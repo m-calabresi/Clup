@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Clup</string>
+    <string name="title_verify_number">Verify your number</string>
+    <string name="text_verify_number">Enter your mobile number to receive a verification code</string>
+    <string name="action_continue">Continue</string>
+    <string name="text_verify_code">Enter the verification code sent to %1$s</string>
+    <string name="action_verify">Verify</string>
+    <string name="text_prefix">+</string>
+</resources>

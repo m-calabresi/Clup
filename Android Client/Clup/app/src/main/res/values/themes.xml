@@ -13,4 +13,24 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="MaterialRoundedButton" parent="@style/Widget.MaterialComponents.Button">
+        <item name="cornerRadius">32dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingStart">60dp</item>
+        <item name="android:paddingEnd">60dp</item>
+    </style>
+
+    <style name="OutlinedMaterialRoundedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">32dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingStart">60dp</item>
+        <item name="android:paddingEnd">60dp</item>
+
+        <item name="strokeColor">@color/outlined_material_round_button_stroke_color</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
 </resources>

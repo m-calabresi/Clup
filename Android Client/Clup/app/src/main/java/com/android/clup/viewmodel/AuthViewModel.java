@@ -39,7 +39,9 @@ public class AuthViewModel extends ViewModel {
     private final MutableLiveData<Boolean> nameFragmentButtonVisibilityStatus;
 
     // PhoneFragment fields
+    @NonNull
     private final MutableLiveData<Boolean> prefixStatus;
+    @NonNull
     private final MutableLiveData<Boolean> phoneNumberStatus;
     private final MediatorLiveData<Boolean> phoneFragmentButtonVisibilityStatus;
 
@@ -58,8 +60,14 @@ public class AuthViewModel extends ViewModel {
         this.phoneNumberStatus = new MutableLiveData<>(false);
         this.phoneFragmentButtonVisibilityStatus = new MediatorLiveData<>();
 
-        this.phoneFragmentButtonVisibilityStatus.addSource(this.prefixStatus, status -> this.phoneFragmentButtonVisibilityStatus.setValue(status && this.phoneNumberStatus.getValue()));
-        this.phoneFragmentButtonVisibilityStatus.addSource(this.phoneNumberStatus, status -> this.phoneFragmentButtonVisibilityStatus.setValue(status && this.prefixStatus.getValue()));
+        this.phoneFragmentButtonVisibilityStatus.addSource(this.prefixStatus, status -> {
+            if (this.phoneNumberStatus.getValue() != null)
+                this.phoneFragmentButtonVisibilityStatus.setValue(status && this.phoneNumberStatus.getValue());
+        });
+        this.phoneFragmentButtonVisibilityStatus.addSource(this.phoneNumberStatus, status -> {
+            if (this.prefixStatus.getValue() != null)
+                this.phoneFragmentButtonVisibilityStatus.setValue(status && this.prefixStatus.getValue());
+        });
 
         this.codeFragmentButtonVisibilityStatus = new MutableLiveData<>(false);
     }
@@ -155,7 +163,7 @@ public class AuthViewModel extends ViewModel {
     public int getDefaultCountryCode(@NonNull final Activity activity) {
         String locale = activity.getResources().getConfiguration().locale.getCountry();
 
-        if (locale == null || locale.isEmpty())
+        if (locale.isEmpty())
             locale = SMSAuthService.DEFAULT_LOCALE.toUpperCase();
 
         return PhoneNumberUtil.getInstance().getCountryCodeForRegion(locale);

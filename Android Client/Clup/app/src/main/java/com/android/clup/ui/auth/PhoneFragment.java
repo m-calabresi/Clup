@@ -23,6 +23,8 @@ import com.android.clup.viewmodel.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
+
 public class PhoneFragment extends Fragment {
     private AuthViewModel viewModel;
 
@@ -32,11 +34,11 @@ public class PhoneFragment extends Fragment {
     private TextInputEditText phoneNumberEditText;
 
     private final View.OnClickListener nextOnClickListener = view -> {
-        this.viewModel.hideSoftInput(getActivity());
+        this.viewModel.hideSoftInput(requireActivity());
         this.viewModel.showProgressBar(this.nextButton);
 
-        final String prefix = this.prefixEditText.getText().toString();
-        final String phoneNumber = this.phoneNumberEditText.getText().toString();
+        final String prefix = Objects.requireNonNull(this.prefixEditText.getText()).toString();
+        final String phoneNumber = Objects.requireNonNull(this.phoneNumberEditText.getText()).toString();
         this.viewModel.setPhoneNumber(prefix + phoneNumber);
 
         final String locale = this.viewModel.toLocale(Integer.parseInt(prefix));
@@ -51,7 +53,7 @@ public class PhoneFragment extends Fragment {
             } else {
                 // final String error = ((Result.Error<String>) result).message;
                 showErrorHint();
-                this.viewModel.showSoftInput(getActivity(), this.phoneNumberEditText);
+                this.viewModel.showSoftInput(requireActivity(), this.phoneNumberEditText);
             }
         });
     };
@@ -127,27 +129,27 @@ public class PhoneFragment extends Fragment {
         this.prefixEditText = prefixTextInput.findViewById(R.id.prefix_edit_text);
         this.prefixEditText.addTextChangedListener(this.prefixTextWatcher);
 
-        final int defaultCountryCode = this.viewModel.getDefaultCountryCode(getActivity());
+        final int defaultCountryCode = this.viewModel.getDefaultCountryCode(requireActivity());
         this.prefixEditText.setText(String.valueOf(defaultCountryCode));
 
-        this.phoneNumberTextInput = root.findViewById(R.id.code_text_input);
-        this.phoneNumberEditText = this.phoneNumberTextInput.findViewById(R.id.code_edit_text);
+        this.phoneNumberTextInput = root.findViewById(R.id.phone_text_input);
+        this.phoneNumberEditText = this.phoneNumberTextInput.findViewById(R.id.phone_edit_text);
         this.phoneNumberEditText.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         this.phoneNumberEditText.addTextChangedListener(this.phoneNumberTextWatcher);
-        this.viewModel.showSoftInput(getActivity(), this.phoneNumberEditText);
+        this.viewModel.showSoftInput(requireActivity(), this.phoneNumberEditText);
 
         return root;
     }
 
     @Override
     public void onResume() {
-        this.viewModel.showSoftInput(getActivity(), this.phoneNumberEditText);
+        this.viewModel.showSoftInput(requireActivity(), this.phoneNumberEditText);
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        this.viewModel.hideSoftInput(getActivity());
+        this.viewModel.hideSoftInput(requireActivity());
         super.onPause();
     }
 

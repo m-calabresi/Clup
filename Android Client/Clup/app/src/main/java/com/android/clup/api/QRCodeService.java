@@ -31,6 +31,7 @@ public class QRCodeService {
             Result<Bitmap> result;
             try {
                 final String payload = toJsonString(username, hours, status);
+                System.out.println("PAYLOAD: " + payload);
                 final Result<String> response = RemoteConnection.postConnect(API_URL, payload);
 
                 if (response instanceof Result.Success) {
@@ -58,10 +59,7 @@ public class QRCodeService {
             jsonContent.put("hours", Integer.toString(hours));
             jsonContent.put("status", status);
 
-            final JSONObject jsonBody = new JSONObject();
-            jsonBody.put("body", jsonContent);
-
-            return jsonBody.toString();
+            return jsonContent.toString();
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

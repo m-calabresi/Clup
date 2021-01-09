@@ -6,7 +6,7 @@
     android:id="@+id/fragment_code"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.PhoneFragment">
+    tools:context=".ui.auth.CodeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,7 +16,10 @@
             android:id="@+id/title_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
             android:text="@string/title_verify_number"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -28,24 +31,20 @@
 
         <TextView
             android:id="@+id/text_code"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="50dp"
             android:textAlignment="center"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/title_code"
+            app:layout_constraintStart_toStartOf="@id/title_code"
             app:layout_constraintTop_toBottomOf="@id/title_code" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/code_text_input"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="100dp"
             app:boxBackgroundColor="@android:color/transparent"
             app:errorEnabled="true"
             app:layout_constrainedWidth="true"
@@ -57,8 +56,11 @@
                 android:id="@+id/code_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ems="8"
                 android:focusableInTouchMode="true"
                 android:inputType="number"
+                android:maxEms="8"
+                android:minEms="8"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
@@ -71,6 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="10dp"
+            android:stateListAnimator="@null"
             android:text="@string/action_verify"
             app:layout_constraintBottom_toTopOf="@id/retry_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,8 +87,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="50dp"
-            android:text="@string/action_retry"
             android:enabled="false"
+            android:stateListAnimator="@null"
+            android:text="@string/action_retry"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

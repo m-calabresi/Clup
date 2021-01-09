@@ -26,9 +26,9 @@ public class SuccessFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        PackageManager packageManager = getActivity().getPackageManager();
-
         // TODO BEFORE_FINAL_BUILD uncomment this
+        //PackageManager packageManager = requireActivity().getPackageManager();
+
         // disable AuthActivity at startup
         //packageManager.setComponentEnabledSetting(new ComponentName(getActivity(), MainActivity.class),
         //        PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
@@ -52,7 +52,7 @@ public class SuccessFragment extends Fragment {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             final Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
-            getActivity().finish();
+            requireActivity().finish();
         }, TRANSITION_DELAY);
         super.onViewCreated(view, savedInstanceState);
     }

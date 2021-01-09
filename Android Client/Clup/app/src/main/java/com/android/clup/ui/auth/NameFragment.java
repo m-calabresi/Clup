@@ -19,6 +19,8 @@ import com.android.clup.viewmodel.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
+
 public class NameFragment extends Fragment {
     private AuthViewModel viewModel;
 
@@ -27,7 +29,7 @@ public class NameFragment extends Fragment {
     private TextInputEditText nameEditText;
 
     private final View.OnClickListener nextButtonClickListener = view -> {
-        final String username = this.nameEditText.getText().toString();
+        final String username = Objects.requireNonNull(this.nameEditText.getText()).toString();
 
         this.viewModel.setUsername(username);
         this.viewModel.switchTo(PhoneFragment.class);
@@ -80,23 +82,23 @@ public class NameFragment extends Fragment {
         this.nextButton = root.findViewById(R.id.next_button);
         this.nextButton.setOnClickListener(nextButtonClickListener);
 
-        this.nameInputLayout = root.findViewById(R.id.code_text_input);
-        this.nameEditText = this.nameInputLayout.findViewById(R.id.code_edit_text);
+        this.nameInputLayout = root.findViewById(R.id.name_text_input);
+        this.nameEditText = this.nameInputLayout.findViewById(R.id.name_edit_text);
         this.nameEditText.addTextChangedListener(nameTextWatcher);
-        this.viewModel.showSoftInput(getActivity(), this.nameEditText);
+        this.viewModel.showSoftInput(requireActivity(), this.nameEditText);
 
         return root;
     }
 
     @Override
     public void onResume() {
-        this.viewModel.showSoftInput(getActivity(), this.nameEditText);
+        this.viewModel.showSoftInput(requireActivity(), this.nameEditText);
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        this.viewModel.hideSoftInput(getActivity());
+        this.viewModel.hideSoftInput(requireActivity());
         super.onPause();
     }
 }

@@ -24,6 +24,8 @@ import com.android.clup.viewmodel.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
+
 public class CodeFragment extends Fragment {
     private AuthViewModel viewModel;
 
@@ -36,13 +38,13 @@ public class CodeFragment extends Fragment {
     private CountDownTimer countDownTimer;
 
     private final View.OnClickListener nextButtonOnClickListener = view -> {
-        this.viewModel.hideSoftInput(getActivity());
+        this.viewModel.hideSoftInput(requireActivity());
         this.viewModel.showProgressBar(this.verifyButton);
 
-        final String code = this.codeEditText.getText().toString();
+        final String code = Objects.requireNonNull(this.codeEditText.getText()).toString();
 
         this.viewModel.checkVerify(code, result -> {
-            this.viewModel.hideSoftInput(getActivity());
+            this.viewModel.hideSoftInput(requireActivity());
             this.viewModel.hideProgressBar(this.verifyButton, getString(R.string.action_verify));
 
             if (result instanceof Result.Success) {
@@ -134,7 +136,7 @@ public class CodeFragment extends Fragment {
         this.codeInputLayout = root.findViewById(R.id.code_text_input);
         this.codeEditText = this.codeInputLayout.findViewById(R.id.code_edit_text);
         this.codeEditText.addTextChangedListener(this.codeTextWatcher);
-        this.viewModel.showSoftInput(getActivity(), this.codeEditText);
+        this.viewModel.showSoftInput(requireActivity(), this.codeEditText);
 
         return root;
     }

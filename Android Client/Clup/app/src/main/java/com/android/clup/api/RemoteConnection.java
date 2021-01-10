@@ -62,27 +62,25 @@ class RemoteConnection {
     @NonNull
     public static Result<String> postConnect(@NonNull final String requestUrl, @NonNull final String jsonPayload) {
         Result<String> result;
-        HttpURLConnection httpURLConnection = null;
+        HttpURLConnection connection = null;
         InputStream inputStream = null;
         OutputStream outputStream = null;
 
         try {
             final URL url = new URL(requestUrl);
 
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setRequestProperty("Content-Type", "application/json; utf-8");
-            httpURLConnection.setRequestProperty("Accept", "application/json");
-            httpURLConnection.setDoOutput(true);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
 
-            outputStream = httpURLConnection.getOutputStream();
+            outputStream = connection.getOutputStream();
             byte[] input = jsonPayload.getBytes(StandardCharsets.UTF_8);
             outputStream.write(input, 0, input.length);
 
-            inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
+            inputStream = new BufferedInputStream(connection.getInputStream());
             result = new Result.Success<>(toString(inputStream));
-
-            System.out.println("RESULTTTTTTTTTTTTTTT: " + result);
         } catch (IOException e) {
             e.printStackTrace();
             result = new Result.Error<>(e.getLocalizedMessage());
@@ -105,8 +103,8 @@ class RemoteConnection {
                 }
             }
 
-            if (httpURLConnection != null)
-                httpURLConnection.disconnect();
+            if (connection != null)
+                connection.disconnect();
         }
         return result;
     }

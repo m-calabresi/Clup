@@ -19,23 +19,28 @@ public class QRCodeService {
     private static final int QR_CODE_SIZE = 1024;
 
     public static final String API_URL = "https://mobile-project-1605.twil.io/queue/enter";
+    private static final String TAG_USER_FULLNAME = "user_fullname";
+    private static final String TAG_HOUR = "hour";
+    private static final String TAG_STATUS = "status";
+    private static final String TAG_UUID = "uuid";
+
     private final Executor executor;
 
     public QRCodeService() {
         this.executor = Executors.newSingleThreadExecutor();
     }
 
-    public void generateQRCode(@NonNull final String username, final int hours, @NonNull final String status,
-                               @NonNull final QRCodeCallback<Bitmap> callback) {
+    public void generateQRCode(@NonNull final String username, @NonNull final String hours,
+                               @NonNull final String status, @NonNull final QRCodeCallback<Bitmap> callback) {
         executor.execute(() -> {
             Result<Bitmap> result;
             try {
                 final String payload = toJsonString(username, hours, status);
-                System.out.println("PAYLOAD: " + payload);
                 final Result<String> response = RemoteConnection.postConnect(API_URL, payload);
 
                 if (response instanceof Result.Success) {
                     final String jsonResponse = ((Result.Success<String>) response).data;
+                    System.out.println(jsonResponse);
                     final String uuid = getUuid(jsonResponse, username, hours, status);
 
                     // create qr-code bitmap & return it
@@ -51,13 +56,13 @@ public class QRCodeService {
     }
 
     @NonNull
-    private static String toJsonString(@NonNull final String username, final int hours, @NonNull final String status) {
+    private static String toJsonString(@NonNull final String username, @NonNull final String hours,
+                                       @NonNull final String status) {
         try {
             final JSONObject jsonContent = new JSONObject();
-            jsonContent.put("user_fullname", username);
-
-            jsonContent.put("hours", Integer.toString(hours));
-            jsonContent.put("status", status);
+            jsonContent.put(TAG_USER_FULLNAME, username);
+            jsonContent.put(TAG_HOUR, hours);
+            jsonContent.put(TAG_STATUS, status);
 
             return jsonContent.toString();
         } catch (JSONException e) {
@@ -67,20 +72,18 @@ public class QRCodeService {
 
     @NonNull
     private String getUuid(@NonNull final String jsonResponse, @NonNull final String username,
-                           final int hours, @NonNull final String status) throws InvalidResponseException {
+                           @NonNull final String hours, @NonNull final String status)
+            throws InvalidResponseException {
         try {
             final JSONObject jsonObject = new JSONObject(jsonResponse);
 
-            final String receivedFullName = jsonObject.getString("user_fullname");
-            final String receivedHours = jsonObject.getString("hours");
-            final String receivedStatus = jsonObject.getString("status");
+            final String receivedFullName = jsonObject.getString(TAG_USER_FULLNAME);
+            final String receivedHours = jsonObject.getString(TAG_HOUR);
+            final String receivedStatus = jsonObject.getString(TAG_STATUS);
 
-            if (receivedFullName.equals(username)
-                    && receivedHours.equals(Integer.toString(hours))
-                    && receivedStatus.equals(status)) {
-
-                return jsonObject.getString("uuid");
-            } else
+            if (receivedFullName.equals(username) && receivedHours.equals(hours) && receivedStatus.equals(status))
+                return jsonObject.getString(TAG_UUID);
+            else
                 throw new InvalidResponseException("One or more received parameters doesn't match with original ones");
         } catch (JSONException e) {
             throw new RuntimeException(e);

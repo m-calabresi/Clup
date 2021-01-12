@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- BASE APPLICATION THEME -->
     <style name="AppTheme.Clup" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/lime_500</item>
@@ -14,11 +15,21 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <!--> SPLASH SCREEN THEME <-->
+    <!-- TOOLBAR THEME -->
+
+    <style name="AppTheme.Clup.MaterialToolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+
+    </style>
+
+    <!-- SPLASH SCREEN THEME -->
 
     <style name="AppTheme.Clup.SplashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/lime_200</item>
+        <item name="colorPrimaryDark">@color/lime_200</item>
         <item name="android:windowBackground">@drawable/splash_screen_background</item>
     </style>
+
+    <!-- BUTTON THEMES -->
 
     <style name="MaterialRoundedButton" parent="@style/Widget.MaterialComponents.Button">
         <item name="cornerRadius">32dp</item>
@@ -37,6 +48,13 @@
 
         <item name="strokeColor">@color/outlined_material_round_button_stroke_color</item>
         <item name="strokeWidth">2dp</item>
+    </style>
+
+    <!-- ALERT DIALOG THEME -->
+
+    <style name="AppTheme.RoundedAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="cornerSize">10dp</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">10dp</item>
     </style>
 
 </resources>

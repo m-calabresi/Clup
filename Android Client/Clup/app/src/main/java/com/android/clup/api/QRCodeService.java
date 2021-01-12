@@ -40,7 +40,6 @@ public class QRCodeService {
 
                 if (response instanceof Result.Success) {
                     final String jsonResponse = ((Result.Success<String>) response).data;
-                    System.out.println(jsonResponse);
                     final String uuid = getUuid(jsonResponse, username, hours, status);
 
                     // create qr-code bitmap & return it

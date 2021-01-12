@@ -11,10 +11,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
 import com.android.clup.ui.MainActivity;
+import com.android.clup.viewmodel.MainViewModel;
 
 public class SuccessFragment extends Fragment {
     private static final int TRANSITION_DELAY = 1000;
@@ -37,6 +40,9 @@ public class SuccessFragment extends Fragment {
         //packageManager.setComponentEnabledSetting(new ComponentName(getActivity(), AuthActivity.class),
         //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 
+        // initiate the theme preference to follow_system (default behavior
+        final MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel.setThemePreference(requireContext(), AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         super.onCreate(savedInstanceState);
     }
 

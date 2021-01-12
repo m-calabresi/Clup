@@ -15,4 +15,9 @@
     <string name="phone_error">Invalid phone number</string>
     <string name="code_error">Invalid or expired code</string>
     <string name="action_retry_in">Retry in\u0020</string>
+    <string name="action_select_theme">Theme</string>
+    <string name="title_theme_alert">Choose theme</string>
+    <string name="array_item_light">Light</string>
+    <string name="array_item_dark">Dark</string>
+    <string name="array_item_system_default">System default</string>
 </resources>

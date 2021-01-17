@@ -1,16 +1,44 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- BASE APPLICATION THEME -->
     <style name="AppTheme.Clup" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/lime_200</item>
-        <item name="colorPrimaryVariant">@color/lime_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/lime_500</item>
-        <item name="colorSecondaryVariant">@color/lime_700</item>
-        <item name="colorOnSecondary">@color/gray_800</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <item name="colorPrimary">@color/lime_500</item>
+        <item name="colorPrimaryVariant">@color/gray_900</item>
+        <item name="colorOnPrimary">@color/gray_900</item>
+
+        <item name="colorSecondary">@color/unknown</item>
+        <item name="colorSecondaryVariant">@color/unknown</item>
+        <item name="colorOnSecondary">@color/unknown</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
+
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- SPLASH SCREEN THEME -->
+
+    <style name="AppTheme.Clup.SplashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
+
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+
+        <item name="android:windowBackground">@drawable/splash_screen_background</item>
+    </style>
+
+    <!-- BUTTON FINAL THEMES -->
+
+    <style name="FilledRoundButton" parent="@style/AppTheme.Clup.MaterialRoundedButton">
+        <item name="rippleColor">@color/gray_800</item>
     </style>
 </resources>

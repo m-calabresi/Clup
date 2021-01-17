@@ -16,7 +16,7 @@
         tools:ignore="AllowBackup">
         <activity
             android:name=".ui.MainActivity"
-            android:enabled="true"
+            android:enabled="false"
             android:theme="@style/AppTheme.Clup.SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
         </activity> <!-- TODO BEFORE_FINAL_BUILD change enabled="true" in AuthActivity and enabled="false" in MainActivity -->
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:enabled="false"
+            android:enabled="true"
             android:theme="@style/AppTheme.Clup.SplashScreenTheme"
             android:windowSoftInputMode="stateVisible">
             <intent-filter>

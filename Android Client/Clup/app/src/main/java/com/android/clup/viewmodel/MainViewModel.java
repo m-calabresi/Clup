@@ -2,20 +2,72 @@ package com.android.clup.viewmodel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModel;
 
+import com.android.clup.api.QueueService;
+import com.android.clup.concurrent.Callback;
+import com.android.clup.concurrent.Result;
+
+import net.glxn.qrgen.android.QRCode;
+
+import java.security.InvalidParameterException;
+
 public class MainViewModel extends ViewModel {
+    private static final int QR_CODE_SIZE = 1024;
+
     @Nullable
     private Integer themeValue;
     @NonNull
     private static final String PREF_THEME_NAME = "theme_preference";
 
-    public MainViewModel() {
+    private final QueueService queueService;
 
+    private String username;
+    private String hour;
+    private String status;
+    private String uuid;
+
+    public MainViewModel() {
+        this.queueService = new QueueService();
+    }
+
+    public void setUserData(@NonNull final String username, @NonNull final String hour, @NonNull final String status) {
+        this.username = username;
+        this.hour = hour;
+        this.status = status;
+    }
+
+    public void getQrCode(final int onColor, final int offColor, @NonNull final Callback<Bitmap> callback) {
+        if (this.username == null || this.hour == null || this.status == null)
+            throw new InvalidParameterException("Some parameters are null or empty, did you call 'setUserData'?");
+
+        if (this.uuid == null) {
+            this.queueService.getQueueUUID(this.username, this.hour, this.status, result -> {
+                if (result instanceof Result.Success) {
+                    this.uuid = ((Result.Success<String>) result).data; // cache qrCode to retrieve it faster
+
+                    final Result<Bitmap> qrCode = new Result.Success<>(generateQRCode(this.uuid, onColor, offColor));
+                    callback.onComplete(qrCode);
+                } else {
+                    final String errorMsg = ((Result.Error<String>) result).message;
+                    final Result<Bitmap> error = new Result.Error<>(errorMsg);
+                    callback.onComplete(error);
+                }
+            });
+            return;
+        }
+        final Bitmap cachedQrCode = generateQRCode(this.uuid, onColor, offColor);
+        callback.onComplete(new Result.Success<>(cachedQrCode));
+    }
+
+    private Bitmap generateQRCode(@NonNull final String uuid, final int onColor, final int offColor) {
+        // create qr-code bitmap & return it
+        return QRCode.from(uuid).withSize(QR_CODE_SIZE, QR_CODE_SIZE).withColor(onColor, offColor).bitmap();
     }
 
     public void setThemePreference(@NonNull final Context context, final int mode) {

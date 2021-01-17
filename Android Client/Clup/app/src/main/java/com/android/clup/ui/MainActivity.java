@@ -14,7 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
-import com.android.clup.api.QRCodeService;
 import com.android.clup.concurrent.Result;
 import com.android.clup.viewmodel.MainViewModel;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -41,8 +40,12 @@ public class MainActivity extends AppCompatActivity {
         final String hours = "11";
         final String status = "todo";
 
-        final QRCodeService qrCodeService = new QRCodeService();
-        qrCodeService.generateQRCode(username, hours, status, result -> {
+        this.viewModel.setUserData(username, hours, status);
+
+        final int onColor = getResources().getColor(R.color.qr_code_on_color);
+        final int offColor = getResources().getColor(R.color.qr_code_off_color);
+
+        this.viewModel.getQrCode(onColor, offColor, result -> {
             if (result instanceof Result.Success) {
                 imageView.post(() -> {
                     final Bitmap qrCode = ((Result.Success<Bitmap>) result).data;

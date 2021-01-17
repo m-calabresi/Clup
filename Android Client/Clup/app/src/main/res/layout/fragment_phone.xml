@@ -6,6 +6,9 @@
     android:id="@+id/fragment_phone"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:scrollbarThumbHorizontal="@null"
+    android:scrollbarThumbVertical="@null"
     tools:context=".ui.auth.PhoneFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +23,7 @@
             android:paddingEnd="50dp"
             android:text="@string/title_insert_number"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/title_color"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -62,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="3"
+                android:freezesText="true"
                 android:inputType="phone"
                 android:maxEms="3"
                 android:minEms="3"
@@ -89,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:focusableInTouchMode="true"
+                android:freezesText="true"
                 android:inputType="phone"
                 android:maxEms="10"
                 android:minEms="10"
@@ -98,7 +103,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/next_button"
-            style="@style/MaterialRoundedButton"
+            style="@style/FilledRoundButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"

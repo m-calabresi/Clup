@@ -28,14 +28,27 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
-    private void replaceFragment(@NonNull final Class<? extends Fragment> fragment) {
+    private void replaceFragment(@NonNull final Class<? extends Fragment> fragmentClass) {
+        for (Fragment f : getSupportFragmentManager().getFragments()) {
+            if (f.getClass().equals(fragmentClass)) {
+                // f is the fragment already inserted (no need to crete a new one)
+                replace(f);
+                return;
+            }
+        }
+
+        // no fragment found (need to create a new one)
         try {
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_enter, R.anim.slide_exit)
-                    .replace(R.id.container, fragment.newInstance())
-                    .commitNow();
+            replace(fragmentClass.newInstance());
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
+    }
+
+    private void replace(@NonNull final Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_enter, R.anim.slide_exit)
+                .replace(R.id.container, fragment)
+                .commitNow();
     }
 }

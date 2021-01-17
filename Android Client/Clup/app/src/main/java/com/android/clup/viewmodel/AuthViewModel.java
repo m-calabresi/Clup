@@ -1,9 +1,9 @@
 package com.android.clup.viewmodel;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -16,8 +16,9 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.android.clup.R;
 import com.android.clup.api.SMSAuthService;
-import com.android.clup.concurrent.AuthenticationCallback;
+import com.android.clup.concurrent.Callback;
 import com.github.razir.progressbutton.ButtonTextAnimatorExtensionsKt;
 import com.github.razir.progressbutton.DrawableButton;
 import com.github.razir.progressbutton.DrawableButtonExtensionsKt;
@@ -147,7 +148,7 @@ public class AuthViewModel extends ViewModel {
         return this.codeFragmentButtonVisibilityStatus;
     }
 
-    public void startVerify(@NonNull final AuthenticationCallback<String> callback) {
+    public void startVerify(@NonNull final Callback<String> callback) {
         if (this.phoneNumber == null || this.phoneNumber.isEmpty())
             throw new NullPointerException("'phoneNumber' is null or empty, did you call 'setPhoneNumber'?");
         if (this.locale == null || this.locale.isEmpty())
@@ -156,7 +157,7 @@ public class AuthViewModel extends ViewModel {
         authService.startVerify(this.phoneNumber, this.locale, callback);
     }
 
-    public void checkVerify(@NonNull final String code, @NonNull final AuthenticationCallback<String> callback) {
+    public void checkVerify(@NonNull final String code, @NonNull final Callback<String> callback) {
         this.authService.checkVerify(this.phoneNumber, code, callback);
     }
 
@@ -218,9 +219,14 @@ public class AuthViewModel extends ViewModel {
 
     public void showProgressBar(@NonNull final Button button) {
         button.setClickable(false);
+
         // start spinning animation
         DrawableButtonExtensionsKt.showProgress(button, progressParams -> {
-            progressParams.setProgressColor(Color.WHITE);
+            final TypedValue typedValue = new TypedValue();
+            button.getContext().getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
+            final int progressColor = typedValue.data;
+
+            progressParams.setProgressColor(progressColor);
             progressParams.setGravity(DrawableButton.GRAVITY_CENTER);
             return Unit.INSTANCE;
         });

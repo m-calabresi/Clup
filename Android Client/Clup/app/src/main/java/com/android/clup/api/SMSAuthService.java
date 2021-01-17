@@ -2,7 +2,7 @@ package com.android.clup.api;
 
 import androidx.annotation.NonNull;
 
-import com.android.clup.concurrent.AuthenticationCallback;
+import com.android.clup.concurrent.Callback;
 import com.android.clup.concurrent.Result;
 
 import java.util.concurrent.Executor;
@@ -38,7 +38,7 @@ public class SMSAuthService {
      *                            procedure is ended.
      */
     public void startVerify(@NonNull final String completePhoneNumber, @NonNull final String smsLocale,
-                            @NonNull final AuthenticationCallback<String> callback) {
+                            @NonNull final Callback<String> callback) {
         this.executor.execute(() -> {
             final String authServiceUrl = API_URL + "start-verify";
             final String target = "to=%2B" + completePhoneNumber;
@@ -63,7 +63,7 @@ public class SMSAuthService {
      * @param callback           the callback through which the caller will be notified once the verification
      *                           procedure is ended.
      */
-    public void checkVerify(@NonNull final String completePoneNumber, @NonNull final String code, @NonNull final AuthenticationCallback<String> callback) {
+    public void checkVerify(@NonNull final String completePoneNumber, @NonNull final String code, @NonNull final Callback<String> callback) {
         this.executor.execute(() -> {
             final String authServiceUrl = API_URL + "check-verify";
             final String target = "to=%2B" + completePoneNumber;

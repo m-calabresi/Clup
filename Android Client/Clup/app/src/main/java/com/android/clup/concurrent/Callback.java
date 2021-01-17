@@ -1,5 +1,5 @@
 package com.android.clup.concurrent;
 
-public interface AuthenticationCallback<T> {
+public interface Callback<T> {
     void onComplete(Result<T> result);
 }

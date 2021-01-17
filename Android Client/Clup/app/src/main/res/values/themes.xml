@@ -2,17 +2,38 @@
 
     <!-- BASE APPLICATION THEME -->
     <style name="AppTheme.Clup" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/lime_500</item>
-        <item name="colorPrimaryVariant">@color/lime_700</item>
+
+        <item name="colorPrimary">@color/lime_700</item>
+        <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/gray_900</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/lime_500</item>
-        <item name="colorSecondaryVariant">@color/lime_700</item>
-        <item name="colorOnSecondary">@color/gray_800</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <item name="colorSecondary">@color/unknown</item>
+        <item name="colorSecondaryVariant">@color/unknown</item>
+        <item name="colorOnSecondary">@color/unknown</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
+
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- SPLASH SCREEN THEME -->
+
+    <style name="AppTheme.Clup.SplashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
+
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+
+        <item name="android:windowBackground">@drawable/splash_screen_background</item>
     </style>
 
     <!-- TOOLBAR THEME -->
@@ -21,33 +42,39 @@
 
     </style>
 
-    <!-- SPLASH SCREEN THEME -->
+    <!-- BUTTON BASE THEMES -->
 
-    <style name="AppTheme.Clup.SplashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/lime_200</item>
-        <item name="colorPrimaryDark">@color/lime_200</item>
-        <item name="android:windowBackground">@drawable/splash_screen_background</item>
-    </style>
-
-    <!-- BUTTON THEMES -->
-
-    <style name="MaterialRoundedButton" parent="@style/Widget.MaterialComponents.Button">
+    <style name="AppTheme.Clup.MaterialRoundedButton" parent="@style/Widget.MaterialComponents.Button">
         <item name="cornerRadius">32dp</item>
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:paddingBottom">15dp</item>
-        <item name="android:paddingStart">60dp</item>
-        <item name="android:paddingEnd">60dp</item>
-    </style>
 
-    <style name="OutlinedMaterialRoundedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="cornerRadius">32dp</item>
         <item name="android:paddingTop">15dp</item>
         <item name="android:paddingBottom">15dp</item>
         <item name="android:paddingStart">60dp</item>
         <item name="android:paddingEnd">60dp</item>
 
-        <item name="strokeColor">@color/outlined_material_round_button_stroke_color</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="AppTheme.Clup.MaterialOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">32dp</item>
+
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingStart">60dp</item>
+        <item name="android:paddingEnd">60dp</item>
+
         <item name="strokeWidth">2dp</item>
+    </style>
+
+    <!-- BUTTON FINAL THEMES -->
+
+    <style name="FilledRoundButton" parent="@style/AppTheme.Clup.MaterialRoundedButton">
+        <item name="rippleColor">@color/white</item>
+    </style>
+
+    <style name="OutlinedRoundButton" parent="AppTheme.Clup.MaterialOutlinedButton">
+        <item name="strokeColor">@color/outlined_material_round_button_stroke_color</item>
+        <item name="android:textColor">@color/outlined_material_round_button_text_color</item>
     </style>
 
     <!-- ALERT DIALOG THEME -->
@@ -56,5 +83,4 @@
         <item name="cornerSize">10dp</item>
         <item name="android:dialogCornerRadius" tools:targetApi="p">10dp</item>
     </style>
-
 </resources>

@@ -2,12 +2,11 @@
     <string name="app_name">Clup</string>
     <string name="title_verify_number">Verify your number</string>
     <string name="text_verify_number">Enter your mobile number to receive a verification code</string>
-    <string name="action_continue">Continue</string>
     <string name="text_verify_code">Enter the verification code sent to +%1$s</string>
     <string name="action_verify">Verify</string>
     <string name="text_prefix">+</string>
-    <string name="title_welcome">Welcom to Clup!</string>
-    <string name="text_choose_name">Insert your full name, it will be visible to other Clup users</string>
+    <string name="title_welcome">Welcome to Clup!</string>
+    <string name="text_choose_name">Insert your full name, it will be visible to other Clup users.</string>
     <string name="action_next">Next</string>
     <string name="title_insert_number">Input your number</string>
     <string name="action_retry">Retry</string>

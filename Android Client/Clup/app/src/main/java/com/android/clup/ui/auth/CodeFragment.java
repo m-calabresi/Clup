@@ -58,7 +58,7 @@ public class CodeFragment extends Fragment {
     };
 
     private final Observer<Boolean> verifyButtonObserver = status ->
-            this.viewModel.handleGone(this.verifyButton, status);
+            this.viewModel.handleInvisible(this.verifyButton, status);
 
     private final TextWatcher codeTextWatcher = new TextWatcher() {
         @Override

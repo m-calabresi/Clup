@@ -20,11 +20,11 @@ import com.android.clup.ui.MainActivity;
 import com.android.clup.viewmodel.MainViewModel;
 
 public class SuccessFragment extends Fragment {
-    private static final int TRANSITION_DELAY = 1000;
+    private static final int TRANSITION_DELAY = 6000;
 
     @NonNull
-    public static NameFragment newInstance() {
-        return new NameFragment();
+    public static SuccessFragment newInstance() {
+        return new SuccessFragment();
     }
 
     @Override

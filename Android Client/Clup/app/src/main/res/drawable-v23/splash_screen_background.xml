@@ -2,9 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque">
     <item android:drawable="@color/splash_screen_background_color" />
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/ic_logo" />
-    </item>
+    <item
+        android:drawable="@drawable/ic_splash_screen_foreground"
+        android:gravity="center" />
 </layer-list>

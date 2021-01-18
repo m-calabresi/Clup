@@ -66,12 +66,12 @@ public class PhoneFragment extends Fragment {
     @NonNull
     private final TextWatcher prefixTextWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        public void beforeTextChanged(@NonNull final CharSequence s, final int start, final int count, final int after) {
 
         }
 
         @Override
-        public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
+        public void onTextChanged(@NonNull final CharSequence s, final int start, final int before, final int count) {
             viewModel.setPrefixStatus(s.length() > 0);
         }
 
@@ -84,12 +84,12 @@ public class PhoneFragment extends Fragment {
     @NonNull
     private final TextWatcher phoneNumberTextWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        public void beforeTextChanged(@NonNull final CharSequence s, final int start, final int count, final int after) {
 
         }
 
         @Override
-        public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
+        public void onTextChanged(@NonNull final CharSequence s, final int start, final int before, final int count) {
             final boolean textFilled = s.length() > 0;
 
             if (textFilled)
@@ -118,8 +118,8 @@ public class PhoneFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
+                             @Nullable final Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.fragment_phone, container, false);
 

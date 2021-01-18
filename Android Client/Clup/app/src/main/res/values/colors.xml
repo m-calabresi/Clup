@@ -3,6 +3,7 @@
     <color name="lime_200">#FFCAFFE7</color>
     <color name="lime_500">#FF97FFCF</color>
     <color name="lime_700">#FF64FFB7</color>
+    <color name="gray_legacy">#FFBCBFC0</color>
     <color name="gray_400">#FFBBBBBB</color>
     <color name="gray_700">#FF545454</color>
     <color name="gray_800">#FF2A2A2A</color>

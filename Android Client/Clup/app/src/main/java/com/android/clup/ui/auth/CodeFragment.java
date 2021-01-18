@@ -67,17 +67,17 @@ public class CodeFragment extends Fragment {
     @NonNull
     private final TextWatcher codeTextWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        public void beforeTextChanged(@NonNull final CharSequence s, final int start, final int count, final int after) {
 
         }
 
         @Override
-        public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
+        public void onTextChanged(@NonNull final CharSequence s, final int start, final int before, final int count) {
             viewModel.setCodeFragmentButtonVisibilityStatus(s.length() > 0);
         }
 
         @Override
-        public void afterTextChanged(Editable s) {
+        public void afterTextChanged(@NonNull final Editable s) {
 
         }
     };
@@ -119,8 +119,8 @@ public class CodeFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
+                             @Nullable final Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.fragment_code, container, false);
 
@@ -148,7 +148,7 @@ public class CodeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         this.countDownTimer.start();
         super.onViewCreated(view, savedInstanceState);
     }

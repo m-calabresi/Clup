@@ -29,6 +29,7 @@ public class QueueService {
         this.executor = Executors.newSingleThreadExecutor();
     }
 
+    @SuppressWarnings("unchecked")
     public void getQueueUUID(@NonNull final String username, @NonNull final String hour,
                              @NonNull final String status, @NonNull final Callback<String> callback) {
         executor.execute(() -> {

@@ -43,12 +43,12 @@ public class NameFragment extends Fragment {
     @NonNull
     private final TextWatcher nameTextWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        public void beforeTextChanged(@NonNull final CharSequence s, final int start, final int count, final int after) {
 
         }
 
         @Override
-        public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
+        public void onTextChanged(@NonNull final CharSequence s, final int start, final int before, final int count) {
             final boolean buttonVisible = s.length() > 0;
             final String errorMessage = buttonVisible ? null : getString(R.string.error_name);
 
@@ -75,8 +75,8 @@ public class NameFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
+                             @Nullable final Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.fragment_name, container, false);
 

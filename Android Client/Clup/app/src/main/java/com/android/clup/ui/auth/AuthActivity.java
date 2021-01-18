@@ -1,12 +1,12 @@
 package com.android.clup.ui.auth;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Bundle;
 
 import com.android.clup.R;
 import com.android.clup.viewmodel.AuthViewModel;
@@ -14,7 +14,7 @@ import com.android.clup.viewmodel.AuthViewModel;
 public class AuthActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_Clup);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
@@ -41,7 +41,7 @@ public class AuthActivity extends AppCompatActivity {
         // no fragment found (need to create a new one)
         try {
             replace(fragmentClass.newInstance());
-        } catch (@NonNull IllegalAccessException | InstantiationException e) {
+        } catch (@NonNull final IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
     }

@@ -1,6 +1,7 @@
 package com.android.clup.viewmodel;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.TypedValue;
@@ -28,6 +29,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import kotlin.Unit;
 
 public class AuthViewModel extends ViewModel {
+    @NonNull
     private final MutableLiveData<Class<? extends Fragment>> nextFragmentLiveData;
 
     private final SMSAuthService authService;
@@ -37,6 +39,7 @@ public class AuthViewModel extends ViewModel {
     private String locale; // language chosen by the user in form [\c\c] (eg. US)
 
     // NameFragment fields
+    @NonNull
     private final MutableLiveData<Boolean> nameFragmentButtonVisibilityStatus;
 
     // PhoneFragment fields
@@ -44,12 +47,14 @@ public class AuthViewModel extends ViewModel {
     private final MutableLiveData<Boolean> prefixStatus;
     @NonNull
     private final MutableLiveData<Boolean> phoneNumberStatus;
+    @NonNull
     private final MediatorLiveData<Boolean> phoneFragmentButtonVisibilityStatus;
 
     // CodeFragment fields
+    @NonNull
     private final MutableLiveData<Boolean> codeFragmentButtonVisibilityStatus;
-    public static final long countDown = 10000;
-    public static final long interval = 1000;
+    public static final long COUNTDOWN_START = 10000;
+    public static final long INTERVAL = 1000;
 
     public AuthViewModel() {
         this.nextFragmentLiveData = new MutableLiveData<>();
@@ -122,6 +127,7 @@ public class AuthViewModel extends ViewModel {
         this.nameFragmentButtonVisibilityStatus.setValue(status);
     }
 
+    @NonNull
     public MutableLiveData<Boolean> getNameFragmentButtonVisibilityStatus() {
         return this.nameFragmentButtonVisibilityStatus;
     }
@@ -199,14 +205,14 @@ public class AuthViewModel extends ViewModel {
     public void hideSoftInput(@NonNull final Activity activity) {
         // if keyboard is still open
         if (activity.getCurrentFocus() != null) {
-            final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
         }
     }
 
     public void showSoftInput(@NonNull final Activity activity, @NonNull final View view) {
         view.post(() -> {
-            final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             view.requestFocus();
             inputMethodManager.showSoftInput(view, 0);
         });

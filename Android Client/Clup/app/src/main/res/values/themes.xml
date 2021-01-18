@@ -51,6 +51,8 @@
         <item name="android:paddingBottom">@dimen/rounded_button_vertical_padding</item>
 
         <item name="android:stateListAnimator">@null</item>
+
+        <item name="fontFamily">@font/helvetica_neue_heavy</item>
     </style>
 
     <style name="AppTheme.Clup.MaterialOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -60,6 +62,9 @@
         <item name="android:paddingBottom">@dimen/rounded_button_vertical_padding</item>
 
         <item name="strokeWidth">@dimen/rounded_button_stroke_width</item>
+        <item name="android:stateListAnimator">@null</item>
+
+        <item name="fontFamily">@font/helvetica_neue_heavy</item>
     </style>
 
     <!-- BUTTON FINAL THEMES -->
@@ -80,5 +85,26 @@
         <item name="android:dialogCornerRadius" tools:targetApi="p">
             @dimen/alert_dialog_corner_radius
         </item>
+    </style>
+
+    <!-- TITLE TEXT VIEW THEMES -->
+    <style name="AppTheme.Clup.TitleTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="paddingStart">@dimen/title_text_view_horizontal_padding</item>
+        <item name="paddingEnd">@dimen/title_text_view_horizontal_padding</item>
+
+        <item name="android:fontFamily">@font/helvetica_neue_heavy</item>
+
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/title_color</item>
+        <item name="android:textSize">@dimen/title_text_view_text_size</item>
+    </style>
+
+    <!-- SUBTITLE TEXT VIEW THEMES -->
+    <style name="AppTheme.Clup.SubtitleTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:fontFamily">@font/helvetica_neue_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+
+        <item name="android:textSize">@dimen/subtitle_text_view_text_size</item>
     </style>
 </resources>

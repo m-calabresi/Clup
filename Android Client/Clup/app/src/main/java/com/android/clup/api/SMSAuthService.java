@@ -9,7 +9,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class SMSAuthService {
+    @NonNull
     private static final String API_URL = "https://verify-2044-mdd3gm.twil.io/";
+    @NonNull
     public static final String DEFAULT_LOCALE = "us";
 
     private static SMSAuthService instance;
@@ -46,7 +48,7 @@ public class SMSAuthService {
             final String locale = "locale=" + smsLocale;
 
             final String requestUrl = authServiceUrl + "?" + target + "&" + channel + "&" + locale;
-            final Result<String> result = RemoteConnection.connect(requestUrl);
+            final Result result = RemoteConnection.connect(requestUrl);
 
             callback.onComplete(result);
         });
@@ -70,7 +72,7 @@ public class SMSAuthService {
             final String verificationCode = "verification_code=" + code;
 
             final String requestUrl = authServiceUrl + "?" + target + "&" + verificationCode;
-            final Result<String> result = RemoteConnection.connect(requestUrl);
+            final Result result = RemoteConnection.connect(requestUrl);
 
             callback.onComplete(result);
         });

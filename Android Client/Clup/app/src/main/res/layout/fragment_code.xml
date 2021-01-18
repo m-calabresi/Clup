@@ -17,15 +17,10 @@
 
         <TextView
             android:id="@+id/title_code"
+            style="@style/AppTheme.Clup.TitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="50dp"
-            android:paddingEnd="50dp"
             android:text="@string/title_verify_number"
-            android:textAlignment="center"
-            android:textColor="@color/title_color"
-            android:textSize="30sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,11 +29,10 @@
 
         <TextView
             android:id="@+id/text_code"
+            style="@style/AppTheme.Clup.SubtitleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/title_code"
             app:layout_constraintStart_toStartOf="@id/title_code"
             app:layout_constraintTop_toBottomOf="@id/title_code" />
@@ -76,7 +70,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="50dp"
-            android:stateListAnimator="@null"
             android:text="@string/action_verify"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +84,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:enabled="false"
-            android:stateListAnimator="@null"
             android:text="@string/action_retry"
             app:layout_constraintBottom_toTopOf="@id/verify_button"
             app:layout_constraintEnd_toEndOf="@id/verify_button"

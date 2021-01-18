@@ -14,6 +14,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 class RemoteConnection {
+    private RemoteConnection(){
+
+    }
+
     /**
      * Sends to the specified {@code URL} an http/https request without parameters.
      *
@@ -21,8 +25,8 @@ class RemoteConnection {
      * @return the response to the request sent.
      */
     @NonNull
-    static Result<String> connect(@NonNull final String requestUrl) {
-        Result<String> result;
+    static Result connect(@NonNull final String requestUrl) {
+        Result result;
         HttpURLConnection httpURLConnection = null;
         InputStream inputStream = null;
 
@@ -33,14 +37,14 @@ class RemoteConnection {
             result = new Result.Success<>(toString(inputStream));
         } catch (IOException e) {
             e.printStackTrace();
-            result = new Result.Error<>(e.getLocalizedMessage());
+            result = new Result.Error(e.getLocalizedMessage());
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    result = new Result.Error<>(e.getLocalizedMessage());
+                    result = new Result.Error(e.getLocalizedMessage());
                 }
             }
 
@@ -60,8 +64,8 @@ class RemoteConnection {
      * @return the response to the request sent.
      */
     @NonNull
-    public static Result<String> postConnect(@NonNull final String requestUrl, @NonNull final String jsonPayload) {
-        Result<String> result;
+    public static Result postConnect(@NonNull final String requestUrl, @NonNull final String jsonPayload) {
+        Result result;
         HttpURLConnection connection = null;
         InputStream inputStream = null;
         OutputStream outputStream = null;
@@ -83,14 +87,14 @@ class RemoteConnection {
             result = new Result.Success<>(toString(inputStream));
         } catch (IOException e) {
             e.printStackTrace();
-            result = new Result.Error<>(e.getLocalizedMessage());
+            result = new Result.Error(e.getLocalizedMessage());
         } finally {
             if (outputStream != null) {
                 try {
                     outputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    result = new Result.Error<>(e.getLocalizedMessage());
+                    result = new Result.Error(e.getLocalizedMessage());
                 }
             }
 
@@ -99,7 +103,7 @@ class RemoteConnection {
                     inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    result = new Result.Error<>(e.getLocalizedMessage());
+                    result = new Result.Error(e.getLocalizedMessage());
                 }
             }
 

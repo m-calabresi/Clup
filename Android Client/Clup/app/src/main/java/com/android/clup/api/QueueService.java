@@ -12,10 +12,15 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class QueueService {
+    @NonNull
     public static final String API_URL = "https://mobile-project-1605.twil.io/queue/enter";
+    @NonNull
     private static final String TAG_USER_FULLNAME = "user_fullname";
+    @NonNull
     private static final String TAG_HOUR = "hour";
+    @NonNull
     private static final String TAG_STATUS = "status";
+    @NonNull
     private static final String TAG_UUID = "uuid";
 
     private final Executor executor;
@@ -27,10 +32,10 @@ public class QueueService {
     public void getQueueUUID(@NonNull final String username, @NonNull final String hour,
                              @NonNull final String status, @NonNull final Callback<String> callback) {
         executor.execute(() -> {
-            Result<String> result;
+            Result result;
             try {
                 final String payload = toJsonString(username, hour, status);
-                final Result<String> response = RemoteConnection.postConnect(API_URL, payload);
+                final Result response = RemoteConnection.postConnect(API_URL, payload);
 
                 if (response instanceof Result.Success) {
                     final String jsonResponse = ((Result.Success<String>) response).data;
@@ -38,9 +43,9 @@ public class QueueService {
 
                     result = new Result.Success<>(uuid);
                 } else
-                    result = new Result.Error<>("Invalid response"); // TODO replace with resource string
+                    result = new Result.Error("Invalid response"); // TODO replace with resource string
             } catch (InvalidResponseException e) {
-                result = new Result.Error<>(e.getLocalizedMessage());
+                result = new Result.Error(e.getLocalizedMessage());
             }
             callback.onComplete(result);
         });

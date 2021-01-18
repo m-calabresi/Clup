@@ -37,6 +37,7 @@ public class CodeFragment extends Fragment {
     private String retryInText;
     private CountDownTimer countDownTimer;
 
+    @NonNull
     private final View.OnClickListener nextButtonOnClickListener = view -> {
         this.retryButton.setEnabled(false);
         this.viewModel.hideSoftInput(requireActivity());
@@ -59,9 +60,11 @@ public class CodeFragment extends Fragment {
         });
     };
 
+    @NonNull
     private final Observer<Boolean> verifyButtonObserver = status ->
             this.viewModel.handleInvisible(this.verifyButton, status);
 
+    @NonNull
     private final TextWatcher codeTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -69,7 +72,7 @@ public class CodeFragment extends Fragment {
         }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
             viewModel.setCodeFragmentButtonVisibilityStatus(s.length() > 0);
         }
 
@@ -79,6 +82,7 @@ public class CodeFragment extends Fragment {
         }
     };
 
+    @NonNull
     private final View.OnClickListener retryButtonOnClickListener = view -> {
         this.viewModel.startVerify(result -> {
             if (result instanceof Result.Error) {
@@ -97,7 +101,7 @@ public class CodeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         this.viewModel = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
-        this.countDownTimer = new CountDownTimer(AuthViewModel.countDown, AuthViewModel.interval) {
+        this.countDownTimer = new CountDownTimer(AuthViewModel.COUNTDOWN_START, AuthViewModel.INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
                 final String text = retryInText + (millisUntilFinished / 1000);

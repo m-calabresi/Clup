@@ -33,6 +33,7 @@ public class PhoneFragment extends Fragment {
     private TextInputEditText prefixEditText;
     private TextInputEditText phoneNumberEditText;
 
+    @NonNull
     private final View.OnClickListener nextOnClickListener = view -> {
         this.viewModel.hideSoftInput(requireActivity());
         this.viewModel.showProgressBar(this.nextButton);
@@ -58,9 +59,11 @@ public class PhoneFragment extends Fragment {
         });
     };
 
+    @NonNull
     private final Observer<Boolean> nextButtonObserver = buttonVisibility ->
             this.viewModel.handleInvisible(this.nextButton, buttonVisibility);
 
+    @NonNull
     private final TextWatcher prefixTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -68,7 +71,7 @@ public class PhoneFragment extends Fragment {
         }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
             viewModel.setPrefixStatus(s.length() > 0);
         }
 
@@ -78,6 +81,7 @@ public class PhoneFragment extends Fragment {
         }
     };
 
+    @NonNull
     private final TextWatcher phoneNumberTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -85,7 +89,7 @@ public class PhoneFragment extends Fragment {
         }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
             final boolean textFilled = s.length() > 0;
 
             if (textFilled)

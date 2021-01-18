@@ -37,7 +37,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.15'
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.16'
     implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'
     implementation 'com.github.kenglxn.QRGen:android:2.6.0'
 }

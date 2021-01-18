@@ -28,6 +28,7 @@ public class NameFragment extends Fragment {
     private TextInputLayout nameInputLayout;
     private TextInputEditText nameEditText;
 
+    @NonNull
     private final View.OnClickListener nextButtonClickListener = view -> {
         final String username = Objects.requireNonNull(this.nameEditText.getText()).toString();
 
@@ -35,9 +36,11 @@ public class NameFragment extends Fragment {
         this.viewModel.switchTo(PhoneFragment.class);
     };
 
+    @NonNull
     private final Observer<Boolean> nextButtonObserver = buttonVisibility ->
             this.viewModel.handleInvisible(this.nextButton, buttonVisibility);
 
+    @NonNull
     private final TextWatcher nameTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -45,7 +48,7 @@ public class NameFragment extends Fragment {
         }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
             final boolean buttonVisible = s.length() > 0;
             final String errorMessage = buttonVisible ? null : getString(R.string.error_name);
 

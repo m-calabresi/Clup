@@ -1,10 +1,7 @@
 package com.android.clup.concurrent;
 
-public abstract class Result<T> {
-    private Result() {
-    }
-
-    public static final class Success<T> extends Result<T> {
+public interface Result {
+    final class Success<T> implements Result {
         public final T data;
 
         public Success(T data) {
@@ -12,7 +9,7 @@ public abstract class Result<T> {
         }
     }
 
-    public static final class Error<T> extends Result<T> {
+    final class Error implements Result {
         public final String message;
 
         public Error(String message) {

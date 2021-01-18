@@ -26,6 +26,7 @@ public class MainViewModel extends ViewModel {
     @NonNull
     private static final String PREF_THEME_NAME = "theme_preference";
 
+    @NonNull
     private final QueueService queueService;
 
     private String username;
@@ -52,11 +53,11 @@ public class MainViewModel extends ViewModel {
                 if (result instanceof Result.Success) {
                     this.uuid = ((Result.Success<String>) result).data; // cache qrCode to retrieve it faster
 
-                    final Result<Bitmap> qrCode = new Result.Success<>(generateQRCode(this.uuid, onColor, offColor));
+                    final Result qrCode = new Result.Success<>(generateQRCode(this.uuid, onColor, offColor));
                     callback.onComplete(qrCode);
                 } else {
-                    final String errorMsg = ((Result.Error<String>) result).message;
-                    final Result<Bitmap> error = new Result.Error<>(errorMsg);
+                    final String errorMsg = ((Result.Error) result).message;
+                    final Result error = new Result.Error(errorMsg);
                     callback.onComplete(error);
                 }
             });

@@ -38,6 +38,7 @@ public class CodeFragment extends Fragment {
     private CountDownTimer countDownTimer;
 
     private final View.OnClickListener nextButtonOnClickListener = view -> {
+        this.retryButton.setEnabled(false);
         this.viewModel.hideSoftInput(requireActivity());
         this.viewModel.showProgressBar(this.verifyButton);
 
@@ -52,6 +53,7 @@ public class CodeFragment extends Fragment {
                 switchToNextFragment();
             } else {
                 // final String error = ((Result.Error<String>) result).message;
+                enableRetryButton();
                 showErrorHint();
             }
         });
@@ -147,6 +149,10 @@ public class CodeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    private void enableRetryButton() {
+        runOnUIThread(() -> this.retryButton.setEnabled(true));
+    }
+
     private void showErrorHint() {
         runOnUIThread(() -> {
             final String errorMessage = getString(R.string.code_error);
@@ -159,7 +165,7 @@ public class CodeFragment extends Fragment {
             this.verifyButton.setVisibility(View.INVISIBLE);
             this.viewModel.switchTo(SuccessFragment.class);
 
-            // TODO after this, username, phoneNumber and locale stored in viewModel will be lost, consider saving to local storage/cloud storage
+            // TODO after this, username, phoneNumber and locale stored in viewModel will be lost, consider saving to local/cloud storage
         });
     }
 

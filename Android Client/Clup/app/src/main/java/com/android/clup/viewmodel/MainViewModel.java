@@ -18,6 +18,7 @@ import net.glxn.qrgen.android.QRCode;
 import java.security.InvalidParameterException;
 
 public class MainViewModel extends ViewModel {
+    public static final int TRANSITION_DELAY = 1000;
     private static final int QR_CODE_SIZE = 1024;
 
     @Nullable

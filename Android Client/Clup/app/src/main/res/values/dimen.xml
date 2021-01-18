@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rounded_button_width">170dp</dimen>
+    <dimen name="rounded_button_corner_radius">32dp</dimen>
+    <dimen name="rounded_button_vertical_padding">15dp</dimen>
+    <dimen name="rounded_button_stroke_width">2dp</dimen>
+
+    <dimen name="alert_dialog_corner_radius">10dp</dimen>
+</resources>

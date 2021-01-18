@@ -23,7 +23,7 @@ public class AuthActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, NameFragment.newInstance())
+                    .replace(R.id.container, CodeFragment.newInstance())
                     .commitNow();
         }
     }

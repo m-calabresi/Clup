@@ -20,7 +20,6 @@ import com.android.clup.ui.MainActivity;
 import com.android.clup.viewmodel.MainViewModel;
 
 public class SuccessFragment extends Fragment {
-    private static final int TRANSITION_DELAY = 6000;
 
     @NonNull
     public static SuccessFragment newInstance() {
@@ -59,7 +58,7 @@ public class SuccessFragment extends Fragment {
             final Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             requireActivity().finish();
-        }, TRANSITION_DELAY);
+        }, MainViewModel.TRANSITION_DELAY);
         super.onViewCreated(view, savedInstanceState);
     }
 }

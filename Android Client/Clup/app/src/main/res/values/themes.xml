@@ -45,25 +45,21 @@
     <!-- BUTTON BASE THEMES -->
 
     <style name="AppTheme.Clup.MaterialRoundedButton" parent="@style/Widget.MaterialComponents.Button">
-        <item name="cornerRadius">32dp</item>
+        <item name="cornerRadius">@dimen/rounded_button_corner_radius</item>
 
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:paddingBottom">15dp</item>
-        <item name="android:paddingStart">60dp</item>
-        <item name="android:paddingEnd">60dp</item>
+        <item name="android:paddingTop">@dimen/rounded_button_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/rounded_button_vertical_padding</item>
 
         <item name="android:stateListAnimator">@null</item>
     </style>
 
     <style name="AppTheme.Clup.MaterialOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="cornerRadius">32dp</item>
+        <item name="cornerRadius">@dimen/rounded_button_corner_radius</item>
 
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:paddingBottom">15dp</item>
-        <item name="android:paddingStart">60dp</item>
-        <item name="android:paddingEnd">60dp</item>
+        <item name="android:paddingTop">@dimen/rounded_button_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/rounded_button_vertical_padding</item>
 
-        <item name="strokeWidth">2dp</item>
+        <item name="strokeWidth">@dimen/rounded_button_stroke_width</item>
     </style>
 
     <!-- BUTTON FINAL THEMES -->
@@ -80,7 +76,9 @@
     <!-- ALERT DIALOG THEME -->
 
     <style name="AppTheme.RoundedAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
-        <item name="cornerSize">10dp</item>
-        <item name="android:dialogCornerRadius" tools:targetApi="p">10dp</item>
+        <item name="cornerSize">@dimen/alert_dialog_corner_radius</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">
+            @dimen/alert_dialog_corner_radius
+        </item>
     </style>
 </resources>

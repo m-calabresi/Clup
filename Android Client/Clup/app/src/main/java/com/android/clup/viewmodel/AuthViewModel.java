@@ -154,7 +154,7 @@ public class AuthViewModel extends ViewModel {
         return this.codeFragmentButtonVisibilityStatus;
     }
 
-    public void startVerify(@NonNull final Callback<String> callback) {
+    public void startVerify(@NonNull final Callback callback) {
         if (this.phoneNumber == null || this.phoneNumber.isEmpty())
             throw new NullPointerException("'phoneNumber' is null or empty, did you call 'setPhoneNumber'?");
         if (this.locale == null || this.locale.isEmpty())
@@ -163,7 +163,7 @@ public class AuthViewModel extends ViewModel {
         authService.startVerify(this.phoneNumber, this.locale, callback);
     }
 
-    public void checkVerify(@NonNull final String code, @NonNull final Callback<String> callback) {
+    public void checkVerify(@NonNull final String code, @NonNull final Callback callback) {
         this.authService.checkVerify(this.phoneNumber, code, callback);
     }
 

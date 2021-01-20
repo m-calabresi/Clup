@@ -158,20 +158,16 @@ public class PhoneFragment extends Fragment {
     }
 
     private void showErrorHint() {
-        runOnUIThread(() -> {
+        this.phoneNumberTextInput.post(() -> {
             final String errorMessage = getString(R.string.phone_error);
-            phoneNumberTextInput.setError(errorMessage);
+            this.phoneNumberTextInput.setError(errorMessage);
         });
     }
 
     private void switchToNextFragment() {
-        runOnUIThread(() -> {
+        new Handler(Looper.getMainLooper()).post(() -> {
             this.nextButton.setVisibility(View.INVISIBLE);
             this.viewModel.switchTo(CodeFragment.class);
         });
-    }
-
-    private void runOnUIThread(Runnable runnable) {
-        new Handler(Looper.getMainLooper()).post(runnable);
     }
 }

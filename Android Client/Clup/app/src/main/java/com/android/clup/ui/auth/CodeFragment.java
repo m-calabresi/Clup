@@ -154,26 +154,22 @@ public class CodeFragment extends Fragment {
     }
 
     private void enableRetryButton() {
-        runOnUIThread(() -> this.retryButton.setEnabled(true));
+        this.retryButton.post(() -> this.retryButton.setEnabled(true));
     }
 
     private void showErrorHint() {
-        runOnUIThread(() -> {
+        this.codeInputLayout.post(() -> {
             final String errorMessage = getString(R.string.code_error);
             this.codeInputLayout.setError(errorMessage);
         });
     }
 
     private void switchToNextFragment() {
-        runOnUIThread(() -> {
+        new Handler(Looper.getMainLooper()).post(() -> {
             this.verifyButton.setVisibility(View.INVISIBLE);
             this.viewModel.switchTo(SuccessFragment.class);
 
             // TODO after this, username, phoneNumber and locale stored in viewModel will be lost, consider saving to local/cloud storage
         });
-    }
-
-    private void runOnUIThread(Runnable runnable) {
-        new Handler(Looper.getMainLooper()).post(runnable);
     }
 }

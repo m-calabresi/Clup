@@ -44,7 +44,8 @@ public class MainViewModel extends ViewModel {
         this.status = status;
     }
 
-    public void getQrCode(final int onColor, final int offColor, @NonNull final Callback<Bitmap> callback) {
+    @SuppressWarnings("unchecked")
+    public void getQrCode(final int onColor, final int offColor, @NonNull final Callback callback) {
         if (this.username == null || this.hour == null || this.status == null)
             throw new InvalidParameterException("Some parameters are null or empty, did you call 'setUserData'?");
 

@@ -1,17 +1,21 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- BASE APPLICATION THEME -->
     <style name="AppTheme.Clup" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/lime_500</item>
-        <item name="colorPrimaryDark">@color/lime_500</item>
+        <item name="colorPrimaryDark">@color/gray_900</item>
         <item name="colorPrimaryVariant">@color/gray_900</item>
         <item name="colorOnPrimary">@color/gray_900</item>
 
-        <item name="colorSecondary">@color/unknown</item>
+        <item name="colorSecondary">@color/gray_900</item>
         <item name="colorSecondaryVariant">@color/unknown</item>
-        <item name="colorOnSecondary">@color/unknown</item>
+        <item name="colorOnSecondary">@color/white</item>
+    </style>
 
+    <!-- MAIN ACTIVITY THEME -->
+    <style name="AppTheme.Clup.Main" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:statusBarColor">?android:colorBackground</item>
 
@@ -20,10 +24,19 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- SPLASH SCREEN THEME -->
-
-    <style name="AppTheme.Clup.SplashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <!-- MAP ACTIVITY THEME -->
+    <style name="AppTheme.Clup.Map" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- SPLASH SCREEN THEME -->
+    <style name="AppTheme.Clup.Splash" parent="AppTheme.Clup">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:statusBarColor">?android:colorBackground</item>
 
@@ -33,8 +46,17 @@
     </style>
 
     <!-- BUTTON FINAL THEMES -->
-
     <style name="FilledRoundButton" parent="@style/AppTheme.Clup.MaterialRoundedButton">
         <item name="rippleColor">@color/gray_800</item>
+    </style>
+
+    <!-- ALERT DIALOG THEME -->
+    <style name="AppTheme.RoundedAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/lime_500</item>
+        <item name="colorAccent">@color/lime_500</item>
+        <item name="cornerSize">@dimen/alert_dialog_corner_radius</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">
+            @dimen/alert_dialog_corner_radius
+        </item>
     </style>
 </resources>

@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.clup">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,24 +18,34 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.Clup"
+        android:theme="@style/AppTheme.Clup.Main"
         tools:ignore="AllowBackup">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".ui.MapActivity"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme.Clup.Map"/>
         <activity
             android:name=".ui.MainActivity"
-            android:enabled="false"
-            android:theme="@style/AppTheme.Clup.SplashScreenTheme">
+            android:enabled="true"
+            android:theme="@style/AppTheme.Clup.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- TODO BEFORE_FINAL_BUILD change enabled="true" in AuthActivity and enabled="false" in MainActivity -->
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:enabled="true"
-            android:theme="@style/AppTheme.Clup.SplashScreenTheme"
+            android:enabled="false"
+            android:theme="@style/AppTheme.Clup.Splash"
             android:windowSoftInputMode="stateVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

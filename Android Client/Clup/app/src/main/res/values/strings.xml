@@ -19,4 +19,6 @@
     <string name="array_item_light">Light</string>
     <string name="array_item_dark">Dark</string>
     <string name="array_item_system_default">System default</string>
+    <string name="title_activity_map">Map</string>
+    <string name="action_book">Book</string>
 </resources>

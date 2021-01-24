@@ -48,7 +48,7 @@
 
     </style>
 
-    <!-- BUTTON BASE THEMES -->
+    <!-- BUTTON BASE THEME -->
     <style name="AppTheme.Clup.MaterialRoundedButton" parent="@style/Widget.MaterialComponents.Button">
         <item name="cornerRadius">@dimen/rounded_button_corner_radius</item>
 
@@ -72,18 +72,18 @@
         <item name="fontFamily">@font/helvetica_neue_heavy</item>
     </style>
 
-    <!-- BUTTON FINAL THEMES -->
-    <style name="FilledRoundButton" parent="@style/AppTheme.Clup.MaterialRoundedButton">
+    <!-- BUTTON FINAL THEME -->
+    <style name="AppTheme.Clup.FilledRoundButton" parent="@style/AppTheme.Clup.MaterialRoundedButton">
         <item name="rippleColor">@color/white</item>
     </style>
 
-    <style name="OutlinedRoundButton" parent="AppTheme.Clup.MaterialOutlinedButton">
+    <style name="AppTheme.Clup.OutlinedRoundButton" parent="AppTheme.Clup.MaterialOutlinedButton">
         <item name="strokeColor">@color/outlined_material_round_button_stroke_color</item>
         <item name="android:textColor">@color/outlined_material_round_button_text_color</item>
     </style>
 
     <!-- ALERT DIALOG THEME -->
-    <style name="AppTheme.RoundedAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+    <style name="AppTheme.Clup.RoundedAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/lime_700</item>
         <item name="colorAccent">@color/lime_700</item>
         <item name="cornerSize">@dimen/alert_dialog_corner_radius</item>
@@ -92,7 +92,7 @@
         </item>
     </style>
 
-    <!-- TITLE TEXT VIEW THEMES -->
+    <!-- TITLE TEXT VIEW THEME -->
     <style name="AppTheme.Clup.TitleTextView" parent="Widget.MaterialComponents.TextView">
         <item name="paddingStart">@dimen/title_text_view_horizontal_padding</item>
         <item name="paddingEnd">@dimen/title_text_view_horizontal_padding</item>
@@ -104,7 +104,7 @@
         <item name="android:textSize">@dimen/title_text_view_text_size</item>
     </style>
 
-    <!-- SUBTITLE TEXT VIEW THEMES -->
+    <!-- SUBTITLE TEXT VIEW THEME -->
     <style name="AppTheme.Clup.SubtitleTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/helvetica_neue_light</item>
         <item name="android:textStyle">bold</item>

@@ -21,4 +21,7 @@
     <string name="array_item_system_default">System default</string>
     <string name="title_activity_map">Map</string>
     <string name="action_book">Book</string>
+    <string name="text_error_alert_message">To continue, enable your device location</string>
+    <string name="action_ok">OK</string>
+    <string name="location_error_text">Unable to find your location, try again</string>
 </resources>

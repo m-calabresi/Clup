@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayThemesAlertDialog(final int selectedPosition) {
-        new MaterialAlertDialogBuilder(this, R.style.AppTheme_RoundedAlertDialog)
+        new MaterialAlertDialogBuilder(this, R.style.AppTheme_Clup_RoundedAlertDialog)
                 .setTitle(R.string.title_theme_alert)
                 .setSingleChoiceItems(R.array.themes_array, selectedPosition, (dialog, which) -> {
                     final int mode = this.viewModel.mapToTheme(which);

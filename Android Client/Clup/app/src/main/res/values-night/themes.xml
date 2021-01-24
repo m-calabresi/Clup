@@ -45,13 +45,13 @@
         <item name="android:windowBackground">@drawable/splash_screen_background</item>
     </style>
 
-    <!-- BUTTON FINAL THEMES -->
-    <style name="FilledRoundButton" parent="@style/AppTheme.Clup.MaterialRoundedButton">
+    <!-- BUTTON FINAL THEME -->
+    <style name="AppTheme.Clup.FilledRoundButton" parent="@style/AppTheme.Clup.MaterialRoundedButton">
         <item name="rippleColor">@color/gray_800</item>
     </style>
 
     <!-- ALERT DIALOG THEME -->
-    <style name="AppTheme.RoundedAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+    <style name="AppTheme.Clup.RoundedAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/lime_500</item>
         <item name="colorAccent">@color/lime_500</item>
         <item name="cornerSize">@dimen/alert_dialog_corner_radius</item>

@@ -97,7 +97,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/next_button"
-            style="@style/FilledRoundButton"
+            style="@style/AppTheme.Clup.FilledRoundButton"
             android:layout_width="@dimen/rounded_button_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"

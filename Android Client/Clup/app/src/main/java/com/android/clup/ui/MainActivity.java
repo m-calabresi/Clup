@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         final ImageView imageView = findViewById(R.id.imageView);
-        final ProgressBar progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
+        //final ProgressBar progressBar = findViewById(R.id.progressBar);
+        //progressBar.setVisibility(View.GONE);
         final Button bookButton = findViewById(R.id.book_button);
         bookButton.setOnClickListener(bookButtonOnClickListener);
 

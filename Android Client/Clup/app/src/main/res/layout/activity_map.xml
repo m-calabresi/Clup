@@ -1,45 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_activity_map"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
 
-    <!-- fab margins are set programmatically, @see MapActivity#adjustMargins() -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|start"
-        android:clickable="true"
-        android:contentDescription="TODO"
-        android:focusable="true"
-        android:src="@drawable/ic_arrow_back"
-        app:fabSize="mini" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <!-- dummy textview used to prevent the bottom sheet
+    to overlap the statusbar when fully expanded -->
+    <TextView
+        android:id="@+id/pad_view"
+        style="@style/AppTheme.Clup.PadTextView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include layout="@layout/bottom_sheet_map" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/location_button"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/fab_margin_end"
-        android:layout_marginBottom="@dimen/fab_margin_bottom"
-        android:clickable="true"
-        android:contentDescription="TODO"
-        app:layout_anchorGravity="top|end"
-        app:layout_anchor="@+id/bottom_sheet_layout"
-        android:focusable="true"
-        app:srcCompat="@drawable/ic_location" />
+        android:visibility="gone" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/layout_activity_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- fab margins are set programmatically, @see MapActivity#adjustMargins() -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:clickable="true"
+            android:contentDescription="TODO"
+            android:focusable="true"
+            android:src="@drawable/ic_arrow_back"
+            app:fabSize="mini" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:padding="12dp"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="100dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/location_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fab_margin_end"
+            android:layout_marginBottom="@dimen/fab_margin_bottom"
+            android:clickable="true"
+            android:contentDescription="TODO"
+            android:focusable="true"
+            app:layout_anchor="@+id/recycler_view"
+            app:layout_anchorGravity="top|end"
+            app:srcCompat="@drawable/ic_location" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

@@ -50,6 +50,11 @@
         <item name="rippleColor">@color/gray_800</item>
     </style>
 
+    <!-- PAD TEXT VIEW THEME -->
+    <style name="AppTheme.Clup.PadTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:background">@color/gray_900</item>
+    </style>
+
     <!-- ALERT DIALOG THEME -->
     <style name="AppTheme.Clup.RoundedAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/lime_500</item>

@@ -44,14 +44,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
+            style="@style/AppTheme.Clup.BottomSheetRecyclerView"
+            android:paddingTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff"
             android:orientation="vertical"
-            android:padding="12dp"
-            app:behavior_hideable="false"
-            app:behavior_peekHeight="100dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+            android:overScrollMode="never" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/location_button"

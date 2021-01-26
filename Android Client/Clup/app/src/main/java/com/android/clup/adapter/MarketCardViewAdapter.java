@@ -9,59 +9,59 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
-import com.android.clup.model.Business;
+import com.android.clup.model.Market;
 import com.android.clup.viewmodel.MapViewModel;
 
 import java.util.List;
 
-public class BusinessCardViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MarketCardViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final MapViewModel viewModel;
-    private final List<Business> businesses;
+    private final List<Market> markets;
 
-    public static class BusinessViewHolder extends RecyclerView.ViewHolder {
+    public static class MarketViewHolder extends RecyclerView.ViewHolder {
         private final TextView nameTextView;
         private final TextView addressTextView;
 
-        public BusinessViewHolder(@NonNull final View v) {
+        public MarketViewHolder(@NonNull final View v) {
             super(v);
             this.nameTextView = v.findViewById(R.id.name_text_view);
             this.addressTextView = v.findViewById(R.id.address_text_view);
         }
     }
 
-    public BusinessCardViewAdapter(@NonNull final MapViewModel viewModel, @NonNull final List<Business> businesses) {
+    public MarketCardViewAdapter(@NonNull final MapViewModel viewModel, @NonNull final List<Market> markets) {
         super();
         this.viewModel = viewModel;
-        this.businesses = businesses;
+        this.markets = markets;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
         final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        final View cardView = layoutInflater.inflate(R.layout.item_business, parent, false);
+        final View cardView = layoutInflater.inflate(R.layout.item_market, parent, false);
 
-        return new BusinessViewHolder(cardView);
+        return new MarketViewHolder(cardView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-        final BusinessViewHolder viewHolder = (BusinessViewHolder) holder;
-        final Business business = this.businesses.get(position);
+        final MarketViewHolder viewHolder = (MarketViewHolder) holder;
+        final Market market = this.markets.get(position);
 
         viewHolder.nameTextView.post(() -> {
-            final String name = business.getName();
+            final String name = market.getName();
             viewHolder.nameTextView.setText(name);
         });
 
         viewHolder.addressTextView.post(() -> {
-            final String address = this.viewModel.getAddressByCoordinates(business.getCoordinates());
+            final String address = this.viewModel.getAddressByCoordinates(market.getCoordinates());
             viewHolder.addressTextView.setText(address);
         });
     }
 
     @Override
     public int getItemCount() {
-        return businesses.size();
+        return markets.size();
     }
 }

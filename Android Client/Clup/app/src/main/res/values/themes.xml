@@ -92,7 +92,7 @@
         </item>
     </style>
 
-    <!-- TITLE TEXT VIEW THEME -->
+    <!-- TITLE TEXT VIEW THEMES -->
     <style name="AppTheme.Clup.TitleTextView" parent="Widget.MaterialComponents.TextView">
         <item name="paddingStart">@dimen/title_text_view_horizontal_padding</item>
         <item name="paddingEnd">@dimen/title_text_view_horizontal_padding</item>
@@ -100,8 +100,26 @@
         <item name="android:fontFamily">@font/helvetica_neue_heavy</item>
 
         <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/title_color</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/title_text_view_text_size</item>
+    </style>
+
+    <style name="AppTheme.Clup.ItemTitleTextView" parent="AppTheme.Clup.TitleTextView">
+        <item name="android:textSize">@dimen/item_title_text_view_text_size</item>
+    </style>
+
+    <!-- SUBTITLE TEXT VIEW THEMES -->
+    <style name="AppTheme.Clup.SubtitleTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:fontFamily">@font/helvetica_neue_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+
+        <item name="android:textSize">@dimen/subtitle_text_view_text_size</item>
+    </style>
+
+    <style name="AppTheme.Clup.ItemSubtitleTextView" parent="AppTheme.Clup.SubtitleTextView">
+        <item name="android:textSize">@dimen/item_subtitle_text_view_text_size</item>
+        <item name="android:textAlignment">textStart</item>
     </style>
 
     <!-- PAD TEXT VIEW THEME -->
@@ -109,12 +127,24 @@
         <item name="android:background">@color/gray_legacy</item>
     </style>
 
-    <!-- SUBTITLE TEXT VIEW THEME -->
-    <style name="AppTheme.Clup.SubtitleTextView" parent="Widget.MaterialComponents.TextView">
-        <item name="android:fontFamily">@font/helvetica_neue_light</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textAlignment">center</item>
+    <!-- CARD VIEW ITEM THEME -->
+    <style name="AppTheme.Clup.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
 
-        <item name="android:textSize">@dimen/subtitle_text_view_text_size</item>
+        <item name="android:layout_margin">@dimen/card_view_margin</item>
+
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="rippleColor">@color/black_alpha_10</item>
+    </style>
+
+    <!-- RECYCLER VIEW CONTAINER THEME -->
+    <style name="AppTheme.Clup.BottomSheetRecyclerView">
+        <item name="android:background">@color/white</item>
+
+        <item name="behavior_hideable">false</item>
+        <item name="behavior_peekHeight">@dimen/peek_height</item>
+        <item name="layout_behavior">com.google.android.material.bottomsheet.BottomSheetBehavior
+        </item>
     </style>
 </resources>

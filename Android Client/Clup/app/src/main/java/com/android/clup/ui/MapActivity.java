@@ -12,20 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
-import com.android.clup.adapter.BusinessCardViewAdapter;
-import com.android.clup.model.AvailableDay;
-import com.android.clup.model.Business;
+import com.android.clup.adapter.MarketCardViewAdapter;
+import com.android.clup.model.Market;
 import com.android.clup.viewmodel.MapViewModel;
 import com.android.clup.viewmodel.MapViewModelFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,27 +81,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // dummy list
-        final LatLng coords1 = new LatLng(45.4659, 9.1914);
-        final LatLng coords2 = new LatLng(1122.1, 1245.2);
-
-        final AvailableDay availableDay1 = new AvailableDay("12-02-2020", Arrays.asList(12, 13, 14, 15));
-        final AvailableDay availableDay2 = new AvailableDay("13-02-2020", Arrays.asList(16, 17, 18, 19));
-        final AvailableDay availableDay3 = new AvailableDay("14-02-2020", Arrays.asList(15, 16, 17, 20));
-        final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay2, availableDay3);
-
-        final Business business1 = new Business("local shop", coords1, availableDays);
-        final Business business2 = new Business("supermarket", coords2, availableDays);
-
-        final List<Business> businesses = Arrays.asList(business1, business2, business1, business2, business1, business2, business1, business2, business1, business2);
-
-        final BusinessCardViewAdapter adapter = new BusinessCardViewAdapter(this.viewModel, businesses);
+        final List<Market> markets = this.viewModel.getMarkets();
+        final MarketCardViewAdapter adapter = new MarketCardViewAdapter(this.viewModel, markets);
         recyclerView.setAdapter(adapter);
 
         final BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(recyclerView);
         bottomSheetBehavior.setFitToContents(false);
         bottomSheetBehavior.setHalfExpandedRatio(MapViewModel.BOTTOM_SHEET_HALF_EXPANDED_RATIO);
         bottomSheetBehavior.addBottomSheetCallback(this.bottomSheetCallback);
+
+        //int peekHeight = getResources().getDimension(R.dimen.)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

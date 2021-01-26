@@ -20,6 +20,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModel;
 
 import com.android.clup.R;
+import com.android.clup.model.AvailableDay;
+import com.android.clup.model.Market;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,6 +31,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -204,7 +207,7 @@ public class MapViewModel extends ViewModel {
 
         // "address,\ncity, state" or "city, state" or "address\ncity" or "address,\nstate" or "address,\n" or "city," or "state" or ""
         String completeAddress = "";
-        completeAddress += !address.equals("") ? address + ",\n" : "";
+        completeAddress += !address.equals("") ? address + "\n" : "";
         completeAddress += !city.equals("") ? city + ", " : "";
         completeAddress += !state.equals("") ? state : "";
 
@@ -295,5 +298,26 @@ public class MapViewModel extends ViewModel {
      */
     public void hideView(@NonNull final View view) {
         view.post(() -> view.animate().scaleX(0).scaleY(0).setDuration(DEFAULT_ANIMATION_DURATION).start());
+    }
+
+    /**
+     * Return the list of shops to be displayed in the UI.
+     * TODO replace with API call
+     */
+    public List<Market> getMarkets() {
+        // dummy list
+        final LatLng coords1 = new LatLng(45.4659, 9.1914);
+        final LatLng coords2 = new LatLng(1122.1, 1245.2);
+
+        final AvailableDay availableDay1 = new AvailableDay("12-02-2020", Arrays.asList(12, 13, 14, 15));
+        final AvailableDay availableDay2 = new AvailableDay("13-02-2020", Arrays.asList(16, 17, 18, 19));
+        final AvailableDay availableDay3 = new AvailableDay("14-02-2020", Arrays.asList(15, 16, 17, 20));
+        final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay2, availableDay3);
+
+        final Market market1 = new Market("local shop", coords1, availableDays);
+        final Market market2 = new Market("supermarket", coords2, availableDays);
+
+        //return Arrays.asList(market1, market2, market1, market2, market1, market2, market1, market2, market1, market2);
+        return Arrays.asList(market1, market2, market1);
     }
 }

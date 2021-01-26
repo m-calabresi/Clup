@@ -9,6 +9,7 @@
     <color name="gray_800">#FF2A2A2A</color>
     <color name="gray_900">#FF111111</color>
     <color name="black">#FF000000</color>
+    <color name="black_alpha_10">#16000000</color>
     <color name="white">#FFFFFFFF</color>
 
     <color name="ic_check_color">@color/lime_700</color>
@@ -17,8 +18,6 @@
     <color name="outlined_button_text_color_disabled">@color/gray_400</color>
     <color name="outlined_button_stroke_color">@color/lime_700</color>
     <color name="outlined_button_stroke_color_disabled">@color/gray_400</color>
-
-    <color name="title_color">@color/black</color>
 
     <color name="splash_screen_logo_color">@color/gray_900</color>
     <color name="splash_screen_logo_background_color">@color/lime_500</color>

@@ -2,6 +2,7 @@ package com.android.clup.api;
 
 import androidx.annotation.NonNull;
 
+import com.android.clup.concurrent.Callback;
 import com.android.clup.concurrent.Result;
 
 import java.io.BufferedInputStream;
@@ -9,12 +10,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-class RemoteConnection {
-    private RemoteConnection(){
+public class RemoteConnection {
+    private static final String URL_TEST_CONNECTION = "http://clients3.google.com/generate_204";
+    private static final int DEFAULT_TIMEOUT_DURATION = 3000;
+
+    private RemoteConnection() {
 
     }
 
@@ -25,8 +32,8 @@ class RemoteConnection {
      * @return the response to the request sent.
      */
     @NonNull
-    static Result connect(@NonNull final String requestUrl) {
-        Result result;
+    static Result<String> connect(@NonNull final String requestUrl) {
+        Result<String> result;
         HttpURLConnection httpURLConnection = null;
         InputStream inputStream = null;
 
@@ -37,14 +44,14 @@ class RemoteConnection {
             result = new Result.Success<>(toString(inputStream));
         } catch (IOException e) {
             e.printStackTrace();
-            result = new Result.Error(e.getLocalizedMessage());
+            result = new Result.Error<>(e.getLocalizedMessage());
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    result = new Result.Error(e.getLocalizedMessage());
+                    result = new Result.Error<>(e.getLocalizedMessage());
                 }
             }
 
@@ -64,8 +71,8 @@ class RemoteConnection {
      * @return the response to the request sent.
      */
     @NonNull
-    public static Result postConnect(@NonNull final String requestUrl, @NonNull final String jsonPayload) {
-        Result result;
+    public static Result<String> postConnect(@NonNull final String requestUrl, @NonNull final String jsonPayload) {
+        Result<String> result;
         HttpURLConnection connection = null;
         InputStream inputStream = null;
         OutputStream outputStream = null;
@@ -87,14 +94,14 @@ class RemoteConnection {
             result = new Result.Success<>(toString(inputStream));
         } catch (IOException e) {
             e.printStackTrace();
-            result = new Result.Error(e.getLocalizedMessage());
+            result = new Result.Error<>(e.getLocalizedMessage());
         } finally {
             if (outputStream != null) {
                 try {
                     outputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    result = new Result.Error(e.getLocalizedMessage());
+                    result = new Result.Error<>(e.getLocalizedMessage());
                 }
             }
 
@@ -103,7 +110,7 @@ class RemoteConnection {
                     inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    result = new Result.Error(e.getLocalizedMessage());
+                    result = new Result.Error<>(e.getLocalizedMessage());
                 }
             }
 
@@ -113,6 +120,9 @@ class RemoteConnection {
         return result;
     }
 
+    /**
+     * Returns the String representation of the given InputStream.
+     */
     @NonNull
     private static String toString(@NonNull final InputStream inputStream) {
         final Scanner s = new Scanner(inputStream).useDelimiter("\\A");
@@ -120,5 +130,35 @@ class RemoteConnection {
 
         s.close();
         return result;
+    }
+
+    /**
+     * Returns {@code true} if the devise is able to establish a remote https connection,
+     * {@code false} otherwise.
+     * This can be used to test whether the device is connected to the Internet.
+     */
+    public static void hasInternetAccess(@NonNull final Callback<Boolean> callback) {
+        final ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            HttpURLConnection connection = null;
+            Result<Boolean> result;
+            try {
+                HttpURLConnection.setFollowRedirects(false);
+                connection = (HttpURLConnection) (new URL(URL_TEST_CONNECTION).openConnection());
+                connection.setReadTimeout(DEFAULT_TIMEOUT_DURATION);
+                connection.setConnectTimeout(DEFAULT_TIMEOUT_DURATION);
+                result = new Result.Success<>(connection.getResponseCode() == 204 && connection.getContentLength() == 0);
+            } catch (SocketTimeoutException e) {
+                result = new Result.Success<>(false);
+            } catch (IOException e) {
+                e.printStackTrace();
+                result = new Result.Error<>(e.getLocalizedMessage());
+            } finally {
+                if (connection != null)
+                    connection.disconnect();
+            }
+            callback.onComplete(result);
+        });
+        executor.shutdown();
     }
 }

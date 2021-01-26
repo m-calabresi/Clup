@@ -9,9 +9,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModel;
 
+import com.android.clup.R;
 import com.android.clup.api.QueueService;
 import com.android.clup.concurrent.Callback;
 import com.android.clup.concurrent.Result;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import net.glxn.qrgen.android.QRCode;
 
@@ -38,12 +40,19 @@ public class MainViewModel extends ViewModel {
         this.queueService = new QueueService();
     }
 
+    /**
+     * Sets the user data that will be used to create the corresponding qr-code.
+     */
     public void setUserData(@NonNull final String username, @NonNull final String hour, @NonNull final String status) {
         this.username = username;
         this.hour = hour;
         this.status = status;
     }
 
+    /**
+     * Request asynchronously the data used to create the corresponding qr-code and notify the user
+     * when a valid qr-code has been created.
+     */
     @SuppressWarnings("unchecked")
     public void getQrCode(final int onColor, final int offColor, @NonNull final Callback callback) {
         if (this.username == null || this.hour == null || this.status == null)
@@ -68,11 +77,25 @@ public class MainViewModel extends ViewModel {
         callback.onComplete(new Result.Success<>(cachedQrCode));
     }
 
+    /**
+     * Generates the qr-code associated to the given uuid using the specified color-scheme.
+     */
     private Bitmap generateQRCode(@NonNull final String uuid, final int onColor, final int offColor) {
         // create qr-code bitmap & return it
         return QRCode.from(uuid).withSize(QR_CODE_SIZE, QR_CODE_SIZE).withColor(onColor, offColor).bitmap();
     }
 
+    /**
+     * Sets the default theme for the application.
+     */
+    public void setDefaultTheme(@NonNull final Context context) {
+        final int mode = getThemePreference(context);
+        AppCompatDelegate.setDefaultNightMode(mode);
+    }
+
+    /**
+     * Stores the given theme-preference.
+     */
     public void setThemePreference(@NonNull final Context context, final int mode) {
         this.themeValue = mode;
 
@@ -84,7 +107,10 @@ public class MainViewModel extends ViewModel {
         AppCompatDelegate.setDefaultNightMode(mode);
     }
 
-    public int getThemePreference(@NonNull final Context context) {
+    /**
+     * Returns the stored theme.preference.
+     */
+    private int getThemePreference(@NonNull final Context context) {
         if (this.themeValue == null) {
             final SharedPreferences preferences = context.getSharedPreferences(PREF_THEME_NAME, Context.MODE_PRIVATE);
             this.themeValue = preferences.getInt(PREF_THEME_NAME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
@@ -92,7 +118,10 @@ public class MainViewModel extends ViewModel {
         return this.themeValue;
     }
 
-    public int mapToPosition(final int themeValue) {
+    /**
+     * Maps a theme-preference value to the corresponding position in the AlertDialog.
+     */
+    private int mapToPosition(final int themeValue) {
         /*  -1 -> 2
          *   1 -> 0
          *   2 -> 1 */
@@ -101,7 +130,10 @@ public class MainViewModel extends ViewModel {
         return themeValue - 1;
     }
 
-    public int mapToTheme(final int position) {
+    /**
+     * Maps the position in the AlertDialog to the corresponding theme-preference.
+     */
+    private int mapToTheme(final int position) {
         switch (position) {
             case 0:
                 return AppCompatDelegate.MODE_NIGHT_NO;
@@ -110,5 +142,22 @@ public class MainViewModel extends ViewModel {
             default:
                 return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
         }
+    }
+
+    /**
+     * Displays the AlertDialog through which the user can choose the desired theme.
+     */
+    public void displayThemesAlertDialog(@NonNull final Context context) {
+        final int selectedPosition = mapToPosition(getThemePreference(context));
+
+        new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
+                .setTitle(R.string.title_theme_alert)
+                .setSingleChoiceItems(R.array.themes_array, selectedPosition, (dialog, which) -> {
+                    final int mode = mapToTheme(which);
+                    setThemePreference(context, mode);
+                    dialog.dismiss();
+                })
+                .create()
+                .show();
     }
 }

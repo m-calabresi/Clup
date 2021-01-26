@@ -6,18 +6,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
 import com.android.clup.viewmodel.MainViewModel;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
@@ -34,15 +30,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
-        // sets default theme
-        final int mode = this.viewModel.getThemePreference(this);
-        AppCompatDelegate.setDefaultNightMode(mode);
+        this.viewModel.setDefaultTheme(this);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ImageView imageView = findViewById(R.id.imageView);
+        //final ImageView imageView = findViewById(R.id.imageView);
         //final ProgressBar progressBar = findViewById(R.id.progressBar);
         //progressBar.setVisibility(View.GONE);
         final Button bookButton = findViewById(R.id.book_button);
@@ -81,22 +74,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
         if (item.getItemId() == R.id.action_settings_theme) {
-            final int itemPosition = this.viewModel.mapToPosition(this.viewModel.getThemePreference(this));
-            displayThemesAlertDialog(itemPosition);
+            this.viewModel.displayThemesAlertDialog(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void displayThemesAlertDialog(final int selectedPosition) {
-        new MaterialAlertDialogBuilder(this, R.style.AppTheme_Clup_RoundedAlertDialog)
-                .setTitle(R.string.title_theme_alert)
-                .setSingleChoiceItems(R.array.themes_array, selectedPosition, (dialog, which) -> {
-                    final int mode = this.viewModel.mapToTheme(which);
-                    this.viewModel.setThemePreference(this, mode);
-                    dialog.dismiss();
-                })
-                .create()
-                .show();
     }
 }

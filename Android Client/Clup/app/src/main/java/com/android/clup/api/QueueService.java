@@ -29,6 +29,15 @@ public class QueueService {
         this.executor = Executors.newSingleThreadExecutor();
     }
 
+    /**
+     * Returns the UUID code associated to the Queue in which the user is being added.
+     *
+     * @param username the complete name of the user to insert in the queue.
+     * @param hour     the time at which the user can access the queue
+     * @param status   TODO
+     * @param callback the callback through which the caller will be notified once the queue
+     *                 procedure is ended.
+     */
     @SuppressWarnings("unchecked")
     public void getQueueUUID(@NonNull final String username, @NonNull final String hour,
                              @NonNull final String status, @NonNull final Callback callback) {
@@ -52,6 +61,14 @@ public class QueueService {
         });
     }
 
+    /**
+     * Returns a Json String representation of the given information.
+     *
+     * @param username the complete name of the user
+     * @param hour     the time at which the user can access the queue
+     * @param status   TODO
+     * @return a Json string representing the encoding of the given information.
+     */
     @NonNull
     private static String toJsonString(@NonNull final String username, @NonNull final String hour,
                                        @NonNull final String status) {
@@ -67,6 +84,18 @@ public class QueueService {
         }
     }
 
+    /**
+     * Checks whether the requests is legit and, in case, extracts the UUID code from the given
+     * {@param jsonResponse} and returns it.
+     *
+     * @param jsonResponse the Json string containing the data to operate on.
+     * @param username     the complete name of the user, used to legitimate the request.
+     * @param hour         the hour at which the user can access the queue, used to legitimate the request.
+     * @param status       TODO, used to legitimate the request.
+     * @return the UUID code associate to the given response.
+     * @throws InvalidResponseException if there is any mismatch between the data extracted from the
+     *                                  response and the data provided.
+     */
     @NonNull
     private String getUuid(@NonNull final String jsonResponse, @NonNull final String username,
                            @NonNull final String hour, @NonNull final String status)

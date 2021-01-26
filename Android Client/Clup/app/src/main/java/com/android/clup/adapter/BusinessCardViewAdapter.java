@@ -1,8 +1,5 @@
 package com.android.clup.adapter;
 
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,30 +10,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
 import com.android.clup.model.Business;
+import com.android.clup.viewmodel.MapViewModel;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 public class BusinessCardViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final MapViewModel viewModel;
     private final List<Business> businesses;
-    private final Geocoder geocoder;
 
     public static class BusinessViewHolder extends RecyclerView.ViewHolder {
         private final TextView nameTextView;
-        private final TextView addresseTextView;
+        private final TextView addressTextView;
 
         public BusinessViewHolder(@NonNull final View v) {
             super(v);
             this.nameTextView = v.findViewById(R.id.name_text_view);
-            this.addresseTextView = v.findViewById(R.id.address_text_view);
+            this.addressTextView = v.findViewById(R.id.address_text_view);
         }
     }
 
-    public BusinessCardViewAdapter(@NonNull final Context context, @NonNull final List<Business> businesses) {
+    public BusinessCardViewAdapter(@NonNull final MapViewModel viewModel, @NonNull final List<Business> businesses) {
         super();
+        this.viewModel = viewModel;
         this.businesses = businesses;
-        this.geocoder = new Geocoder(context, Locale.getDefault());
     }
 
     @NonNull
@@ -58,33 +54,9 @@ public class BusinessCardViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             viewHolder.nameTextView.setText(name);
         });
 
-        viewHolder.addresseTextView.post(() -> {
-            String address = "";
-            String city = "";
-            String state = "";
-
-            try {
-                final List<Address> addresses = this.geocoder.
-                        getFromLocation(business.getCoordinates().latitude,
-                                business.getCoordinates().longitude,
-                                1);
-                if (addresses != null && addresses.size() > 0) {
-                    address = addresses.get(0).getAddressLine(0);
-                    city = addresses.get(0).getLocality();
-                    state = addresses.get(0).getAdminArea();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            String completeAddress = "";
-            completeAddress += !address.equals("") ? address + ",\n" : "";
-            completeAddress += !city.equals("") ? city + ", " : "";
-            completeAddress += !state.equals("") ? state : "";
-            // if no address, city and state provided, dummy string
-            completeAddress = !completeAddress.equals("") ? completeAddress : "Unknown location"; // TODO replace with resource string
-
-            viewHolder.addresseTextView.setText(completeAddress);
+        viewHolder.addressTextView.post(() -> {
+            final String address = this.viewModel.getAddressByCoordinates(business.getCoordinates());
+            viewHolder.addressTextView.setText(address);
         });
     }
 

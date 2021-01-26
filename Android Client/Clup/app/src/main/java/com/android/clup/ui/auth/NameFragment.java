@@ -32,8 +32,14 @@ public class NameFragment extends Fragment {
     private final View.OnClickListener nextButtonClickListener = view -> {
         final String username = Objects.requireNonNull(this.nameEditText.getText()).toString();
 
-        this.viewModel.setUsername(username);
-        this.viewModel.switchTo(PhoneFragment.class);
+        // check whether the user inserted at least one name and one surname separated by a space
+        if (this.viewModel.isValidUsername(username)) {
+            this.viewModel.setUsername(username);
+            this.viewModel.switchTo(PhoneFragment.class);
+        } else {
+            final String errorMessage = getString(R.string.error_fullname);
+            this.nameInputLayout.setError(errorMessage);
+        }
     };
 
     @NonNull

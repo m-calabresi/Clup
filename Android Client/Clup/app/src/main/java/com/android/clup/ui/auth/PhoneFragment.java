@@ -38,23 +38,35 @@ public class PhoneFragment extends Fragment {
         this.viewModel.hideSoftInput(requireActivity());
         this.viewModel.showProgressBar(this.nextButton);
 
-        final String prefix = Objects.requireNonNull(this.prefixEditText.getText()).toString();
-        final String phoneNumber = Objects.requireNonNull(this.phoneNumberEditText.getText()).toString();
-        this.viewModel.setPhoneNumber(prefix + phoneNumber);
+        this.viewModel.isConnectionAvailable(connectionResult -> {
+            if (connectionResult instanceof Result.Success) {
+                final boolean connectionAvailable = ((Result.Success<Boolean>) connectionResult).data;
 
-        final String locale = this.viewModel.toLocale(Integer.parseInt(prefix));
-        this.viewModel.setLocale(locale);
+                if (connectionAvailable) {
+                    final String prefix = Objects.requireNonNull(this.prefixEditText.getText()).toString();
+                    final String phoneNumber = Objects.requireNonNull(this.phoneNumberEditText.getText()).toString();
+                    this.viewModel.setPhoneNumber(prefix + phoneNumber);
 
-        this.viewModel.startVerify(result -> {
-            this.viewModel.hideProgressBar(this.nextButton, getString(R.string.action_next));
+                    final String locale = this.viewModel.toLocale(Integer.parseInt(prefix));
+                    this.viewModel.setLocale(locale);
 
-            if (result instanceof Result.Success) {
-                // final String message = ((Result.Success<String>) result).data;
-                switchToNextFragment();
+                    this.viewModel.startVerify(verificationResult -> {
+                        this.viewModel.hideProgressBar(this.nextButton, getString(R.string.action_next));
+
+                        if (verificationResult instanceof Result.Success) {
+                            switchToNextFragment();
+                        } else {
+                            showErrorHint();
+                            this.viewModel.showSoftInput(requireActivity(), this.phoneNumberEditText);
+                        }
+                    });
+                } else {
+                    this.viewModel.displayConnectionErrorDialog(requireContext());
+                    this.viewModel.hideProgressBar(this.nextButton, getString(R.string.action_next));
+                }
             } else {
-                // final String error = ((Result.Error<String>) result).message;
-                showErrorHint();
-                this.viewModel.showSoftInput(requireActivity(), this.phoneNumberEditText);
+                this.viewModel.displayConnectionErrorDialog(requireContext());
+                this.viewModel.hideProgressBar(this.nextButton, getString(R.string.action_next));
             }
         });
     };

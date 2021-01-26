@@ -18,12 +18,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.android.clup.R;
+import com.android.clup.api.RemoteConnection;
 import com.android.clup.api.SMSAuthService;
 import com.android.clup.concurrent.Callback;
 import com.github.razir.progressbutton.ButtonTextAnimatorExtensionsKt;
 import com.github.razir.progressbutton.DrawableButton;
 import com.github.razir.progressbutton.DrawableButtonExtensionsKt;
 import com.github.razir.progressbutton.ProgressButtonHolderKt;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import kotlin.Unit;
@@ -66,6 +68,7 @@ public class AuthViewModel extends ViewModel {
         this.phoneNumberStatus = new MutableLiveData<>(false);
         this.phoneFragmentButtonVisibilityStatus = new MediatorLiveData<>();
 
+        // button in PhoneFragment should be visible only if both prefix and phone-number fields are filled
         this.phoneFragmentButtonVisibilityStatus.addSource(this.prefixStatus, status -> {
             if (this.phoneNumberStatus.getValue() != null)
                 this.phoneFragmentButtonVisibilityStatus.setValue(status && this.phoneNumberStatus.getValue());
@@ -78,11 +81,17 @@ public class AuthViewModel extends ViewModel {
         this.codeFragmentButtonVisibilityStatus = new MutableLiveData<>(false);
     }
 
+    /**
+     * Returns the LiveData that observes the next fragment change.
+     */
     @NonNull
     public MutableLiveData<Class<? extends Fragment>> getNextFragmentLiveData() {
         return this.nextFragmentLiveData;
     }
 
+    /**
+     * Switch from the current Fragment to the given one.
+     */
     public void switchTo(@NonNull final Class<? extends Fragment> fragmentClass) {
         this.nextFragmentLiveData.setValue(fragmentClass);
     }
@@ -109,6 +118,16 @@ public class AuthViewModel extends ViewModel {
         this.locale = locale;
     }
 
+    /**
+     * Check the given username to validate it.
+     */
+    public boolean isValidUsername(@NonNull final String username) {
+        return username.trim().contains(" ");
+    }
+
+    /**
+     * Returns the locale associated to the given country-code.
+     */
     @NonNull
     public String toLocale(int countryCode) {
         String locale = PhoneNumberUtil.getInstance().getRegionCodeForCountryCode(countryCode);
@@ -123,38 +142,82 @@ public class AuthViewModel extends ViewModel {
         return this.locale;
     }
 
+    /**
+     * Whether the button in NameFragment should be visible or not.
+     */
     public void setNameFragmentButtonVisibilityStatus(final boolean status) {
         this.nameFragmentButtonVisibilityStatus.setValue(status);
     }
 
+    /**
+     * Get the NameFragment button visibility.
+     */
     @NonNull
     public MutableLiveData<Boolean> getNameFragmentButtonVisibilityStatus() {
         return this.nameFragmentButtonVisibilityStatus;
     }
 
+    /**
+     * Whether the prefix field in PhoneFragment is filled or not.
+     */
     public void setPrefixStatus(final boolean status) {
         this.prefixStatus.setValue(status);
     }
 
+    /**
+     * Whether the phone-number field in PhoneFragment is filled or not.
+     */
     public void setPhoneNumberStatus(final boolean status) {
         this.phoneNumberStatus.setValue(status);
     }
 
+    /**
+     * Get the PhoneFragment button visibility.
+     */
     @NonNull
     public MediatorLiveData<Boolean> getPhoneFragmentButtonVisibilityStatus() {
         return this.phoneFragmentButtonVisibilityStatus;
     }
 
+    /**
+     * Whether the button in CodeFragment should be visible or not.
+     */
     public void setCodeFragmentButtonVisibilityStatus(final boolean status) {
         this.codeFragmentButtonVisibilityStatus.setValue(status);
     }
 
+    /**
+     * Get the CodeFragment button visibility.
+     */
     @NonNull
     public MutableLiveData<Boolean> getCodeFragmentButtonVisibilityStatus() {
         return this.codeFragmentButtonVisibilityStatus;
     }
 
-    public void startVerify(@NonNull final Callback callback) {
+    /**
+     * Check whether the device has access to the Internet or not.
+     */
+    public void isConnectionAvailable(@NonNull final Callback<Boolean> callback) {
+        RemoteConnection.hasInternetAccess(callback);
+    }
+
+    public void displayConnectionErrorDialog(@NonNull final Context context) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
+                    .setTitle(R.string.title_connection_error_alert_message)
+                    .setMessage(R.string.text_connection_error_alert_message)
+                    .setPositiveButton(R.string.action_ok, null)
+                    .create()
+                    .show();
+        });
+    }
+
+    /**
+     * Start the phone-number verification procedure, notify the user once it has finished.
+     * After this method has been called, if the procedure is successful, the authentication SMS
+     * should appear on the user device.
+     */
+    public void startVerify(@NonNull final Callback<String> callback) {
         if (this.phoneNumber == null || this.phoneNumber.isEmpty())
             throw new NullPointerException("'phoneNumber' is null or empty, did you call 'setPhoneNumber'?");
         if (this.locale == null || this.locale.isEmpty())
@@ -163,10 +226,18 @@ public class AuthViewModel extends ViewModel {
         authService.startVerify(this.phoneNumber, this.locale, callback);
     }
 
-    public void checkVerify(@NonNull final String code, @NonNull final Callback callback) {
+    /**
+     * End the phone-number verification procedure, notify the user once it has finished.
+     * After this method has been called, if the procedure is successful, the user device should
+     * be correctly authenticated.
+     */
+    public void checkVerify(@NonNull final String code, @NonNull final Callback<String> callback) {
         this.authService.checkVerify(this.phoneNumber, code, callback);
     }
 
+    /**
+     * Returns the country-code associated to the user device.
+     */
     public int getDefaultCountryCode(@NonNull final Activity activity) {
         String locale = activity.getResources().getConfiguration().locale.getCountry();
 
@@ -176,12 +247,17 @@ public class AuthViewModel extends ViewModel {
         return PhoneNumberUtil.getInstance().getCountryCodeForRegion(locale);
     }
 
+    /**
+     * Remove all spaces and non-numerical characters from the given phone-number.
+     */
     @NonNull
     private String clearNumber(@NonNull final String phoneNumber) {
-        // remove all spaces and non-numerical characters
         return phoneNumber.replaceAll("[^\\d]", "");
     }
 
+    /**
+     * Handle the visibility of the given component.
+     */
     public void handleInvisible(@NonNull final View view, boolean visibility) {
         if (visibility) {
             if (view.getVisibility() != View.VISIBLE)
@@ -192,6 +268,9 @@ public class AuthViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Handle the visibility of the given component. If necessary the view is destroyed.
+     */
     public void handleGone(@NonNull final View view, boolean visibility) {
         if (visibility) {
             if (view.getVisibility() != View.VISIBLE)
@@ -202,6 +281,9 @@ public class AuthViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Hide the soft-input from the user device.
+     */
     public void hideSoftInput(@NonNull final Activity activity) {
         // if keyboard is still open
         if (activity.getCurrentFocus() != null) {
@@ -210,6 +292,9 @@ public class AuthViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Shows the soft-input on the user device.
+     */
     public void showSoftInput(@NonNull final Activity activity, @NonNull final View view) {
         view.post(() -> {
             final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -218,11 +303,19 @@ public class AuthViewModel extends ViewModel {
         });
     }
 
+    /**
+     * Enables the given button to expose a progress bar animation upon clicked.
+     * Must be called before {@link #showProgressBar(Button)}
+     */
     public void enableProgressButton(@NonNull final Button button, @NonNull final LifecycleOwner lifecycleOwner) {
         ProgressButtonHolderKt.bindProgressButton(lifecycleOwner, button);
         ButtonTextAnimatorExtensionsKt.attachTextChangeAnimator(button);
     }
 
+    /**
+     * Shows the progress bar animation on the given button upon clicked.
+     * Must be called after {@link #enableProgressButton(Button, LifecycleOwner)}
+     */
     public void showProgressBar(@NonNull final Button button) {
         button.setClickable(false);
 
@@ -238,6 +331,10 @@ public class AuthViewModel extends ViewModel {
         });
     }
 
+    /**
+     * Ends the progress bar animation on the given device.
+     * Must be called after {@link #showProgressBar(Button)}
+     */
     public void hideProgressBar(@NonNull final Button button, @NonNull final String newButtonText) {
         // stop spinning animation
         new Handler(Looper.getMainLooper()).post(() -> {

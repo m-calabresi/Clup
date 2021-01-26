@@ -21,7 +21,10 @@
     <string name="array_item_system_default">System default</string>
     <string name="title_activity_map">Map</string>
     <string name="action_book">Book</string>
-    <string name="text_error_alert_message">To continue, enable your device location</string>
+    <string name="text_location_error_alert_message">To continue, enable your device location</string>
     <string name="action_ok">OK</string>
     <string name="location_error_text">Unable to find your location, try again</string>
+    <string name="error_fullname">Your full name is required</string>
+    <string name="text_connection_error_alert_message">Check your internet connection and try again</string>
+    <string name="title_connection_error_alert_message">You are offline</string>
 </resources>

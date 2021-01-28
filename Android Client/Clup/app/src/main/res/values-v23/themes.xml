@@ -26,6 +26,19 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <!-- SELECT ACTIVITY THEME -->
+    <style name="AppTheme.Clup.Select" parent="AppTheme.Clup">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/lime_500</item>
+
+        <item name="android:navigationBarColor">@color/gray_legacy</item>
+
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
     <!-- SPLASH SCREEN THEME -->
     <style name="AppTheme.Clup.Splash" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -37,6 +50,8 @@
         <item name="android:navigationBarColor">?android:colorBackground</item>
 
         <item name="android:windowBackground">@drawable/splash_screen_background</item>
+
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <!-- PAD TEXT VIEW THEME -->

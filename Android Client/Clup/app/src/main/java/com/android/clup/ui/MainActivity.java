@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
 import com.android.clup.viewmodel.MainViewModel;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
@@ -32,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
         this.viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         this.viewModel.setDefaultTheme(this);
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
         //final ImageView imageView = findViewById(R.id.imageView);
         //final ProgressBar progressBar = findViewById(R.id.progressBar);
         //progressBar.setVisibility(View.GONE);
-        final Button bookButton = findViewById(R.id.book_button);
+        final ExtendedFloatingActionButton bookButton = findViewById(R.id.book_button);
         bookButton.setOnClickListener(bookButtonOnClickListener);
 
         // retrieved somewhere

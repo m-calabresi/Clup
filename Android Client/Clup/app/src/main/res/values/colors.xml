@@ -1,30 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="lime_200_alpha_65">#A6CAFFE7</color>
     <color name="lime_200">#FFCAFFE7</color>
     <color name="lime_500">#FF97FFCF</color>
     <color name="lime_700">#FF64FFB7</color>
+    <color name="lime_900">#FF3A956B</color>
     <color name="gray_legacy">#FFBCBFC0</color>
     <color name="gray_400">#FFBBBBBB</color>
     <color name="gray_700">#FF545454</color>
     <color name="gray_800">#FF2A2A2A</color>
     <color name="gray_900">#FF111111</color>
     <color name="black">#FF000000</color>
+    <color name="black_alpha_05">#08000000</color>
     <color name="black_alpha_10">#16000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_alpha_10">#1FFFFFFF</color>
+    <color name="white_alpha_20">#33FFFFFF</color>
+    <color name="white_alpha_80">#CCFFFFFF</color>
+    <color name="white_alpha_85">#75FFFFFF</color>
+    <color name="white_alpha_90">#10FFFFFF</color>
 
     <color name="ic_check_color">@color/lime_700</color>
 
+    <!-- button colors -->
     <color name="outlined_button_text_color">@color/gray_900</color>
     <color name="outlined_button_text_color_disabled">@color/gray_400</color>
     <color name="outlined_button_stroke_color">@color/lime_700</color>
     <color name="outlined_button_stroke_color_disabled">@color/gray_400</color>
 
+    <!-- splash screen colors -->
     <color name="splash_screen_logo_color">@color/gray_900</color>
     <color name="splash_screen_logo_background_color">@color/lime_500</color>
     <color name="splash_screen_background_color">@color/white</color>
 
+    <!-- qr-code colors -->
     <color name="qr_code_on_color">@color/black</color>
     <color name="qr_code_off_color">@color/white</color>
 
-    <color name="unknown">@android:color/holo_blue_bright</color> <!-- TODO remove this -->
+    <!-- chip colors -->
+    <color name="selected_background_color">@color/lime_200</color>
+    <color name="normal_background_color">@color/black_alpha_05</color>
+
+    <color name="selected_text_color">@color/lime_900</color>
+    <color name="normal_text_color">@color/gray_legacy</color>
+
+    <!-- TODO remove this -->
+    <color name="unknown">@android:color/holo_blue_bright</color>
 </resources>

@@ -202,14 +202,13 @@ public class AuthViewModel extends ViewModel {
     }
 
     public void displayConnectionErrorDialog(@NonNull final Context context) {
-        new Handler(Looper.getMainLooper()).post(() -> {
-            new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
-                    .setTitle(R.string.title_connection_error_alert_message)
-                    .setMessage(R.string.text_connection_error_alert_message)
-                    .setPositiveButton(R.string.action_ok, null)
-                    .create()
-                    .show();
-        });
+        new Handler(Looper.getMainLooper()).post(() ->
+                new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
+                        .setTitle(R.string.title_connection_error_alert_message)
+                        .setMessage(R.string.text_connection_error_alert_message)
+                        .setPositiveButton(R.string.action_ok, null)
+                        .create()
+                        .show());
     }
 
     /**
@@ -259,26 +258,20 @@ public class AuthViewModel extends ViewModel {
      * Handle the visibility of the given component.
      */
     public void handleInvisible(@NonNull final View view, boolean visibility) {
-        if (visibility) {
-            if (view.getVisibility() != View.VISIBLE)
-                view.setVisibility(View.VISIBLE);
-        } else {
-            if (view.getVisibility() != View.INVISIBLE)
-                view.setVisibility(View.INVISIBLE);
-        }
+        if (visibility)
+            view.setVisibility(View.VISIBLE);
+        else
+            view.setVisibility(View.INVISIBLE);
     }
 
     /**
      * Handle the visibility of the given component. If necessary the view is destroyed.
      */
     public void handleGone(@NonNull final View view, boolean visibility) {
-        if (visibility) {
-            if (view.getVisibility() != View.VISIBLE)
-                view.setVisibility(View.VISIBLE);
-        } else {
-            if (view.getVisibility() != View.GONE)
-                view.setVisibility(View.GONE);
-        }
+        if (visibility)
+            view.setVisibility(View.VISIBLE);
+        else
+            view.setVisibility(View.GONE);
     }
 
     /**

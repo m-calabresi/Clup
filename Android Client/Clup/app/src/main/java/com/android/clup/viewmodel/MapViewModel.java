@@ -7,6 +7,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -21,13 +23,16 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.clup.R;
 import com.android.clup.model.AvailableDay;
-import com.android.clup.model.Market;
+import com.android.clup.model.Date;
+import com.android.clup.model.Model;
+import com.android.clup.model.Shop;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.IOException;
@@ -38,6 +43,7 @@ import java.util.Locale;
 import static android.content.Context.LOCATION_SERVICE;
 
 public class MapViewModel extends ViewModel {
+    private final Model model;
 
     // The entry point to the Fused Location Provider.
     private final FusedLocationProviderClient fusedLocationProviderClient;
@@ -53,10 +59,11 @@ public class MapViewModel extends ViewModel {
     private GoogleMap map;
 
     private static final int DEFAULT_ANIMATION_DURATION = 200; // milliseconds
-    public static final float BOTTOM_SHEET_HALF_EXPANDED_RATIO = 0.4f;
+    public static final float BOTTOM_SHEET_HALF_EXPANDED_RATIO = 0.6f;
 
     public MapViewModel(@NonNull final Activity activity) {
-        // Construct a FusedLocationProviderClient.
+        this.model = Model.getInstance();
+
         this.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
         this.geocoder = new Geocoder(activity, Locale.getDefault());
     }
@@ -70,7 +77,7 @@ public class MapViewModel extends ViewModel {
      */
     public void startLocationPermissionRequest(@NonNull final Activity activity) {
         if (this.map == null)
-            throw new RuntimeException("this.map is null, did you call setGoogleMap()?");
+            throw new RuntimeException("this.map is null, did you call 'setGoogleMap'?");
 
         /*
          * Request location permission, so that we can get the location of the
@@ -304,20 +311,49 @@ public class MapViewModel extends ViewModel {
      * Return the list of shops to be displayed in the UI.
      * TODO replace with API call
      */
-    public List<Market> getMarkets() {
-        // dummy list
-        final LatLng coords1 = new LatLng(45.4659, 9.1914);
-        final LatLng coords2 = new LatLng(1122.1, 1245.2);
+    public List<Shop> getShops() {
+        if (this.model.getShops() == null) {
+            // dummy list
+            final LatLng coords1 = new LatLng(45.4659, 9.1914);
+            final LatLng coords2 = new LatLng(1122.1, 1245.2);
 
-        final AvailableDay availableDay1 = new AvailableDay("12-02-2020", Arrays.asList(12, 13, 14, 15));
-        final AvailableDay availableDay2 = new AvailableDay("13-02-2020", Arrays.asList(16, 17, 18, 19));
-        final AvailableDay availableDay3 = new AvailableDay("14-02-2020", Arrays.asList(15, 16, 17, 20));
-        final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay2, availableDay3);
+            final Date date1 = new Date(11, 2, 2020);
+            final Date date2 = new Date(12, 2, 2020);
+            final Date date3 = new Date(13, 2, 2020);
 
-        final Market market1 = new Market("local shop", coords1, availableDays);
-        final Market market2 = new Market("supermarket", coords2, availableDays);
+            final AvailableDay availableDay1 = new AvailableDay(date1, Arrays.asList("12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"));
+            final AvailableDay availableDay2 = new AvailableDay(date2, Arrays.asList("16:00", "17:00", "18:00", "19:00"));
+            final AvailableDay availableDay3 = new AvailableDay(date3, Arrays.asList("15:00", "16:00", "17:00", "20:00"));
 
-        //return Arrays.asList(market1, market2, market1, market2, market1, market2, market1, market2, market1, market2);
-        return Arrays.asList(market1, market2, market1);
+            final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay1, availableDay2, availableDay3, availableDay2, availableDay3, availableDay1, availableDay2, availableDay3, availableDay1, availableDay2, availableDay3);
+            //final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay2, availableDay3);
+
+            final Shop shop1 = new Shop("Local shop", coords1, availableDays);
+            final Shop shop2 = new Shop("Supermarket", coords2, availableDays);
+
+            //List<Shop> shops = Arrays.asList(shop1, shop2, shop1, shop2, shop1, shop2, shop1, shop2, shop1, shop2);
+            List<Shop> shops = Arrays.asList(shop1, shop2, shop1);
+            this.model.setShops(shops);
+        }
+        return this.model.getShops();
+    }
+
+    /**
+     * Store index corresponding to the shop selected by the user.
+     */
+    public void setSelectedShopPosition(final int position) {
+        this.model.setSelectedShopIndex(position);
+    }
+
+    /**
+     * If the bottom sheet is fully expanded, set it to half expansion. This allows for faster
+     * bak action when the user decides to go back through multiple activities (back button will
+     * otherwise be hidden).
+     */
+    public void handleExpansion(@NonNull final BottomSheetBehavior<View> bottomSheetBehavior) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+        });
     }
 }

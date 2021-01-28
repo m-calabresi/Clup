@@ -2,16 +2,26 @@
 <resources>
     <color name="ic_check_color">@color/lime_500</color>
 
+    <!-- button colors -->
     <color name="outlined_button_text_color">@color/lime_500</color>
     <color name="outlined_button_text_color_disabled">@color/gray_700</color>
     <color name="outlined_button_stroke_color">@color/lime_500</color>
     <color name="outlined_button_stroke_color_disabled">@color/gray_700</color>
 
+    <!-- splash screen colors -->
     <color name="splash_screen_logo_color">@color/gray_900</color>
     <color name="splash_screen_logo_background_color">@color/lime_500</color>
     <color name="splash_screen_background_color">@color/gray_900</color>
 
+    <!-- qr-code colors -->
     <color name="qr_code_on_color">@color/white</color>
     <color name="qr_code_off_color">@color/gray_900</color>
+
+    <!-- chip colors -->
+    <color name="selected_background_color">@color/lime_200_alpha_65</color>
+    <color name="normal_background_color">@color/white_alpha_10</color>
+
+    <color name="selected_text_color">@color/lime_700</color>
+    <color name="normal_text_color">@color/white_alpha_85</color>
 
 </resources>

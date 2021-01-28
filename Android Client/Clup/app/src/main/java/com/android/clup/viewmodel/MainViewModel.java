@@ -53,8 +53,7 @@ public class MainViewModel extends ViewModel {
      * Request asynchronously the data used to create the corresponding qr-code and notify the user
      * when a valid qr-code has been created.
      */
-    @SuppressWarnings("unchecked")
-    public void getQrCode(final int onColor, final int offColor, @NonNull final Callback callback) {
+    public void getQrCode(final int onColor, final int offColor, @NonNull final Callback<Bitmap> callback) {
         if (this.username == null || this.hour == null || this.status == null)
             throw new InvalidParameterException("Some parameters are null or empty, did you call 'setUserData'?");
 
@@ -63,11 +62,11 @@ public class MainViewModel extends ViewModel {
                 if (result instanceof Result.Success) {
                     this.uuid = ((Result.Success<String>) result).data; // cache qrCode to retrieve it faster
 
-                    final Result qrCode = new Result.Success<>(generateQRCode(this.uuid, onColor, offColor));
+                    final Result<Bitmap> qrCode = new Result.Success<>(generateQRCode(this.uuid, onColor, offColor));
                     callback.onComplete(qrCode);
                 } else {
-                    final String errorMsg = ((Result.Error) result).message;
-                    final Result error = new Result.Error(errorMsg);
+                    final String errorMsg = ((Result.Error<String>) result).message;
+                    final Result<Bitmap> error = new Result.Error<>(errorMsg);
                     callback.onComplete(error);
                 }
             });

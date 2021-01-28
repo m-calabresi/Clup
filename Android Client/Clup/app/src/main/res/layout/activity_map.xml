@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/map_recycler_view"
             style="@style/AppTheme.Clup.BottomSheetRecyclerView"
             android:paddingTop="12dp"
             android:layout_width="match_parent"
@@ -60,7 +60,7 @@
             android:clickable="true"
             android:contentDescription="TODO"
             android:focusable="true"
-            app:layout_anchor="@+id/recycler_view"
+            app:layout_anchor="@+id/map_recycler_view"
             app:layout_anchorGravity="top|end"
             app:srcCompat="@drawable/ic_location" />
 

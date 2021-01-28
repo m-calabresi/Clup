@@ -6,22 +6,22 @@ import java.util.List;
 
 public class AvailableDay {
     @NonNull
-    private final String date;
+    private final Date date;
     @NonNull
-    private final List<Integer> hours;
+    private final List<String> hours;
 
-    public AvailableDay(@NonNull final String date, @NonNull final List<Integer> hours) {
+    public AvailableDay(@NonNull final Date date, @NonNull final List<String> hours) {
         this.date = date;
         this.hours = hours;
     }
 
     @NonNull
-    public String getDate() {
-        return this.date;
+    public String getFormatDate() {
+        return this.date.getFormatDate();
     }
 
     @NonNull
-    public List<Integer> getHours() {
+    public List<String> getHours() {
         return this.hours;
     }
 }

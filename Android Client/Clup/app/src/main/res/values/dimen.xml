@@ -12,15 +12,20 @@
     <dimen name="subtitle_text_view_text_size">20sp</dimen>
 
     <dimen name="item_title_text_view_text_size">24sp</dimen>
+    <dimen name="medium_item_subtitle_text_view_text_size">18sp</dimen>
     <dimen name="item_subtitle_text_view_text_size">14sp</dimen>
 
     <dimen name="mini_fab_margin_start">20dp</dimen>
     <dimen name="fab_margin_end">10dp</dimen>
     <dimen name="fab_margin_bottom">10dp</dimen>
+    <dimen name="extended_fab_margin">16dp</dimen>
 
     <dimen name="card_view_margin">12dp</dimen>
     <dimen name="card_corner_radius">15dp</dimen>
-    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
 
-    <dimen name="peek_height">130dp</dimen>
+    <dimen name="peek_height">135dp</dimen>
+
+    <!-- 16dp (top margin) + 56dp (extended FAB) + 16dp (bottom margin) -->
+    <dimen name="footer_height">88dp</dimen>
 </resources>

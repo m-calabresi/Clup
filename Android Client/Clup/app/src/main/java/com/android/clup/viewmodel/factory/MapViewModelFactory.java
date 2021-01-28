@@ -1,10 +1,12 @@
-package com.android.clup.viewmodel;
+package com.android.clup.viewmodel.factory;
 
 import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.android.clup.viewmodel.MapViewModel;
 
 import java.util.Objects;
 

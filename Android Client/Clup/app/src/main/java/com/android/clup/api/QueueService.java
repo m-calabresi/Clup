@@ -38,14 +38,13 @@ public class QueueService {
      * @param callback the callback through which the caller will be notified once the queue
      *                 procedure is ended.
      */
-    @SuppressWarnings("unchecked")
     public void getQueueUUID(@NonNull final String username, @NonNull final String hour,
-                             @NonNull final String status, @NonNull final Callback callback) {
+                             @NonNull final String status, @NonNull final Callback<String> callback) {
         executor.execute(() -> {
-            Result result;
+            Result<String> result;
             try {
                 final String payload = toJsonString(username, hour, status);
-                final Result response = RemoteConnection.postConnect(API_URL, payload);
+                final Result<String> response = RemoteConnection.postConnect(API_URL, payload);
 
                 if (response instanceof Result.Success) {
                     final String jsonResponse = ((Result.Success<String>) response).data;
@@ -53,9 +52,9 @@ public class QueueService {
 
                     result = new Result.Success<>(uuid);
                 } else
-                    result = new Result.Error("Invalid response"); // TODO replace with resource string
+                    result = new Result.Error<>("Invalid response"); // TODO replace with resource string
             } catch (InvalidResponseException e) {
-                result = new Result.Error(e.getLocalizedMessage());
+                result = new Result.Error<>(e.getLocalizedMessage());
             }
             callback.onComplete(result);
         });

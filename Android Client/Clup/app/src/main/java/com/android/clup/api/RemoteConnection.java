@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,14 +45,14 @@ public class RemoteConnection {
             result = new Result.Success<>(toString(inputStream));
         } catch (IOException e) {
             e.printStackTrace();
-            result = new Result.Error<>(e.getLocalizedMessage());
+            result = new Result.Error<>(Objects.requireNonNull(e.getLocalizedMessage()));
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    result = new Result.Error<>(e.getLocalizedMessage());
+                    result = new Result.Error<>(Objects.requireNonNull(e.getLocalizedMessage()));
                 }
             }
 
@@ -94,14 +95,14 @@ public class RemoteConnection {
             result = new Result.Success<>(toString(inputStream));
         } catch (IOException e) {
             e.printStackTrace();
-            result = new Result.Error<>(e.getLocalizedMessage());
+            result = new Result.Error<>(Objects.requireNonNull(e.getLocalizedMessage()));
         } finally {
             if (outputStream != null) {
                 try {
                     outputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    result = new Result.Error<>(e.getLocalizedMessage());
+                    result = new Result.Error<>(Objects.requireNonNull(e.getLocalizedMessage()));
                 }
             }
 
@@ -110,7 +111,7 @@ public class RemoteConnection {
                     inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    result = new Result.Error<>(e.getLocalizedMessage());
+                    result = new Result.Error<>(Objects.requireNonNull(e.getLocalizedMessage()));
                 }
             }
 
@@ -152,7 +153,7 @@ public class RemoteConnection {
                 result = new Result.Success<>(false);
             } catch (IOException e) {
                 e.printStackTrace();
-                result = new Result.Error<>(e.getLocalizedMessage());
+                result = new Result.Error<>(Objects.requireNonNull(e.getLocalizedMessage()));
             } finally {
                 if (connection != null)
                     connection.disconnect();

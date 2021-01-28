@@ -1,5 +1,6 @@
 package com.android.clup.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,10 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
-import com.android.clup.adapter.MarketCardViewAdapter;
-import com.android.clup.model.Market;
+import com.android.clup.adapter.ShopRecyclerViewAdapter;
+import com.android.clup.adapter.OnRecyclerViewItemClickedCallback;
 import com.android.clup.viewmodel.MapViewModel;
-import com.android.clup.viewmodel.MapViewModelFactory;
+import com.android.clup.viewmodel.factory.MapViewModelFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -23,15 +24,15 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
 import java.util.Objects;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, OnRecyclerViewItemClickedCallback {
     private MapViewModel viewModel;
 
     private TextView padView;
     private FloatingActionButton locationButton;
     private FloatingActionButton backButton;
+    private BottomSheetBehavior<View> bottomSheetBehavior;
 
     private final View.OnClickListener backButtonOnClickListener = view -> this.finish();
     private final View.OnClickListener locationButtonOnClickListener = view -> this.viewModel.startLocationPermissionRequest(this);
@@ -76,19 +77,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.padView = findViewById(R.id.pad_view);
         this.viewModel.setPadHeight(mapActivityView, padView);
 
-        final RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        final RecyclerView recyclerView = findViewById(R.id.map_recycler_view);
         recyclerView.setNestedScrollingEnabled(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final List<Market> markets = this.viewModel.getMarkets();
-        final MarketCardViewAdapter adapter = new MarketCardViewAdapter(this.viewModel, markets);
+        //final List<Shop> shops = this.viewModel.getShops();
+        // TODO add markers on the map
+
+        final ShopRecyclerViewAdapter adapter = new ShopRecyclerViewAdapter(this, this.viewModel);
         recyclerView.setAdapter(adapter);
 
-        final BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(recyclerView);
-        bottomSheetBehavior.setFitToContents(false);
-        bottomSheetBehavior.setHalfExpandedRatio(MapViewModel.BOTTOM_SHEET_HALF_EXPANDED_RATIO);
-        bottomSheetBehavior.addBottomSheetCallback(this.bottomSheetCallback);
+        this.bottomSheetBehavior = BottomSheetBehavior.from(recyclerView);
+        this.bottomSheetBehavior.setFitToContents(false);
+        this.bottomSheetBehavior.setHalfExpandedRatio(MapViewModel.BOTTOM_SHEET_HALF_EXPANDED_RATIO);
+        this.bottomSheetBehavior.addBottomSheetCallback(this.bottomSheetCallback);
 
         //int peekHeight = getResources().getDimension(R.dimen.)
 
@@ -117,11 +120,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     /**
-     * Handles the result of the request for location permissions.
+     * Handle the result of the request for location permissions.
      */
     @Override
     public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         this.viewModel.continueLocationPermissionRequest(this, requestCode, grantResults);
+    }
+
+    /**
+     * Handle the result of a recyclerview item being clicked.
+     */
+    @Override
+    public void onRecyclerViewItemClicked(final int position) {
+        this.viewModel.setSelectedShopPosition(position);
+        final Intent intent = new Intent(this, SelectActivity.class);
+        startActivity(intent);
+        this.viewModel.handleExpansion(this.bottomSheetBehavior);
     }
 }

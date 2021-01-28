@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- BASE APPLICATION THEME -->
     <style name="AppTheme.Clup" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/lime_500</item>
+        <item name="colorPrimary">@color/lime_700</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorPrimaryVariant">@color/gray_900</item>
         <item name="colorOnPrimary">@color/gray_900</item>
 
         <item name="colorSecondary">@color/white</item>
-        <item name="colorSecondaryVariant">@color/unknown</item>
+        <item name="colorSecondaryVariant">@color/lime_200</item>
         <item name="colorOnSecondary">@color/black</item>
     </style>
 
@@ -27,9 +27,28 @@
     <style name="AppTheme.Clup.Map" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
+
         <item name="android:statusBarColor">@android:color/transparent</item>
 
+        <item name="android:navigationBarColor">@color/gray_legacy</item>
+
         <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- SELECT ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Select" parent="AppTheme.Clup">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+
+        <item name="android:statusBarColor">@color/lime_500</item>
+
+        <item name="android:navigationBarColor">@color/gray_legacy</item>
+
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="AppTheme.Clup.Select.Background" parent="">
+        <item name="android:background">@color/lime_500</item>
     </style>
 
     <!-- SPLASH SCREEN THEME -->
@@ -41,11 +60,19 @@
         <item name="android:navigationBarColor">?android:colorBackground</item>
 
         <item name="android:windowBackground">@drawable/splash_screen_background</item>
+
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- TOOLBAR THEME -->
-    <style name="AppTheme.Clup.MaterialToolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+    <!-- TOOLBAR THEMES -->
+    <style name="AppTheme.Clup.SelectMaterialToolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/lime_500</item>
+        <item name="titleTextColor">@color/black</item>
+    </style>
 
+    <style name="AppTheme.Clup.MainMaterialToolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">?android:colorBackground</item>
+        <item name="titleTextColor">@color/black</item>
     </style>
 
     <!-- BUTTON BASE THEME -->
@@ -104,7 +131,10 @@
         <item name="android:textSize">@dimen/title_text_view_text_size</item>
     </style>
 
-    <style name="AppTheme.Clup.ItemTitleTextView" parent="AppTheme.Clup.TitleTextView">
+    <style name="AppTheme.Clup.ItemTitleTextView" parent="">
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textColor">@color/black</item>
+
         <item name="android:textSize">@dimen/item_title_text_view_text_size</item>
     </style>
 
@@ -122,12 +152,19 @@
         <item name="android:textAlignment">textStart</item>
     </style>
 
+    <style name="AppTheme.Clup.MediumItemSubtitleTextView" parent="">
+        <item name="android:textSize">@dimen/medium_item_subtitle_text_view_text_size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/gray_700</item>
+    </style>
+
     <!-- PAD TEXT VIEW THEME -->
     <style name="AppTheme.Clup.PadTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:background">@color/gray_legacy</item>
     </style>
 
-    <!-- CARD VIEW ITEM THEME -->
+    <!-- CARD VIEW ITEM THEMES -->
     <style name="AppTheme.Clup.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">@dimen/card_corner_radius</item>
         <item name="cardElevation">@dimen/card_elevation</item>
@@ -138,6 +175,12 @@
         <item name="rippleColor">@color/black_alpha_10</item>
     </style>
 
+    <style name="AppTheme.Clup.TopRoundedCardView">
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="android:backgroundTint">?android:colorBackground</item>
+    </style>
+
     <!-- RECYCLER VIEW CONTAINER THEME -->
     <style name="AppTheme.Clup.BottomSheetRecyclerView">
         <item name="android:background">@color/white</item>
@@ -146,5 +189,31 @@
         <item name="behavior_peekHeight">@dimen/peek_height</item>
         <item name="layout_behavior">com.google.android.material.bottomsheet.BottomSheetBehavior
         </item>
+    </style>
+
+    <!-- EXTENDED FLOATING ACTION BUTTON THEME -->
+    <style name="AppTheme.Clup.ExtendedFloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="android:paddingTop">@dimen/rounded_button_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/rounded_button_vertical_padding</item>
+
+        <item name="fontFamily">@font/helvetica_neue_heavy</item>
+
+        <item name="rippleColor">@color/white</item>
+        <item name="backgroundTint">@color/lime_700</item>
+        <item name="iconTint">@color/gray_900</item>
+        <item name="android:textColor">@color/gray_900</item>
+    </style>
+
+    <!-- CHIP THEMES -->
+    <style name="AppTheme.Clup.Chip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+    </style>
+
+    <style name="AppTheme.Clup.Chip.Text" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:ellipsize">end</item>
+
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

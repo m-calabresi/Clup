@@ -16,10 +16,14 @@
         android:theme="@style/AppTheme.Clup.Main"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".ui.SelectActivity"
+            android:theme="@style/AppTheme.Clup.Select" />
         <activity
             android:name=".ui.MapActivity"
             android:label="@string/title_activity_map"

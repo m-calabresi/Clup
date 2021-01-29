@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
 import com.android.clup.concurrent.Result;
+import com.android.clup.ui.Utils;
 import com.android.clup.viewmodel.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -35,8 +36,8 @@ public class PhoneFragment extends Fragment {
 
     @NonNull
     private final View.OnClickListener nextOnClickListener = view -> {
-        this.viewModel.hideSoftInput(requireActivity());
-        this.viewModel.showProgressBar(this.nextButton);
+        Utils.hideSoftInput(requireActivity());
+        Utils.showProgressBar(this.nextButton);
 
         this.viewModel.isConnectionAvailable(connectionResult -> {
             if (connectionResult instanceof Result.Success) {
@@ -51,22 +52,22 @@ public class PhoneFragment extends Fragment {
                     this.viewModel.setLocale(locale);
 
                     this.viewModel.startVerify(verificationResult -> {
-                        this.viewModel.hideProgressBar(this.nextButton, getString(R.string.action_next));
+                        Utils.hideProgressBar(this.nextButton, getString(R.string.action_next));
 
                         if (verificationResult instanceof Result.Success) {
                             switchToNextFragment();
                         } else {
                             showErrorHint();
-                            this.viewModel.showSoftInput(requireActivity(), this.phoneNumberEditText);
+                            Utils.showSoftInput(requireActivity(), this.phoneNumberEditText);
                         }
                     });
                 } else {
-                    this.viewModel.displayConnectionErrorDialog(requireContext());
-                    this.viewModel.hideProgressBar(this.nextButton, getString(R.string.action_next));
+                    Utils.displayConnectionErrorDialog(requireContext());
+                    Utils.hideProgressBar(this.nextButton, getString(R.string.action_next));
                 }
             } else {
-                this.viewModel.displayConnectionErrorDialog(requireContext());
-                this.viewModel.hideProgressBar(this.nextButton, getString(R.string.action_next));
+                Utils.displayConnectionErrorDialog(requireContext());
+                Utils.hideProgressBar(this.nextButton, getString(R.string.action_next));
             }
         });
     };
@@ -139,7 +140,7 @@ public class PhoneFragment extends Fragment {
 
         this.nextButton = root.findViewById(R.id.next_button);
         this.nextButton.setOnClickListener(this.nextOnClickListener);
-        this.viewModel.enableProgressButton(this.nextButton, getViewLifecycleOwner());
+        Utils.enableProgressButton(this.nextButton, getViewLifecycleOwner());
 
         final TextInputLayout prefixTextInput = root.findViewById(R.id.prefix_text_input);
         this.prefixEditText = prefixTextInput.findViewById(R.id.prefix_edit_text);
@@ -152,26 +153,26 @@ public class PhoneFragment extends Fragment {
         this.phoneNumberEditText = this.phoneNumberTextInput.findViewById(R.id.phone_edit_text);
         this.phoneNumberEditText.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         this.phoneNumberEditText.addTextChangedListener(this.phoneNumberTextWatcher);
-        this.viewModel.showSoftInput(requireActivity(), this.phoneNumberEditText);
+        Utils.showSoftInput(requireActivity(), this.phoneNumberEditText);
 
         return root;
     }
 
     @Override
     public void onResume() {
-        this.viewModel.showSoftInput(requireActivity(), this.phoneNumberEditText);
+        Utils.showSoftInput(requireActivity(), this.phoneNumberEditText);
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        this.viewModel.hideSoftInput(requireActivity());
+        Utils.hideSoftInput(requireActivity());
         super.onPause();
     }
 
     private void showErrorHint() {
         this.phoneNumberTextInput.post(() -> {
-            final String errorMessage = getString(R.string.phone_error);
+            final String errorMessage = getString(R.string.error_phone);
             this.phoneNumberTextInput.setError(errorMessage);
         });
     }

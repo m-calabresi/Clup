@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
+import com.android.clup.ui.Utils;
 import com.android.clup.viewmodel.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -94,20 +95,20 @@ public class NameFragment extends Fragment {
         this.nameInputLayout = root.findViewById(R.id.name_text_input);
         this.nameEditText = this.nameInputLayout.findViewById(R.id.name_edit_text);
         this.nameEditText.addTextChangedListener(nameTextWatcher);
-        this.viewModel.showSoftInput(requireActivity(), this.nameEditText);
+        Utils.showSoftInput(requireActivity(), this.nameEditText);
 
         return root;
     }
 
     @Override
     public void onResume() {
-        this.viewModel.showSoftInput(requireActivity(), this.nameEditText);
+        Utils.showSoftInput(requireActivity(), this.nameEditText);
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        this.viewModel.hideSoftInput(requireActivity());
+        Utils.hideSoftInput(requireActivity());
         super.onPause();
     }
 }

@@ -7,8 +7,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.android.clup.R;
+import com.android.clup.api.QueueService;
+import com.android.clup.concurrent.Callback;
+import com.android.clup.concurrent.Result;
 import com.android.clup.model.AvailableDay;
+import com.android.clup.model.Date;
 import com.android.clup.model.Model;
+import com.android.clup.model.Reservation;
 import com.android.clup.model.Shop;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -16,12 +21,18 @@ import com.google.android.material.chip.ChipGroup;
 import java.util.List;
 
 public class SelectViewModel extends ViewModel {
+    @NonNull
     private final Model model;
+    @NonNull
     private final MutableLiveData<Integer> groupIdLiveData;
+
+    @NonNull
+    private final QueueService queueService;
 
     public SelectViewModel() {
         this.model = Model.getInstance();
         this.groupIdLiveData = new MutableLiveData<>();
+        this.queueService = new QueueService();
     }
 
     /**
@@ -105,6 +116,7 @@ public class SelectViewModel extends ViewModel {
     /**
      * A MutableLiveData that reacts to chips selection.
      */
+    @NonNull
     public MutableLiveData<Integer> getGroupIdLiveData() {
         return this.groupIdLiveData;
     }
@@ -115,5 +127,31 @@ public class SelectViewModel extends ViewModel {
      */
     public void setGroupTagLiveData(@NonNull final Object groupTag) {
         this.groupIdLiveData.setValue((int) groupTag);
+    }
+
+    /**
+     * Save the reservation made by the user, then notify the caller about the result.
+     */
+    public void bookReservation(Callback<Boolean> callback) {
+        final String shopName = this.model.getSelectedShop().getName();
+        final Date date = this.model.getSelectedDay().getDate();
+        final String hour = this.model.getSelectedHour();
+
+        this.queueService.getUuid(this.model.getFullname(), shopName, date.plain(), hour, result -> {
+            Result<Boolean> bookResult;
+
+            if (result instanceof Result.Success) {
+                final String uuid = ((Result.Success<String>) result).data;
+
+                final Reservation reservation = new Reservation(shopName, date, hour, uuid);
+                this.model.addReservation(reservation);
+
+                bookResult = new Result.Success<>(true);
+            } else {
+                final String errorMsg = ((Result.Error<String>) result).message;
+                bookResult = new Result.Error<>(errorMsg);
+            }
+            callback.onComplete(bookResult);
+        });
     }
 }

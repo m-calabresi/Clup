@@ -16,8 +16,8 @@ public class AvailableDay {
     }
 
     @NonNull
-    public String getFormatDate() {
-        return this.date.getFormatDate();
+    public Date getDate() {
+        return this.date;
     }
 
     @NonNull

@@ -9,6 +9,9 @@
         <item name="colorSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/lime_200</item>
         <item name="colorOnSecondary">@color/black</item>
+
+        <item name="snackbarStyle">@style/AppTheme.Clup.Snackbar.Style</item>
+        <item name="snackbarTextViewStyle">@style/AppTheme.Clup.Snackbar.Text</item>
     </style>
 
     <!-- MAIN ACTIVITY THEME -->
@@ -215,5 +218,13 @@
 
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- SNACKBAR THEME -->
+    <style name="AppTheme.Clup.Snackbar.Text" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">?colorOnError</item>
+    </style>
+    <style name="AppTheme.Clup.Snackbar.Style" parent="@style/Widget.MaterialComponents.Snackbar">
+        <item name="backgroundTint">?colorError</item>
     </style>
 </resources>

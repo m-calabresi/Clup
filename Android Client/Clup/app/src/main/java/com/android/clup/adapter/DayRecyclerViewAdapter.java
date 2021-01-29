@@ -106,7 +106,7 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             final DayViewHolder viewHolder = (DayViewHolder) holder;
             final AvailableDay availableDay = this.shop.getAvailableDays().get(position);
 
-            viewHolder.dayTextView.post(() -> viewHolder.dayTextView.setText(availableDay.getFormatDate()));
+            viewHolder.dayTextView.post(() -> viewHolder.dayTextView.setText(availableDay.getDate().formatted()));
             SelectViewModel.setHourChips(viewHolder.hoursChipGroup, availableDay.getHours());
         }
     }

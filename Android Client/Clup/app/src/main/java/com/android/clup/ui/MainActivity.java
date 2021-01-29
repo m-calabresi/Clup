@@ -8,10 +8,13 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
+import com.android.clup.model.Preferences;
+import com.android.clup.ui.auth.AuthActivity;
 import com.android.clup.viewmodel.MainViewModel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -29,40 +32,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // check first time procedure
+        if (Preferences.isFirstTime()) {
+            final Intent intent = new Intent(this, AuthActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         this.viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        this.viewModel.setDefaultTheme(this);
+        AppCompatDelegate.setDefaultNightMode(Preferences.getTheme());
 
         final Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        //final ImageView imageView = findViewById(R.id.imageView);
-        //final ProgressBar progressBar = findViewById(R.id.progressBar);
-        //progressBar.setVisibility(View.GONE);
         final ExtendedFloatingActionButton bookButton = findViewById(R.id.book_button);
         bookButton.setOnClickListener(bookButtonOnClickListener);
-
-        // retrieved somewhere
-        /*final String username = "alessandro brigandì";
-        final String hours = "11";
-        final String status = "todo";
-
-        this.viewModel.setUserData(username, hours, status);
-
-        final int onColor = getResources().getColor(R.color.qr_code_on_color);
-        final int offColor = getResources().getColor(R.color.qr_code_off_color);
-
-        this.viewModel.getQrCode(onColor, offColor, result -> {
-            if (result instanceof Result.Success) {
-                imageView.post(() -> {
-                    final Bitmap qrCode = ((Result.Success<Bitmap>) result).data;
-                    imageView.setImageBitmap(qrCode);
-                    imageView.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
-                });
-            } else {
-                // error checking
-            }
-        });*/
     }
 
     @Override
@@ -74,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
         if (item.getItemId() == R.id.action_settings_theme) {
-            this.viewModel.displayThemesAlertDialog(this);
+            Utils.displayThemesAlertDialog(this);
             return true;
         }
         return super.onOptionsItemSelected(item);

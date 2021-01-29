@@ -65,7 +65,8 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         });
 
         viewHolder.addressTextView.post(() -> {
-            final String address = this.viewModel.getAddressByCoordinates(shop.getCoordinates());
+            final String altText = viewHolder.itemView.getContext().getString(R.string.text_unknown_location);
+            final String address = this.viewModel.getAddressByCoordinates(shop.getCoordinates(), altText);
             viewHolder.addressTextView.setText(address);
         });
     }

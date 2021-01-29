@@ -1,50 +1,43 @@
 package com.android.clup.viewmodel;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.TypedValue;
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.android.clup.R;
 import com.android.clup.api.RemoteConnection;
 import com.android.clup.api.SMSAuthService;
 import com.android.clup.concurrent.Callback;
-import com.github.razir.progressbutton.ButtonTextAnimatorExtensionsKt;
-import com.github.razir.progressbutton.DrawableButton;
-import com.github.razir.progressbutton.DrawableButtonExtensionsKt;
-import com.github.razir.progressbutton.ProgressButtonHolderKt;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.android.clup.json.JsonParser;
+import com.android.clup.model.Model;
+import com.android.clup.model.Preferences;
+import com.android.clup.ui.MainActivity;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
-import kotlin.Unit;
-
 public class AuthViewModel extends ViewModel {
+    private final Model model;
+
     @NonNull
     private final MutableLiveData<Class<? extends Fragment>> nextFragmentLiveData;
 
     private final SMSAuthService authService;
-
-    private String username; // complete name of the user
-    private String phoneNumber; // phone name of the user in format [prefix without '+'][phone number]
-    private String locale; // language chosen by the user in form [\c\c] (eg. US)
 
     // NameFragment fields
     @NonNull
     private final MutableLiveData<Boolean> nameFragmentButtonVisibilityStatus;
 
     // PhoneFragment fields
+    private String phoneNumber; // phone name of the user in format [prefix without '+'][phone number]
+    private String locale; // language chosen by the user in form [\c\c] (eg. US)
+
     @NonNull
     private final MutableLiveData<Boolean> prefixStatus;
     @NonNull
@@ -58,7 +51,12 @@ public class AuthViewModel extends ViewModel {
     public static final long COUNTDOWN_START = 10000;
     public static final long INTERVAL = 1000;
 
+    // SuccessFragment fields
+    public static final int TRANSITION_DELAY = 1000;
+
     public AuthViewModel() {
+        this.model = Model.getInstance();
+
         this.nextFragmentLiveData = new MutableLiveData<>();
         this.authService = SMSAuthService.getInstance();
 
@@ -97,12 +95,8 @@ public class AuthViewModel extends ViewModel {
     }
 
     public void setUsername(@NonNull final String username) {
-        this.username = username;
-    }
-
-    @Nullable
-    public String getUsername() {
-        return this.username;
+        this.model.setFullname(username);
+        this.model.setFriendlyName(username.split(" ")[0]);
     }
 
     public void setPhoneNumber(@NonNull final String phoneNumber) {
@@ -135,11 +129,6 @@ public class AuthViewModel extends ViewModel {
         if (locale == null || locale.isEmpty() || locale.equalsIgnoreCase("zz"))
             locale = SMSAuthService.DEFAULT_LOCALE;
         return locale;
-    }
-
-    @Nullable
-    public String getLocale() {
-        return this.locale;
     }
 
     /**
@@ -201,16 +190,6 @@ public class AuthViewModel extends ViewModel {
         RemoteConnection.hasInternetAccess(callback);
     }
 
-    public void displayConnectionErrorDialog(@NonNull final Context context) {
-        new Handler(Looper.getMainLooper()).post(() ->
-                new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
-                        .setTitle(R.string.title_connection_error_alert_message)
-                        .setMessage(R.string.text_connection_error_alert_message)
-                        .setPositiveButton(R.string.action_ok, null)
-                        .create()
-                        .show());
-    }
-
     /**
      * Start the phone-number verification procedure, notify the user once it has finished.
      * After this method has been called, if the procedure is successful, the authentication SMS
@@ -265,74 +244,35 @@ public class AuthViewModel extends ViewModel {
     }
 
     /**
-     * Handle the visibility of the given component. If necessary the view is destroyed.
+     * Enable MainActivity as entry point.
      */
-    public void handleGone(@NonNull final View view, boolean visibility) {
-        if (visibility)
-            view.setVisibility(View.VISIBLE);
-        else
-            view.setVisibility(View.GONE);
+    public void enableMainEntryPoint(@NonNull final Activity activity) {
+        final PackageManager packageManager = activity.getPackageManager();
+
+        // enable MainActivity at startup
+        packageManager.setComponentEnabledSetting(new ComponentName(activity, MainActivity.class),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
 
     /**
-     * Hide the soft-input from the user device.
+     * Finalize the authentication by preparing the environment for the MainActivity.
+     * In particular, initialize the json file that will store reservations and set the default app theme.
      */
-    public void hideSoftInput(@NonNull final Activity activity) {
-        // if keyboard is still open
-        if (activity.getCurrentFocus() != null) {
-            final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-        }
+    public void finalizeAuth() {
+        // disable AuthActivity: first time has been executed
+        Preferences.setFirstTime(false);
+
+        // initialize reservations file
+        JsonParser.initReservationsFile();
+
+        // initialize theme preference
+        Preferences.setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
     }
 
     /**
-     * Shows the soft-input on the user device.
+     * Return the last theme selected by the user or the default one (if user didn't set any theme).
      */
-    public void showSoftInput(@NonNull final Activity activity, @NonNull final View view) {
-        view.post(() -> {
-            final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            view.requestFocus();
-            inputMethodManager.showSoftInput(view, 0);
-        });
-    }
-
-    /**
-     * Enables the given button to expose a progress bar animation upon clicked.
-     * Must be called before {@link #showProgressBar(Button)}
-     */
-    public void enableProgressButton(@NonNull final Button button, @NonNull final LifecycleOwner lifecycleOwner) {
-        ProgressButtonHolderKt.bindProgressButton(lifecycleOwner, button);
-        ButtonTextAnimatorExtensionsKt.attachTextChangeAnimator(button);
-    }
-
-    /**
-     * Shows the progress bar animation on the given button upon clicked.
-     * Must be called after {@link #enableProgressButton(Button, LifecycleOwner)}
-     */
-    public void showProgressBar(@NonNull final Button button) {
-        button.setClickable(false);
-
-        // start spinning animation
-        DrawableButtonExtensionsKt.showProgress(button, progressParams -> {
-            final TypedValue typedValue = new TypedValue();
-            button.getContext().getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
-            final int progressColor = typedValue.data;
-
-            progressParams.setProgressColor(progressColor);
-            progressParams.setGravity(DrawableButton.GRAVITY_CENTER);
-            return Unit.INSTANCE;
-        });
-    }
-
-    /**
-     * Ends the progress bar animation on the given device.
-     * Must be called after {@link #showProgressBar(Button)}
-     */
-    public void hideProgressBar(@NonNull final Button button, @NonNull final String newButtonText) {
-        // stop spinning animation
-        new Handler(Looper.getMainLooper()).post(() -> {
-            DrawableButtonExtensionsKt.hideProgress(button, newButtonText);
-            button.setClickable(true);
-        });
+    public int getTheme() {
+        return Preferences.getTheme();
     }
 }

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".ApplicationContext"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +17,7 @@
         android:theme="@style/AppTheme.Clup.Main"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute">
+        <activity android:name=".ui.DetailsActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -30,25 +32,17 @@
             android:theme="@style/AppTheme.Clup.Map" />
         <activity
             android:name=".ui.MainActivity"
-            android:enabled="true"
             android:theme="@style/AppTheme.Clup.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- TODO BEFORE_FINAL_BUILD change enabled="true" in AuthActivity and enabled="false" in MainActivity -->
+        </activity>
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:enabled="false"
             android:theme="@style/AppTheme.Clup.Splash"
-            android:windowSoftInputMode="stateVisible">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="stateVisible" />
     </application>
 
 </manifest>

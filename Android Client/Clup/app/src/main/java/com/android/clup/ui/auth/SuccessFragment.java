@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
 import com.android.clup.ui.MainActivity;
-import com.android.clup.viewmodel.MainViewModel;
+import com.android.clup.viewmodel.AuthViewModel;
 
 public class SuccessFragment extends Fragment {
 
@@ -27,20 +26,9 @@ public class SuccessFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        // TODO BEFORE_FINAL_BUILD uncomment this
-        //PackageManager packageManager = requireActivity().getPackageManager();
+        final AuthViewModel viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        viewModel.finalizeAuth();
 
-        // disable AuthActivity at startup
-        //packageManager.setComponentEnabledSetting(new ComponentName(getActivity(), MainActivity.class),
-        //        PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-
-        // enable MainActivity at startup
-        //packageManager.setComponentEnabledSetting(new ComponentName(getActivity(), AuthActivity.class),
-        //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-
-        // initiate the theme preference to follow_system (default behavior
-        final MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        viewModel.setThemePreference(requireContext(), AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         super.onCreate(savedInstanceState);
     }
 
@@ -54,10 +42,10 @@ public class SuccessFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            final Intent intent = new Intent(getActivity(), MainActivity.class);
+            final Intent intent = new Intent(requireActivity(), MainActivity.class);
             startActivity(intent);
             requireActivity().finish();
-        }, MainViewModel.TRANSITION_DELAY);
+        }, AuthViewModel.TRANSITION_DELAY);
         super.onViewCreated(view, savedInstanceState);
     }
 }

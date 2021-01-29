@@ -1,7 +1,6 @@
 package com.android.clup.viewmodel;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,15 +9,11 @@ import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModel;
 
 import com.android.clup.R;
@@ -26,6 +21,7 @@ import com.android.clup.model.AvailableDay;
 import com.android.clup.model.Date;
 import com.android.clup.model.Model;
 import com.android.clup.model.Shop;
+import com.android.clup.ui.Utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,7 +29,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -58,7 +53,6 @@ public class MapViewModel extends ViewModel {
     private Location lastKnownLocation;
     private GoogleMap map;
 
-    private static final int DEFAULT_ANIMATION_DURATION = 200; // milliseconds
     public static final float BOTTOM_SHEET_HALF_EXPANDED_RATIO = 0.6f;
 
     public MapViewModel(@NonNull final Activity activity) {
@@ -164,7 +158,7 @@ public class MapViewModel extends ViewModel {
                                             .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
                             if (!isLocationEnabled)
-                                displayLocationErrorDialog(activity);
+                                Utils.displayLocationErrorDialog(activity);
                         }
                     } else {
                         // Current location is null, notify the user
@@ -178,11 +172,11 @@ public class MapViewModel extends ViewModel {
     }
 
     /**
-     * Returns the address associated to the given coordinates (if exists), a placeholder string
+     * Returns the address associated to the given coordinates (if exists), a given placeholder string
      * otherwise.
      */
     @NonNull
-    public String getAddressByCoordinates(@NonNull final LatLng coordinates) {
+    public String getAddressByCoordinates(@NonNull final LatLng coordinates, @NonNull final String altText) {
         String address = "";
         String city = "";
         String state = "";
@@ -219,92 +213,8 @@ public class MapViewModel extends ViewModel {
         completeAddress += !state.equals("") ? state : "";
 
         // one of the above or "unknown location" string
-        completeAddress = !completeAddress.equals("") ? completeAddress : "Unknown location"; // TODO replace with resource string
+        completeAddress = !completeAddress.equals("") ? completeAddress : altText;
         return completeAddress;
-    }
-
-    /**
-     * Displays an error alert dialog.
-     */
-    private void displayLocationErrorDialog(@NonNull final Context context) {
-        new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
-                .setMessage(R.string.text_location_error_alert_message)
-                .setPositiveButton(R.string.action_ok, null)
-                .create()
-                .show();
-    }
-
-    /**
-     * Sets the status bar to be fullscreen.
-     */
-    @SuppressWarnings("deprecation")
-    public void setFullScreenStatusBar(@NonNull final Activity activity) {
-        int systemUiVisibility = activity.getWindow().getDecorView().getSystemUiVisibility();
-        systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(systemUiVisibility);
-    }
-
-    /**
-     * Sets the height of the padding view to fill the status bar region when the bottom sheet
-     * is fully expanded.
-     */
-    public void setPadHeight(@NonNull final View parentView, @NonNull final View padView) {
-        padView.post(() -> ViewCompat.setOnApplyWindowInsetsListener(parentView, (v, insets) -> {
-            final int marginTop = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top;
-            final ViewGroup.LayoutParams layoutParams = padView.getLayoutParams();
-
-            layoutParams.height = marginTop;
-            padView.setLayoutParams(layoutParams);
-
-            return WindowInsetsCompat.CONSUMED;
-        }));
-    }
-
-    /**
-     * Sets the top and start margin for the given view based on the status bar height.
-     */
-    public void setTopStartMargins(@NonNull final View parentView, @NonNull final View view) {
-        ViewCompat.setOnApplyWindowInsetsListener(parentView, (v, insets) -> {
-            final int marginTop = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top;
-            final int marginStart = (int) parentView.getResources().getDimension(R.dimen.mini_fab_margin_start);
-
-            final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
-            params.topMargin = marginTop;
-            params.leftMargin = marginStart;
-            params.rightMargin = marginStart;
-            view.setLayoutParams(params);
-
-            return WindowInsetsCompat.CONSUMED;
-        });
-    }
-
-    /**
-     * Shows the given view.
-     */
-    public void expandHeight(@NonNull final View view) {
-        view.post(() -> view.setVisibility(View.VISIBLE));
-    }
-
-    /**
-     * Hides the given view
-     */
-    public void reduceHeight(@NonNull final View view) {
-        view.post(() -> view.setVisibility(View.GONE));
-    }
-
-    /**
-     * Animate the appearing of the given view.
-     */
-    public void showView(@NonNull final View view) {
-        view.post(() -> view.animate().scaleX(1).scaleY(1).setDuration(DEFAULT_ANIMATION_DURATION).start());
-    }
-
-    /**
-     * Animate the disappearing of the given view.
-     */
-    public void hideView(@NonNull final View view) {
-        view.post(() -> view.animate().scaleX(0).scaleY(0).setDuration(DEFAULT_ANIMATION_DURATION).start());
     }
 
     /**
@@ -317,9 +227,9 @@ public class MapViewModel extends ViewModel {
             final LatLng coords1 = new LatLng(45.4659, 9.1914);
             final LatLng coords2 = new LatLng(1122.1, 1245.2);
 
-            final Date date1 = new Date(11, 2, 2020);
-            final Date date2 = new Date(12, 2, 2020);
-            final Date date3 = new Date(13, 2, 2020);
+            final Date date1 = Date.fromString("11-02-2020");
+            final Date date2 = Date.fromString("12-02-2020");
+            final Date date3 = Date.fromString("13-02-2020");
 
             final AvailableDay availableDay1 = new AvailableDay(date1, Arrays.asList("12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"));
             final AvailableDay availableDay2 = new AvailableDay(date2, Arrays.asList("16:00", "17:00", "18:00", "19:00"));

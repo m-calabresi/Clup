@@ -10,6 +10,9 @@
         <item name="colorSecondary">@color/gray_900</item>
         <item name="colorSecondaryVariant">@color/lime_500</item>
         <item name="colorOnSecondary">@color/white</item>
+
+        <item name="snackbarStyle">@style/AppTheme.Clup.Snackbar.Style</item>
+        <item name="snackbarTextViewStyle">@style/AppTheme.Clup.Snackbar.Text</item>
     </style>
 
     <!-- MAIN ACTIVITY THEME -->

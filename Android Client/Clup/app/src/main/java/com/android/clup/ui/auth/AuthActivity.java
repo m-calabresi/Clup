@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,6 +21,7 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
 
         final AuthViewModel viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        AppCompatDelegate.setDefaultNightMode(viewModel.getTheme());
         viewModel.getNextFragmentLiveData().observe(this, this::replaceFragment);
 
         if (savedInstanceState == null) {

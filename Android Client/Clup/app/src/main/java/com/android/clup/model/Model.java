@@ -1,7 +1,8 @@
 package com.android.clup.model;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
+import com.android.clup.json.JsonParser;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,19 +15,36 @@ public final class Model {
 
     private static final int INVALID_INDEX = -1;
 
-    @Nullable
+    //--- USER DATA ---
+    @NonNull
+    private String friendlyName;
+    @NonNull
+    private String fullname;
+
+    //--- SHOPS DATA ---
+    @NonNull
     private List<Shop> shops;
     private int selectedShopIndex;
     private int selectedDayIndex;
     private int selectedHourIndex;
+
+    //--- RESERVATIONS DATA ---
+    @NonNull
+    private List<Reservation> reservations;
 
     private Model() {
         this.shops = null;
         this.selectedShopIndex = INVALID_INDEX;
         this.selectedDayIndex = INVALID_INDEX;
         this.selectedHourIndex = INVALID_INDEX;
+
+        this.reservations = null;
+
+        this.fullname = null;
+        this.friendlyName = null;
     }
 
+    @NonNull
     public static Model getInstance() {
         return ModelHelper.INSTANCE;
     }
@@ -35,7 +53,7 @@ public final class Model {
         this.shops = shops;
     }
 
-    @Nullable
+    @NonNull
     public List<Shop> getShops() {
         return this.shops;
     }
@@ -59,6 +77,7 @@ public final class Model {
         this.selectedDayIndex = selectedDayIndex;
     }
 
+    @NonNull
     public AvailableDay getSelectedDay() {
         if (this.selectedDayIndex != INVALID_INDEX)
             return getSelectedShop().getAvailableDays().get(this.selectedDayIndex);
@@ -73,6 +92,7 @@ public final class Model {
         this.selectedHourIndex = selectedHourIndex;
     }
 
+    @NonNull
     public String getSelectedHour() {
         if (this.selectedHourIndex != INVALID_INDEX)
             return getSelectedDay().getHours().get(this.selectedHourIndex);
@@ -81,5 +101,41 @@ public final class Model {
 
     public void resetSelectedHourIndex() {
         this.selectedHourIndex = INVALID_INDEX;
+    }
+
+    @NonNull
+    public List<Reservation> getReservations() {
+        if (this.reservations == null)
+            this.reservations = JsonParser.loadReservations();
+        return this.reservations;
+    }
+
+    public void addReservation(@NonNull final Reservation reservation) {
+        getReservations().add(reservation);
+        JsonParser.saveReservations(this.reservations);
+    }
+
+    public void setFriendlyName(@NonNull final String friendlyName) {
+        this.friendlyName = friendlyName;
+        Preferences.setFriendlyName(this.friendlyName);
+    }
+
+    @NonNull
+    public String getFriendlyName() {
+        if (this.friendlyName == null)
+            this.friendlyName = Preferences.getFriendlyName();
+        return this.friendlyName;
+    }
+
+    public void setFullname(@NonNull final String fullname) {
+        this.fullname = fullname;
+        Preferences.setFullname(fullname);
+    }
+
+    @NonNull
+    public String getFullname() {
+        if (this.fullname == null)
+            this.fullname = Preferences.getFullname();
+        return this.fullname;
     }
 }

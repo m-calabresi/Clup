@@ -1,31 +1,39 @@
 <resources>
     <string name="app_name">Clup</string>
+
     <string name="title_verify_number">Verify your number</string>
+    <string name="title_welcome">Welcome to Clup!</string>
+    <string name="title_insert_number">Input your number</string>
+    <string name="title_theme_alert">Choose theme</string>
+    <string name="title_activity_map">Map</string>
+
     <string name="text_verify_number">Enter your mobile number to receive a verification code</string>
     <string name="text_verify_code">Enter the verification code sent to +%1$s</string>
-    <string name="action_verify">Verify</string>
     <string name="text_prefix">+</string>
-    <string name="title_welcome">Welcome to Clup!</string>
     <string name="text_choose_name">Insert your full name, it will be visible to other Clup users.</string>
+    <string name="text_unknown_location">Unknown location.</string>
+
+    <string name="action_verify">Verify</string>
     <string name="action_next">Next</string>
-    <string name="title_insert_number">Input your number</string>
     <string name="action_retry">Retry</string>
-    <string name="error_name">This field is required</string>
-    <string name="phone_error">Invalid phone number</string>
-    <string name="code_error">Invalid or expired code</string>
     <string name="action_retry_in">Retry in\u0020</string>
     <string name="action_select_theme">Theme</string>
-    <string name="title_theme_alert">Choose theme</string>
+    <string name="action_book">Book</string>
+    <string name="action_ok">OK</string>
+    <string name="action_done">Done</string>
+
+    <string name="error_name">This field is required</string>
+    <string name="error_phone">Invalid phone number</string>
+    <string name="error_code">Invalid or expired code</string>
+    <string name="error_fullname">Your full name is required</string>
+
+    <string name="text_location_error_alert_message">To continue, enable your device location</string>
+    <string name="location_error_text">Unable to find your location, try again</string>
+    <string name="text_connection_error_alert_message">Check your internet connection and try again</string>
+    <string name="title_connection_error_alert_message">You are offline</string>
+    <string name="reservation_error_text">An error occurred, retry.</string>
+
     <string name="array_item_light">Light</string>
     <string name="array_item_dark">Dark</string>
     <string name="array_item_system_default">System default</string>
-    <string name="title_activity_map">Map</string>
-    <string name="action_book">Book</string>
-    <string name="text_location_error_alert_message">To continue, enable your device location</string>
-    <string name="action_ok">OK</string>
-    <string name="location_error_text">Unable to find your location, try again</string>
-    <string name="error_fullname">Your full name is required</string>
-    <string name="text_connection_error_alert_message">Check your internet connection and try again</string>
-    <string name="title_connection_error_alert_message">You are offline</string>
-    <string name="action_done">Done</string>
 </resources>

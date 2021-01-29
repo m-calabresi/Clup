@@ -42,13 +42,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         public void onStateChanged(@NonNull final View bottomSheet, final int newState) {
             // hides the collapsed ui when bottom sheet is fully expanded
             if (BottomSheetBehavior.STATE_EXPANDED == newState) {
-                viewModel.hideView(backButton);
-                viewModel.hideView(locationButton);
-                viewModel.expandHeight(padView);
+                Utils.hideView(backButton);
+                Utils.hideView(locationButton);
+                Utils.expandHeight(padView);
             } else { // shows collapsed ui when bottom sheet reduces from fully expanded
-                viewModel.showView(backButton);
-                viewModel.showView(locationButton);
-                viewModel.reduceHeight(padView);
+                Utils.showView(backButton);
+                Utils.showView(locationButton);
+                Utils.reduceHeight(padView);
             }
         }
 
@@ -63,7 +63,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         this.viewModel = new ViewModelProvider(this, new MapViewModelFactory(this)).get(MapViewModel.class);
-        this.viewModel.setFullScreenStatusBar(this);
+        Utils.setFullScreenStatusBar(this);
 
         final View mapActivityView = findViewById(R.id.layout_activity_map);
 
@@ -72,10 +72,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         this.backButton = findViewById(R.id.back_button);
         this.backButton.setOnClickListener(this.backButtonOnClickListener);
-        this.viewModel.setTopStartMargins(mapActivityView, this.backButton);
+        Utils.setTopStartMargins(mapActivityView, this.backButton);
 
         this.padView = findViewById(R.id.pad_view);
-        this.viewModel.setPadHeight(mapActivityView, padView);
+        Utils.setPadHeight(mapActivityView, padView);
 
         final RecyclerView recyclerView = findViewById(R.id.map_recycler_view);
         recyclerView.setNestedScrollingEnabled(true);

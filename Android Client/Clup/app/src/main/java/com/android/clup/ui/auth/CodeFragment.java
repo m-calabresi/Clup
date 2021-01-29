@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
 import com.android.clup.concurrent.Result;
+import com.android.clup.ui.Utils;
 import com.android.clup.viewmodel.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -40,14 +41,14 @@ public class CodeFragment extends Fragment {
     @NonNull
     private final View.OnClickListener nextButtonOnClickListener = view -> {
         this.retryButton.setEnabled(false);
-        this.viewModel.hideSoftInput(requireActivity());
-        this.viewModel.showProgressBar(this.verifyButton);
+        Utils.hideSoftInput(requireActivity());
+        Utils.showProgressBar(this.verifyButton);
 
         final String code = Objects.requireNonNull(this.codeEditText.getText()).toString();
 
         this.viewModel.checkVerify(code, result -> {
-            this.viewModel.hideSoftInput(requireActivity());
-            this.viewModel.hideProgressBar(this.verifyButton, getString(R.string.action_verify));
+            Utils.hideSoftInput(requireActivity());
+            Utils.hideProgressBar(this.verifyButton, getString(R.string.action_verify));
 
             if (result instanceof Result.Success) {
                 // final String message = ((Result.Success<String>) result).data;
@@ -134,7 +135,7 @@ public class CodeFragment extends Fragment {
 
         this.verifyButton = root.findViewById(R.id.verify_button);
         this.verifyButton.setOnClickListener(this.nextButtonOnClickListener);
-        this.viewModel.enableProgressButton(this.verifyButton, getViewLifecycleOwner());
+        Utils.enableProgressButton(this.verifyButton, getViewLifecycleOwner());
 
         this.retryButton = root.findViewById(R.id.retry_button);
         this.retryButton.setOnClickListener(this.retryButtonOnClickListener);
@@ -142,7 +143,7 @@ public class CodeFragment extends Fragment {
         this.codeInputLayout = root.findViewById(R.id.code_text_input);
         this.codeEditText = this.codeInputLayout.findViewById(R.id.code_edit_text);
         this.codeEditText.addTextChangedListener(this.codeTextWatcher);
-        this.viewModel.showSoftInput(requireActivity(), this.codeEditText);
+        Utils.showSoftInput(requireActivity(), this.codeEditText);
 
         return root;
     }
@@ -159,7 +160,7 @@ public class CodeFragment extends Fragment {
 
     private void showErrorHint() {
         this.codeInputLayout.post(() -> {
-            final String errorMessage = getString(R.string.code_error);
+            final String errorMessage = getString(R.string.error_code);
             this.codeInputLayout.setError(errorMessage);
         });
     }
@@ -168,8 +169,6 @@ public class CodeFragment extends Fragment {
         new Handler(Looper.getMainLooper()).post(() -> {
             this.verifyButton.setVisibility(View.INVISIBLE);
             this.viewModel.switchTo(SuccessFragment.class);
-
-            // TODO after this, username, phoneNumber and locale stored in viewModel will be lost, consider saving to local/cloud storage
         });
     }
 }

@@ -2,7 +2,8 @@ package com.android.clup.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
 import com.android.clup.adapter.DayRecyclerViewAdapter;
+import com.android.clup.concurrent.Result;
 import com.android.clup.model.Shop;
 import com.android.clup.viewmodel.SelectViewModel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -25,11 +27,18 @@ public class SelectActivity extends AppCompatActivity {
     private ExtendedFloatingActionButton doneButton;
 
     private final View.OnClickListener doneButtonOnClickListener = view -> {
-        final String date = this.viewModel.getSelectedDay().getFormatDate();
-        final String hour = this.viewModel.getSelectedHour();
+        this.doneButton.setClickable(false);
+        this.doneButton.setFocusable(false);
+        Utils.showProgressBar(this.doneButton);
 
-        final String message = date + ", " + hour;
-        Log.i("AAA", message);
+        this.viewModel.bookReservation(result -> {
+            Utils.hideProgressBar(this.doneButton, getString(R.string.action_done));
+
+            if (result instanceof Result.Success && ((Result.Success<Boolean>) result).data)
+                switchToNextActivity();
+            else
+                showReservationError();
+        });
     };
     private final Observer<Integer> doneButtonGroupIdLiveDataObserver = groupTag -> doneButton.setVisibility(View.VISIBLE);
 
@@ -56,8 +65,25 @@ public class SelectActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         this.doneButton = findViewById(R.id.done_button);
+        Utils.enableProgressButton(this.doneButton, this);
         this.doneButton.setOnClickListener(doneButtonOnClickListener);
         this.viewModel.getGroupIdLiveData().observe(this, this.doneButtonGroupIdLiveDataObserver);
+    }
+
+    private void switchToNextActivity() {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            final Intent intent = new Intent(this, DetailsActivity.class);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void showReservationError() {
+        this.doneButton.post(() -> {
+            this.doneButton.setClickable(true);
+            this.doneButton.setFocusable(true);
+            Utils.displayReservationErrorSnackBar(findViewById(R.id.layout_activity_select), this.doneButton);
+        });
     }
 
     @Override

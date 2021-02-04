@@ -20,10 +20,10 @@
 
     <!-- chip colors -->
     <color name="selected_background_color">@color/lime_200_alpha_65</color>
-    <color name="normal_background_color">@color/white_alpha_10</color>
+    <color name="normal_background_color">@color/white_alpha_12</color>
 
     <color name="selected_text_color">@color/lime_700</color>
-    <color name="normal_text_color">@color/white_alpha_85</color>
+    <color name="normal_text_color">@color/white_alpha_46</color>
 
     <!-- notifications color accent -->
     <color name="notification_accent_color">@color/lime_500</color>

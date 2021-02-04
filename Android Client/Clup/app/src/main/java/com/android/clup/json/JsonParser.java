@@ -51,10 +51,13 @@ public class JsonParser {
     @NonNull
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    /**
+    /*
      * -------- PUBLIC INTERFACE --------
-     **/
+     */
 
+    /**
+     * Load the reservation list from the json file and returns it.
+     */
     @NonNull
     public static List<Reservation> loadReservations() {
 
@@ -68,6 +71,9 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Save the given reservation list to a json file (overwriting the content already inside).
+     */
     public static void saveReservations(@NonNull final List<Reservation> reservations) {
         executor.execute(() -> {
             final JSONObject jsonReservations = JsonParser.toJsonReservations(reservations);
@@ -75,6 +81,9 @@ public class JsonParser {
         });
     }
 
+    /**
+     * Create a new json file and initializes it to be correct for parsing and reading.
+     */
     public static void initReservationsFile() {
         executor.execute(() -> {
             final JSONObject emptyJsonObject = JsonParser.toJsonObject("{}");
@@ -82,10 +91,13 @@ public class JsonParser {
         });
     }
 
-    /**
+    /*
      * -------- CONVERSION FROM JSON FORMAT --------
-     **/
+     */
 
+    /**
+     * Convert the given json array into a list of reservations.
+     */
     @NonNull
     private static List<Reservation> toReservationsList(@NonNull final JSONArray jsonArray) {
         try {
@@ -102,6 +114,9 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Convert the given json object into a reservation.
+     */
     @NonNull
     private static Reservation toReservation(@NonNull final JSONObject jsonReservation) {
         try {
@@ -119,6 +134,9 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Convert the given json object into a coordinate object.
+     */
     @NonNull
     private static LatLng toCoords(@NonNull final JSONObject coordsArray) {
         try {
@@ -130,10 +148,13 @@ public class JsonParser {
         }
     }
 
-    /**
+    /*
      * -------- CONVERSION TO JSON FORMAT --------
-     **/
+     */
 
+    /**
+     * Convert the given reservations into the corresponding json representation.
+     */
     @NonNull
     private static JSONObject toJsonReservations(@NonNull final List<Reservation> reservations) {
         try {
@@ -152,6 +173,9 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Convert the given reservation into the corresponding json representation.
+     */
     @NonNull
     private static JSONObject toJsonReservation(@NonNull final Reservation reservation) {
         try {
@@ -171,6 +195,9 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Convert the given coordinates into the corresponding json representation.
+     */
     @NonNull
     private static JSONObject toJsonCoords(@NonNull final LatLng coords) {
         try {
@@ -183,10 +210,13 @@ public class JsonParser {
         }
     }
 
-    /**
+    /*
      * -------- I/O FILE OPERATIONS --------
-     **/
+     */
 
+    /**
+     * Save the given json object into the chosen file.
+     */
     @SuppressWarnings("SameParameterValue")
     private static void storeJsonObject(@NonNull final Context context, @NonNull final JSONObject jsonObject, @NonNull final String fileName) {
         try (final FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE)) {
@@ -197,6 +227,9 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Load the data in the given json file and return a json object holding those data.
+     */
     @NonNull
     @SuppressWarnings("SameParameterValue")
     private static JSONObject loadJsonFromFile(@NonNull final Context context, @NonNull final String fileName) {
@@ -218,6 +251,9 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Convert a string encoded in json format to a proper json object.
+     */
     @NonNull
     private static JSONObject toJsonObject(@NonNull final String jsonString) {
         try {

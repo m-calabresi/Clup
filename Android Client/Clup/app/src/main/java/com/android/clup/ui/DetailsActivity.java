@@ -90,6 +90,13 @@ public class DetailsActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Called every time a back action is performed (both from the navigation back button and from the back
+     * arrow in the toolbar).
+     * <p>
+     * Close the current activity and also the {@link MapActivity} that is still present in the
+     * stack.
+     */
     private void onBackActionPerformed() {
         final Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

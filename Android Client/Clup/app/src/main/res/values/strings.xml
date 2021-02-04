@@ -63,4 +63,9 @@
     <string name="array_item_thirty_minutes_before">30 minutes before</string>
     <string name="array_item_one_hour_before">1 hour before</string>
     <string name="array_item_two_hours_before">2 hours before</string>
+
+    <string name="accessibility_qr_code_image_view">QR code to show at the shop entrance</string>
+    <string name="accessibility_action_back">Back</string>
+    <string name="accessibility_action_location">Locate your current position on the map</string>
+    <string name="accessibility_success_image_view">Authentication is successful</string>
 </resources>

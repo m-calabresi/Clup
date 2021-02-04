@@ -115,6 +115,7 @@
                 style="@style/AppTheme.Clup.Details.ConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:importantForAccessibility="no"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/details_upper_layout" />
@@ -162,7 +163,7 @@
                         android:layout_marginTop="60dp"
                         android:layout_marginEnd="20dp"
                         android:adjustViewBounds="true"
-                        android:contentDescription="TODO"
+                        android:contentDescription="@string/accessibility_qr_code_image_view"
                         android:scaleType="fitCenter"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"

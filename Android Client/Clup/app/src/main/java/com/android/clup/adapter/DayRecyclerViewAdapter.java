@@ -21,7 +21,9 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private static final int VIEW_TYPE_FOOTER = 0;
     private static final int VIEW_TYPE_DAY = 1;
 
+    @NonNull
     private final LifecycleOwner lifecycleOwner;
+    @NonNull
     private final SelectViewModel viewModel;
 
     private final Shop shop;

@@ -8,29 +8,14 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.clup.model.Model;
 import com.android.clup.model.Preferences;
-import com.android.clup.model.Reservation;
 import com.android.clup.ui.Utils;
 
 public class MainViewModel extends ViewModel {
+    @NonNull
     private final Model model;
 
     public MainViewModel() {
         this.model = Model.getInstance();
-    }
-
-    /**
-     * Return the last theme selected by the user or the default one (if user didn't set any theme).
-     */
-    public int getTheme() {
-        return Preferences.getTheme();
-    }
-
-    public void setSelectedReservationPosition(final int position) {
-        this.model.setSelectedReservationIndex(position);
-    }
-
-    public Reservation getSelectedReservation() {
-        return this.model.getSelectedReservation();
     }
 
     /**

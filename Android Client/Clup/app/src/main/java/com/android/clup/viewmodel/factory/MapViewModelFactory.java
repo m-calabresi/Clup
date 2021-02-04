@@ -20,7 +20,7 @@ public class MapViewModelFactory implements ViewModelProvider.Factory {
     }
 
     /**
-     * Creates a new instance of {@link MapViewModel} such that it can accept the Activity parameter.
+     * Creates a new instance of {@link MapViewModel} such that it can accept an Activity parameter.
      */
     @NonNull
     @Override

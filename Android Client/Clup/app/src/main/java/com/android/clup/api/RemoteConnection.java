@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class RemoteConnection {
+    @NonNull
     private static final String URL_TEST_CONNECTION = "http://clients3.google.com/generate_204";
     private static final int DEFAULT_TIMEOUT_DURATION = 3000;
 

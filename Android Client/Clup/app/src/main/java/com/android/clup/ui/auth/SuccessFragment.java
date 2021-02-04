@@ -19,6 +19,7 @@ import com.android.clup.viewmodel.AuthViewModel;
 
 public class SuccessFragment extends Fragment {
 
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     @NonNull
     public static SuccessFragment newInstance() {
         return new SuccessFragment();

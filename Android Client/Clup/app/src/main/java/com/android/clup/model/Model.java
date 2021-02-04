@@ -17,17 +17,47 @@ public final class Model {
     public static final int INVALID_INDEX = -1;
 
     //--- USER DATA ---
+    /**
+     * A friendly name to be displayed to the user.
+     */
+    @Nullable
     private String friendlyName;
+
+    /**
+     * The complete name of the user.
+     */
+    @Nullable
     private String fullname;
 
     //--- SHOPS DATA ---
+    /**
+     * The list of available shops that are available for booking.
+     */
+    @Nullable
     private List<Shop> shops;
+    /**
+     * The index of the {@link #shops} corresponding to the selected shop.
+     */
     private int selectedShopIndex;
+    /**
+     * The index of the selected shop, indicating the selected day.
+     */
     private int selectedDayIndex;
+    /**
+     * The index of the selected day, indicating the selected hour.
+     */
     private int selectedHourIndex;
 
     //--- RESERVATIONS DATA ---
+    /**
+     * The list of reservations made by the user.
+     */
+    @Nullable
     private List<Reservation> reservations;
+    /**
+     * The index of the {@link #reservations} corresponding to the reservation the user is currently
+     * interacting with.
+     */
     private int selectedReservationIndex;
 
     private Model() {
@@ -111,7 +141,7 @@ public final class Model {
 
     public void addReservation(@NonNull final Reservation reservation) {
         getReservations().add(reservation);
-        JsonParser.saveReservations(this.reservations);
+        JsonParser.saveReservations(Objects.requireNonNull(this.reservations));
     }
 
     public void setFriendlyName(@NonNull final String friendlyName) {
@@ -155,6 +185,6 @@ public final class Model {
     public void setSelectedReservationNotificationInfo(final int notificationStatus, final int timeNotice) {
         getSelectedReservation().setNotificationStatus(notificationStatus);
         getSelectedReservation().setTimeNotice(timeNotice);
-        JsonParser.saveReservations(this.reservations);
+        JsonParser.saveReservations(Objects.requireNonNull(this.reservations));
     }
 }

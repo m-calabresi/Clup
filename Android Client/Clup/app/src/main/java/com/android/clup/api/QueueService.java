@@ -23,7 +23,7 @@ public class QueueService {
     }
 
     /**
-     * Returns the UUID code associated to the Queue in which the user is being added.
+     * Return the UUID code associated to the Queue in which the user is being added.
      */
     public void getUuid(@NonNull final String username, @NonNull final String shopName, @NonNull final String date,
                         @NonNull final String hour, @NonNull final Callback<String> callback) {
@@ -35,6 +35,9 @@ public class QueueService {
         });
     }
 
+    /**
+     * Return the list of shops available for a reservation.
+     */
     public void getShops(@NonNull final Callback<List<Shop>> callback) {
         executor.execute(() -> {
             // TODO replace with API call

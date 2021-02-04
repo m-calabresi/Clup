@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModel;
@@ -34,9 +35,11 @@ import java.util.List;
 import static android.content.Context.LOCATION_SERVICE;
 
 public class MapViewModel extends ViewModel {
+    @NonNull
     private final Model model;
 
     // The entry point to the Fused Location Provider.
+    @NonNull
     private final FusedLocationProviderClient fusedLocationProviderClient;
 
     private static final int DEFAULT_ZOOM = 15;
@@ -45,9 +48,11 @@ public class MapViewModel extends ViewModel {
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
+    @Nullable
     private Location lastKnownLocation;
     private GoogleMap map;
 
+    @NonNull
     private final QueueService queueService;
 
     public static final float BOTTOM_SHEET_HALF_EXPANDED_RATIO = 0.6f;

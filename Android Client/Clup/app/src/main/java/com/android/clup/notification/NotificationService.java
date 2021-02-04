@@ -82,6 +82,7 @@ public class NotificationService {
      * @param timeNotice          the amount of time (chosen by the user in another context) before the
      *                            actual appointment the user chosen to be notified at.
      */
+    @NonNull
     private static Notification buildNotification(@NonNull final Context context, final int notificationId,
                                                   final int reservationPosition, @NonNull final String shopName,
                                                   @NonNull final String timeNotice) {

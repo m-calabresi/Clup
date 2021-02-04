@@ -36,6 +36,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Unit;
 
+/**
+ * Utility class used to quickly retrieve useful methods that can be executed on the UI thread.
+ */
 public class Utils {
     private static final int DEFAULT_ANIMATION_DURATION = 200; // milliseconds
 
@@ -67,7 +70,7 @@ public class Utils {
 
     /**
      * Enables the given button to expose a progress bar animation upon clicked.
-     * Must be called before {@link #showProgressBar(Button)}
+     * Must be called before {@link #showProgressBar(Button)}.
      */
     public static void enableProgressButton(@NonNull final Button button, @NonNull final LifecycleOwner lifecycleOwner) {
         ProgressButtonHolderKt.bindProgressButton(lifecycleOwner, button);
@@ -76,7 +79,7 @@ public class Utils {
 
     /**
      * Shows the progress bar animation on the given button upon clicked.
-     * Must be called after {@link #enableProgressButton(Button, LifecycleOwner)}
+     * Must be called after {@link #enableProgressButton(Button, LifecycleOwner)}.
      */
     public static void showProgressBar(@NonNull final Button button) {
         button.setClickable(false);
@@ -95,7 +98,7 @@ public class Utils {
 
     /**
      * Ends the progress bar animation on the given device.
-     * Must be called after {@link #showProgressBar(Button)}
+     * Must be called after {@link #showProgressBar(Button)}.
      */
     public static void hideProgressBar(@NonNull final Button button, @NonNull final String newButtonText) {
         // stop spinning animation
@@ -105,6 +108,9 @@ public class Utils {
         });
     }
 
+    /**
+     * Displays an AlertDialog.
+     */
     @SuppressWarnings("SameParameterValue")
     private static void displayAlertDialog(@NonNull final Context context, @StringRes final int title,
                                            @StringRes final int message, @StringRes final int buttonText) {
@@ -118,7 +124,7 @@ public class Utils {
     }
 
     /**
-     * Displays an AlertDialog
+     * Displays an AlertDialog.
      */
     @SuppressWarnings("SameParameterValue")
     private static void displayAlertDialog(@NonNull final Context context,
@@ -234,7 +240,7 @@ public class Utils {
     }
 
     /**
-     * Displays a SnackBar telling the user that a reservation error has occurred
+     * Displays a SnackBar telling the user that a reservation error has occurred.
      */
     public static void displayReservationErrorSnackBar(@NonNull final View parent, @NonNull final View anchorView) {
         displayErrorSnackbar(parent, anchorView, R.string.reservation_error_text);
@@ -310,7 +316,7 @@ public class Utils {
     }
 
     /**
-     * Hides the given view
+     * Hides the given view.
      */
     public static void reduceHeight(@NonNull final View view) {
         view.post(() -> view.setVisibility(View.GONE));

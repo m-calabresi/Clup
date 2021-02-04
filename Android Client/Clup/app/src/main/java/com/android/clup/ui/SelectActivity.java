@@ -70,6 +70,9 @@ public class SelectActivity extends AppCompatActivity {
         this.viewModel.getGroupIdLiveData().observe(this, this.doneButtonGroupIdLiveDataObserver);
     }
 
+    /**
+     * Switch to the next Activity.
+     */
     private void switchToNextActivity() {
         new Handler(Looper.getMainLooper()).post(() -> {
             final Intent intent = new Intent(this, DetailsActivity.class);
@@ -78,6 +81,9 @@ public class SelectActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Shows an error snackbar.
+     */
     private void showReservationError() {
         this.doneButton.post(() -> {
             this.doneButton.setClickable(true);
@@ -99,6 +105,12 @@ public class SelectActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Called every time a back action is performed (both from the navigation back button and from the back
+     * arrow in the toolbar).
+     * <p>
+     * Close the current activity and go back to the previous one.
+     */
     private void onBackActionPerformed() {
         this.viewModel.resetSelectedShopPosition();
         this.viewModel.resetSelectedDayPosition();

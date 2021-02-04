@@ -31,6 +31,10 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Swap the current fragment to the given one.
+     * If the fragment already exists it is not recreated.
+     */
     private void replaceFragment(@NonNull final Class<? extends Fragment> fragmentClass) {
         for (Fragment f : getSupportFragmentManager().getFragments()) {
             if (f.getClass().equals(fragmentClass)) {
@@ -48,6 +52,9 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Replace the current fragment to the given one.
+     */
     private void replace(@NonNull final Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_enter, R.anim.slide_exit)

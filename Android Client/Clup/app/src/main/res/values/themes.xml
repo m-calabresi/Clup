@@ -128,8 +128,8 @@
     </style>
 
     <style name="AppTheme.Clup.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/lime_900</item>
-        <item name="iconTint">@color/lime_900</item>
+        <item name="android:textColor">@color/lime_600</item>
+        <item name="iconTint">@color/lime_600</item>
         <item name="rippleColor">@color/white</item>
     </style>
 
@@ -215,7 +215,7 @@
         <item name="android:layout_margin">@dimen/card_view_margin</item>
 
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
-        <item name="rippleColor">@color/black_alpha_10</item>
+        <item name="rippleColor">@color/black_alpha_09</item>
     </style>
 
     <style name="AppTheme.Clup.TopRoundedCardView" parent="">

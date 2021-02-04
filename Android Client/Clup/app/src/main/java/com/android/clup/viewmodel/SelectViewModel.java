@@ -38,6 +38,7 @@ public class SelectViewModel extends ViewModel {
     /**
      * Return the shop selected by the user.
      */
+    @NonNull
     public Shop getSelectedShop() {
         return this.model.getSelectedShop();
     }
@@ -118,7 +119,7 @@ public class SelectViewModel extends ViewModel {
     /**
      * Save the reservation made by the user, then notify the caller about the result.
      */
-    public void bookReservation(Callback<Boolean> callback) {
+    public void bookReservation(@NonNull Callback<Boolean> callback) {
         final String shopName = this.model.getSelectedShop().getName();
         final Date date = this.model.getSelectedDay().getDate();
         final String hour = this.model.getSelectedHour();

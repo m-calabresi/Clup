@@ -16,8 +16,10 @@ import com.android.clup.model.Shop;
 import java.util.List;
 
 public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    @NonNull
     private final OnRecyclerViewItemClickedCallback itemListener;
 
+    @NonNull
     private final List<Shop> shops;
 
     public class ShopViewHolder extends RecyclerView.ViewHolder {

@@ -28,6 +28,7 @@ import net.glxn.qrgen.android.QRCode;
 public class DetailsViewModel extends ViewModel {
     private static final int QR_CODE_SIZE = 1024;
 
+    @NonNull
     private final Model model;
 
     public DetailsViewModel() {
@@ -136,7 +137,6 @@ public class DetailsViewModel extends ViewModel {
      * THis method handles both the graphical part and the calls to the logical part.
      */
     public void toggleNotification(@NonNull final Context context, @NonNull final Button button) {
-        Log.i("AAA", "Current notification status is: " + this.model.getSelectedReservation().getNotificationStatus());
 
         if (this.model.getSelectedReservation().getNotificationStatus() == Reservation.NotificationStatus.ENABLED) {
             conditionallyDisableNotifications(context);
@@ -151,10 +151,8 @@ public class DetailsViewModel extends ViewModel {
             toggleNotification(context, button, iconId, actionId, notificationStatus, timeNotice, snackbarTextId);
         } else {
             final int currentTimeNotice = this.model.getSelectedReservation().getTimeNotice();
-            Log.i("AAA", "Current time notice is " + currentTimeNotice);
 
             Utils.displayNotificationAlertDialog(context, currentTimeNotice, newTimeNotice -> {
-                Log.i("AAA", "New time notice is " + newTimeNotice);
 
                 NotificationService.enableNotificationReceiver(context);
                 scheduleNotification(context, newTimeNotice);
@@ -241,7 +239,7 @@ public class DetailsViewModel extends ViewModel {
 
     /**
      * Check whether exists at least one reservation that has a notification set and, if so, returns
-     * true;
+     * true.
      */
     private boolean isAnyNotificationSet() {
         for (Reservation reservation : this.model.getReservations())

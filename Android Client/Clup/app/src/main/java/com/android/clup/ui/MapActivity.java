@@ -45,7 +45,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private final BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
         @Override
         public void onStateChanged(@NonNull final View bottomSheet, final int newState) {
-            // hides the collapsed ui when bottom sheet is fully expanded
+            // hides the collapsed UI when bottom sheet is fully expanded
             if (BottomSheetBehavior.STATE_EXPANDED == newState) {
                 Utils.hideView(backButton);
                 Utils.hideView(locationButton);

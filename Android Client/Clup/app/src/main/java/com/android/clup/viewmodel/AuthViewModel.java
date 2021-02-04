@@ -1,9 +1,7 @@
 package com.android.clup.viewmodel;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -21,10 +19,10 @@ import com.android.clup.json.JsonParser;
 import com.android.clup.model.Model;
 import com.android.clup.model.Preferences;
 import com.android.clup.notification.NotificationService;
-import com.android.clup.ui.MainActivity;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 public class AuthViewModel extends ViewModel {
+    @NonNull
     private final Model model;
 
     @NonNull
@@ -243,17 +241,6 @@ public class AuthViewModel extends ViewModel {
             view.setVisibility(View.VISIBLE);
         else
             view.setVisibility(View.INVISIBLE);
-    }
-
-    /**
-     * Enable MainActivity as entry point.
-     */
-    public void enableMainEntryPoint(@NonNull final Activity activity) {
-        final PackageManager packageManager = activity.getPackageManager();
-
-        // enable MainActivity at startup
-        packageManager.setComponentEnabledSetting(new ComponentName(activity, MainActivity.class),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
 
     /**

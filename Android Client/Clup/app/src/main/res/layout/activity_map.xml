@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|start"
             android:clickable="true"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/accessibility_action_back"
             android:focusable="true"
             android:src="@drawable/ic_arrow_back"
             app:fabSize="mini" />
@@ -58,7 +58,7 @@
             android:layout_marginEnd="@dimen/fab_margin_end"
             android:layout_marginBottom="@dimen/fab_margin_bottom"
             android:clickable="true"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/accessibility_action_location"
             android:focusable="true"
             app:layout_anchor="@+id/map_recycler_view"
             app:layout_anchorGravity="top|end"

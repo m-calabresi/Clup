@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
+/**
+ * An available day represents a day in which it is possible to book a reservation at a certain shop.
+ */
 public class AvailableDay {
     @NonNull
     private final Date date;

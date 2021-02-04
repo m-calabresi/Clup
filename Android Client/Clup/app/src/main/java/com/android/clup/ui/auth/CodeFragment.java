@@ -94,6 +94,7 @@ public class CodeFragment extends Fragment {
         this.countDownTimer.start();
     };
 
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     @NonNull
     public static CodeFragment newInstance() {
         return new CodeFragment();
@@ -154,10 +155,16 @@ public class CodeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    /**
+     * Enable the retry button.
+     */
     private void enableRetryButton() {
         this.retryButton.post(() -> this.retryButton.setEnabled(true));
     }
 
+    /**
+     * Show an error hint associated to the textview the user is typing in.
+     */
     private void showErrorHint() {
         this.codeInputLayout.post(() -> {
             final String errorMessage = getString(R.string.error_code);
@@ -165,6 +172,9 @@ public class CodeFragment extends Fragment {
         });
     }
 
+    /**
+     * Switch to the next fragment.
+     */
     private void switchToNextFragment() {
         new Handler(Looper.getMainLooper()).post(() -> {
             this.verifyButton.setVisibility(View.INVISIBLE);

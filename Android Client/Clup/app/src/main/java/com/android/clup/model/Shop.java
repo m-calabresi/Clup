@@ -6,11 +6,23 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
+/**
+ * A shop that is available to receive booking requests for reservations.
+ */
 public class Shop {
+    /**
+     * The name of the shop.
+     */
     @NonNull
     private final String name;
+    /**
+     * The coordinates of the shop.
+     */
     @NonNull
     private final LatLng coordinates;
+    /**
+     * The list of available days associated to a shop.
+     */
     @NonNull
     private final List<AvailableDay> availableDays;
 

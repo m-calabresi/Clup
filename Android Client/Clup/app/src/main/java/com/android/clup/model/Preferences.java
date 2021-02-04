@@ -8,10 +8,17 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.android.clup.ApplicationContext;
 
+/**
+ * A helper class used to load and store shared preferences.
+ */
 public class Preferences {
+    @NonNull
     private static final String PREF_FRIENDLY_NAME = "com.android.Clup.FriendlyName";
+    @NonNull
     private static final String PREF_FULL_NAME = "com.android.Clup.Fullname";
+    @NonNull
     private static final String PREF_THEME = "com.android.Clup.Theme";
+    @NonNull
     private static final String PREF_FIRST_TIME_NAME = "com.android.Clup.FirstTime";
 
     private Preferences() {
@@ -52,6 +59,9 @@ public class Preferences {
         return getBooleanPreference(PREF_FIRST_TIME_NAME, true);
     }
 
+    /**
+     * Set the given string preference associated to the corresponding name.
+     */
     private static void setStringPreference(@NonNull final String name, @NonNull final String value) {
         final SharedPreferences mPreferences = ApplicationContext.get().getSharedPreferences(name, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = mPreferences.edit();
@@ -59,6 +69,9 @@ public class Preferences {
         editor.apply();
     }
 
+    /**
+     * Return the string preference associated to the specified name.
+     */
     @NonNull
     private static String getStringPreference(@NonNull final String name) {
         final SharedPreferences mPreferences = ApplicationContext.get().getSharedPreferences(name, Context.MODE_PRIVATE);
@@ -69,6 +82,9 @@ public class Preferences {
         throw new NullPointerException("No preference found that matches the given name: " + name);
     }
 
+    /**
+     * Set the given integer preference associated to the corresponding name.
+     */
     @SuppressWarnings("SameParameterValue")
     private static void setIntPreference(@NonNull final String name, final int value) {
         final SharedPreferences mPreferences = ApplicationContext.get().getSharedPreferences(name, Context.MODE_PRIVATE);
@@ -77,12 +93,18 @@ public class Preferences {
         editor.apply();
     }
 
+    /**
+     * Return the integer preference associated to the specified name.
+     */
     @SuppressWarnings("SameParameterValue")
     private static int getIntPreference(@NonNull final String name, final int defaultValue) {
         final SharedPreferences mPreferences = ApplicationContext.get().getSharedPreferences(name, Context.MODE_PRIVATE);
         return mPreferences.getInt(name, defaultValue);
     }
 
+    /**
+     * Set the given boolean preference associated to the corresponding name.
+     */
     @SuppressWarnings("SameParameterValue")
     private static void setBooleanPreference(@NonNull final String name, final boolean value) {
         final SharedPreferences mPreferences = ApplicationContext.get().getSharedPreferences(name, Context.MODE_PRIVATE);
@@ -91,6 +113,9 @@ public class Preferences {
         editor.apply();
     }
 
+    /**
+     * Return the boolean preference associated to the specified name.
+     */
     @SuppressWarnings("SameParameterValue")
     private static boolean getBooleanPreference(@NonNull final String name, final boolean defaultValue) {
         final SharedPreferences mPreferences = ApplicationContext.get().getSharedPreferences(name, Context.MODE_PRIVATE);

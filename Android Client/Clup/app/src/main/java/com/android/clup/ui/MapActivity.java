@@ -2,6 +2,8 @@ package com.android.clup.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
-import com.android.clup.adapter.ShopRecyclerViewAdapter;
 import com.android.clup.adapter.OnRecyclerViewItemClickedCallback;
+import com.android.clup.adapter.ShopRecyclerViewAdapter;
+import com.android.clup.concurrent.Result;
+import com.android.clup.model.Shop;
 import com.android.clup.viewmodel.MapViewModel;
 import com.android.clup.viewmodel.factory.MapViewModelFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +28,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, OnRecyclerViewItemClickedCallback {
@@ -82,11 +87,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //final List<Shop> shops = this.viewModel.getShops();
-        // TODO add markers on the map
+        this.viewModel.getShops(result -> {
+            if (result instanceof Result.Success) {
+                final List<Shop> shops = ((Result.Success<List<Shop>>) result).data;
 
-        final ShopRecyclerViewAdapter adapter = new ShopRecyclerViewAdapter(this, this.viewModel);
-        recyclerView.setAdapter(adapter);
+                final ShopRecyclerViewAdapter adapter = new ShopRecyclerViewAdapter(this, shops);
+                recyclerView.setAdapter(adapter);
+
+                // TODO add markers on the map
+            } else
+                displayErrorSnackBar();
+        });
 
         this.bottomSheetBehavior = BottomSheetBehavior.from(recyclerView);
         this.bottomSheetBehavior.setFitToContents(false);
@@ -130,6 +141,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     /**
      * Handle the result of a recyclerview item being clicked.
+     * <p>
+     * NOTE: the user must be able to select a shop only one time (this means that a user can go
+     * to a shop only once per week). This is necessary since the shop name is used as identifier
+     * for the reservation both on client and on server.
      */
     @Override
     public void onRecyclerViewItemClicked(final int position) {
@@ -137,5 +152,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         final Intent intent = new Intent(this, SelectActivity.class);
         startActivity(intent);
         this.viewModel.handleExpansion(this.bottomSheetBehavior);
+    }
+
+    /**
+     * Display an error SnackBar.
+     */
+    private void displayErrorSnackBar() {
+        new Handler(Looper.getMainLooper()).post(() ->
+                Utils.displayShopsErrorSnackBar(findViewById(R.id.layout_activity_map)));
     }
 }

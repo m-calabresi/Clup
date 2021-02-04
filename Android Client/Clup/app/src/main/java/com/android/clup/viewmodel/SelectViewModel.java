@@ -10,11 +10,11 @@ import com.android.clup.R;
 import com.android.clup.api.QueueService;
 import com.android.clup.concurrent.Callback;
 import com.android.clup.concurrent.Result;
-import com.android.clup.model.AvailableDay;
 import com.android.clup.model.Date;
 import com.android.clup.model.Model;
 import com.android.clup.model.Reservation;
 import com.android.clup.model.Shop;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -52,13 +52,6 @@ public class SelectViewModel extends ViewModel {
     }
 
     /**
-     * Return the day selected by the user.
-     */
-    public AvailableDay getSelectedDay() {
-        return this.model.getSelectedDay();
-    }
-
-    /**
      * Store index corresponding to the day selected by the user.
      */
     public void setSelectedDayPosition(final int position) {
@@ -70,13 +63,6 @@ public class SelectViewModel extends ViewModel {
      */
     public void resetSelectedDayPosition() {
         this.model.resetSelectedDayIndex();
-    }
-
-    /**
-     * Return the hour selected by the user.
-     */
-    public String getSelectedHour() {
-        return this.model.getSelectedHour();
     }
 
     /**
@@ -136,6 +122,7 @@ public class SelectViewModel extends ViewModel {
         final String shopName = this.model.getSelectedShop().getName();
         final Date date = this.model.getSelectedDay().getDate();
         final String hour = this.model.getSelectedHour();
+        final LatLng coords = this.model.getSelectedShop().getCoordinates();
 
         this.queueService.getUuid(this.model.getFullname(), shopName, date.plain(), hour, result -> {
             Result<Boolean> bookResult;
@@ -143,8 +130,10 @@ public class SelectViewModel extends ViewModel {
             if (result instanceof Result.Success) {
                 final String uuid = ((Result.Success<String>) result).data;
 
-                final Reservation reservation = new Reservation(shopName, date, hour, uuid);
+                final Reservation reservation = new Reservation(shopName, date, hour, uuid, coords);
                 this.model.addReservation(reservation);
+                // last reservation added is put in the last position of the list
+                this.model.setSelectedReservationIndex(this.model.getReservations().size() - 1);
 
                 bookResult = new Result.Success<>(true);
             } else {

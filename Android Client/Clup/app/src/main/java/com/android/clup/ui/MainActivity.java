@@ -24,6 +24,40 @@ public class MainActivity extends AppCompatActivity {
     private final View.OnClickListener bookButtonOnClickListener = view -> {
         final Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
+
+        /*this.viewModel.setSelectedReservationPosition(0);
+        final Intent intent = new Intent(this, DetailsActivity.class);
+        startActivity(intent);*/
+
+        // date: 11-03-2021, 12:00:00 expected millis: 1615460400000
+        /*
+        // THIS IS A TEST CASE
+        int year = 2021;
+        int month = 3;
+        int day = 11;
+        int hour = 12;
+        int minute = 0;
+        int second = 0;
+        int millisecond = 0;
+
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
+        calendar.set(Calendar.MILLISECOND, millisecond);
+
+        Log.i("AAA", "date: " + calendar.getTimeInMillis());
+
+        final int minutesDelay = 15;
+        long millisDelay = 15 * 60 * 1000;
+
+        Log.i("AAA", "delay: " + millisDelay);
+
+        final long notificationDisplayTime = calendar.getTimeInMillis() - millisDelay;
+        Log.i("AAA", "display time: " + notificationDisplayTime);*/
     };
 
     @Override
@@ -58,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
         if (item.getItemId() == R.id.action_settings_theme) {
-            Utils.displayThemesAlertDialog(this);
+            this.viewModel.displayThemesAlertDialog(this);
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -39,6 +39,11 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <!-- DETAILS ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Details" parent="AppTheme.Clup.Select">
+
+    </style>
+
     <!-- SPLASH SCREEN THEME -->
     <style name="AppTheme.Clup.Splash" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>

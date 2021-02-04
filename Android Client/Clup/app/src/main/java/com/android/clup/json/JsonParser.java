@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.android.clup.ApplicationContext;
 import com.android.clup.model.Date;
 import com.android.clup.model.Reservation;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +37,16 @@ public class JsonParser {
     private static final String HOUR_NAME = "hour";
     @NonNull
     private static final String UUID_NAME = "uuid";
+    @NonNull
+    private static final String COORDS_NAME = "coords";
+    @NonNull
+    private static final String LAT_NAME = "lat";
+    @NonNull
+    private static final String LNG_NAME = "lng";
+    @NonNull
+    private static final String NOTIFICATION_STATUS_NAME = "notificationStatus";
+    @NonNull
+    private static final String TIME_NOTICE = "timeNotice";
 
     @NonNull
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -98,10 +109,24 @@ public class JsonParser {
             final Date date = Date.fromString(jsonReservation.getString(DATE_NAME));
             final String hour = jsonReservation.getString(HOUR_NAME);
             final String uuid = jsonReservation.getString(UUID_NAME);
+            final LatLng coords = JsonParser.toCoords(jsonReservation.getJSONObject(COORDS_NAME));
+            final int notificationStatus = jsonReservation.getInt(NOTIFICATION_STATUS_NAME);
+            final int timeNotice = jsonReservation.getInt(TIME_NOTICE);
 
-            return new Reservation(shopName, date, hour, uuid);
+            return new Reservation(shopName, date, hour, uuid, coords, notificationStatus, timeNotice);
         } catch (JSONException e) {
             throw new RuntimeException("Unable to convert JSONObject to Reservation: " + e.getLocalizedMessage());
+        }
+    }
+
+    @NonNull
+    private static LatLng toCoords(@NonNull final JSONObject coordsArray) {
+        try {
+            final double lat = coordsArray.getDouble(LAT_NAME);
+            final double lng = coordsArray.getDouble(LNG_NAME);
+            return new LatLng(lat, lng);
+        } catch (JSONException e) {
+            throw new RuntimeException("Unable to convert JSONObject to LatLng: " + e.getLocalizedMessage());
         }
     }
 
@@ -136,10 +161,25 @@ public class JsonParser {
             jsonReservation.put(DATE_NAME, reservation.getDate().plain());
             jsonReservation.put(HOUR_NAME, reservation.getHour());
             jsonReservation.put(UUID_NAME, reservation.getUuid());
+            jsonReservation.put(COORDS_NAME, JsonParser.toJsonCoords(reservation.getCoords()));
+            jsonReservation.put(NOTIFICATION_STATUS_NAME, reservation.getNotificationStatus());
+            jsonReservation.put(TIME_NOTICE, reservation.getTimeNotice());
 
             return jsonReservation;
         } catch (JSONException e) {
             throw new RuntimeException("Unable to convert Reservation to JSONObject: " + e.getLocalizedMessage());
+        }
+    }
+
+    @NonNull
+    private static JSONObject toJsonCoords(@NonNull final LatLng coords) {
+        try {
+            final JSONObject jsonCoords = new JSONObject();
+            jsonCoords.put(LAT_NAME, coords.latitude);
+            jsonCoords.put(LNG_NAME, coords.longitude);
+            return jsonCoords;
+        } catch (JSONException e) {
+            throw new RuntimeException("Unable to convert LatLng to JSONObject: " + e.getLocalizedMessage());
         }
     }
 

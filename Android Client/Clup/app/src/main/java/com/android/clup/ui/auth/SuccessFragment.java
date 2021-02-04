@@ -27,7 +27,7 @@ public class SuccessFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         final AuthViewModel viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-        viewModel.finalizeAuth();
+        viewModel.finalizeAuth(requireContext());
 
         super.onCreate(savedInstanceState);
     }

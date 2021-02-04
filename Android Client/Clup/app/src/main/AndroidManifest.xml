@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".ApplicationContext"
@@ -17,18 +18,43 @@
         android:theme="@style/AppTheme.Clup.Main"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute">
-        <activity android:name=".ui.DetailsActivity" />
+
+        <receiver
+            android:name=".notification.NotificationElapsedBroadcastReceiver"
+            android:process=":remote" />
+
+        <receiver
+            android:name=".notification.NotificationDeviceBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".notification.NotificationActionBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name=".notification.NotificationService.ACTION_DIRECTIONS" />
+            </intent-filter>
+        </receiver>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".ui.DetailsActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme.Clup.Details" />
+        <activity
             android:name=".ui.SelectActivity"
+            android:parentActivityName=".ui.MapActivity"
             android:theme="@style/AppTheme.Clup.Select" />
         <activity
             android:name=".ui.MapActivity"
             android:label="@string/title_activity_map"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.Clup.Map" />
         <activity
             android:name=".ui.MainActivity"
@@ -41,6 +67,7 @@
         </activity>
         <activity
             android:name=".ui.auth.AuthActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.Clup.Splash"
             android:windowSoftInputMode="stateVisible" />
     </application>

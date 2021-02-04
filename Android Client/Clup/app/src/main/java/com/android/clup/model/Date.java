@@ -21,8 +21,11 @@ public class Date {
 
     private Date(final int day, final int month, final int year) {
         this.calendar = Calendar.getInstance(Locale.getDefault());
-        this.calendar.set(year, month, day);
-        this.sdf = new SimpleDateFormat("EEEE d, MMMM", Locale.getDefault());
+        this.calendar.set(Calendar.YEAR, year);
+        this.calendar.set(Calendar.MONTH, month - 1);
+        this.calendar.set(Calendar.DAY_OF_MONTH, day);
+
+        this.sdf = new SimpleDateFormat("EEEE, d MMMM", Locale.getDefault());
 
         this.plainDate = day + "-" + month + "-" + year;
     }
@@ -45,5 +48,23 @@ public class Date {
     @NonNull
     public String plain() {
         return this.plainDate;
+    }
+
+    /**
+     * Takes as input an hour and outputs the complete time in millis.
+     * Hour must be in the format hh:mm.
+     */
+    public double toMillis(@NonNull final String hour) {
+        final Integer[] timeArray = Arrays.stream(hour.split(":")).map(Integer::parseInt).toArray(Integer[]::new);
+        this.calendar.set(Calendar.HOUR_OF_DAY, timeArray[0]);
+        this.calendar.set(Calendar.MINUTE, timeArray[1]);
+        this.calendar.set(Calendar.SECOND, 0);
+        this.calendar.set(Calendar.MILLISECOND, 0);
+
+        return this.calendar.getTimeInMillis();
+    }
+
+    public static double minutesToMillis(final int minutes) {
+        return minutes * 60 * 1000;
     }
 }

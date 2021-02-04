@@ -2,6 +2,7 @@ package com.android.clup.viewmodel;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.view.View;
 
@@ -19,6 +20,7 @@ import com.android.clup.concurrent.Callback;
 import com.android.clup.json.JsonParser;
 import com.android.clup.model.Model;
 import com.android.clup.model.Preferences;
+import com.android.clup.notification.NotificationService;
 import com.android.clup.ui.MainActivity;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
@@ -52,7 +54,7 @@ public class AuthViewModel extends ViewModel {
     public static final long INTERVAL = 1000;
 
     // SuccessFragment fields
-    public static final int TRANSITION_DELAY = 1000;
+    public static final int TRANSITION_DELAY = 1500;
 
     public AuthViewModel() {
         this.model = Model.getInstance();
@@ -258,7 +260,7 @@ public class AuthViewModel extends ViewModel {
      * Finalize the authentication by preparing the environment for the MainActivity.
      * In particular, initialize the json file that will store reservations and set the default app theme.
      */
-    public void finalizeAuth() {
+    public void finalizeAuth(@NonNull final Context context) {
         // disable AuthActivity: first time has been executed
         Preferences.setFirstTime(false);
 
@@ -267,6 +269,9 @@ public class AuthViewModel extends ViewModel {
 
         // initialize theme preference
         Preferences.setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
+        // initialize notification channel
+        NotificationService.createNotificationChannel(context);
     }
 
     /**

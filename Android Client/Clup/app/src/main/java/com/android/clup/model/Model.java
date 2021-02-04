@@ -1,6 +1,7 @@
 package com.android.clup.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.clup.json.JsonParser;
 
@@ -13,35 +14,33 @@ public final class Model {
         private static final Model INSTANCE = new Model();
     }
 
-    private static final int INVALID_INDEX = -1;
+    public static final int INVALID_INDEX = -1;
 
     //--- USER DATA ---
-    @NonNull
     private String friendlyName;
-    @NonNull
     private String fullname;
 
     //--- SHOPS DATA ---
-    @NonNull
     private List<Shop> shops;
     private int selectedShopIndex;
     private int selectedDayIndex;
     private int selectedHourIndex;
 
     //--- RESERVATIONS DATA ---
-    @NonNull
     private List<Reservation> reservations;
+    private int selectedReservationIndex;
 
     private Model() {
+        this.fullname = null;
+        this.friendlyName = null;
+
         this.shops = null;
         this.selectedShopIndex = INVALID_INDEX;
         this.selectedDayIndex = INVALID_INDEX;
         this.selectedHourIndex = INVALID_INDEX;
 
         this.reservations = null;
-
-        this.fullname = null;
-        this.friendlyName = null;
+        this.selectedReservationIndex = INVALID_INDEX;
     }
 
     @NonNull
@@ -53,7 +52,7 @@ public final class Model {
         this.shops = shops;
     }
 
-    @NonNull
+    @Nullable
     public List<Shop> getShops() {
         return this.shops;
     }
@@ -137,5 +136,25 @@ public final class Model {
         if (this.fullname == null)
             this.fullname = Preferences.getFullname();
         return this.fullname;
+    }
+
+    public void setSelectedReservationIndex(final int selectedReservationIndex) {
+        this.selectedReservationIndex = selectedReservationIndex;
+    }
+
+    public int getSelectedReservationIndex() {
+        if (this.selectedReservationIndex != INVALID_INDEX)
+            return this.selectedReservationIndex;
+        throw new NullPointerException("No index was set before calling this method, did you call 'setSelectedReservationIndex'?");
+    }
+
+    public Reservation getSelectedReservation() {
+        return getReservations().get(getSelectedReservationIndex());
+    }
+
+    public void setSelectedReservationNotificationInfo(final int notificationStatus, final int timeNotice) {
+        getSelectedReservation().setNotificationStatus(notificationStatus);
+        getSelectedReservation().setTimeNotice(timeNotice);
+        JsonParser.saveReservations(this.reservations);
     }
 }

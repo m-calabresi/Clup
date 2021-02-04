@@ -10,15 +10,14 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
+import com.android.clup.api.MapsService;
 import com.android.clup.model.Shop;
-import com.android.clup.viewmodel.MapViewModel;
 
 import java.util.List;
 
 public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final OnRecyclerViewItemClickedCallback itemListener;
 
-    private final MapViewModel viewModel;
     private final List<Shop> shops;
 
     public class ShopViewHolder extends RecyclerView.ViewHolder {
@@ -38,11 +37,11 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    public ShopRecyclerViewAdapter(@NonNull final OnRecyclerViewItemClickedCallback itemListener, @NonNull final MapViewModel viewModel) {
+    public ShopRecyclerViewAdapter(@NonNull final OnRecyclerViewItemClickedCallback itemListener,
+                                   @NonNull final List<Shop> shops) {
         super();
         this.itemListener = itemListener;
-        this.viewModel = viewModel;
-        this.shops = viewModel.getShops();
+        this.shops = shops;
     }
 
     @NonNull
@@ -66,7 +65,7 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         viewHolder.addressTextView.post(() -> {
             final String altText = viewHolder.itemView.getContext().getString(R.string.text_unknown_location);
-            final String address = this.viewModel.getAddressByCoordinates(shop.getCoordinates(), altText);
+            final String address = MapsService.getAddressByCoordinates(viewHolder.itemView.getContext(), shop.getCoordinates(), altText);
             viewHolder.addressTextView.setText(address);
         });
     }

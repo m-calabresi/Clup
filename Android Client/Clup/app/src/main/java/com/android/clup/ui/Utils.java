@@ -2,6 +2,7 @@ package com.android.clup.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.TypedValue;
@@ -10,7 +11,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
@@ -18,13 +22,17 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.android.clup.R;
+import com.android.clup.concurrent.SimpleCallback;
 import com.android.clup.model.Preferences;
+import com.android.clup.model.Reservation;
 import com.github.razir.progressbutton.ButtonTextAnimatorExtensionsKt;
 import com.github.razir.progressbutton.DrawableButton;
 import com.github.razir.progressbutton.DrawableButtonExtensionsKt;
 import com.github.razir.progressbutton.ProgressButtonHolderKt;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Unit;
 
@@ -97,55 +105,145 @@ public class Utils {
         });
     }
 
-    public static void displayConnectionErrorDialog(@NonNull final Context context) {
+    @SuppressWarnings("SameParameterValue")
+    private static void displayAlertDialog(@NonNull final Context context, @StringRes final int title,
+                                           @StringRes final int message, @StringRes final int buttonText) {
         new Handler(Looper.getMainLooper()).post(() ->
                 new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
-                        .setTitle(R.string.title_connection_error_alert_message)
-                        .setMessage(R.string.text_connection_error_alert_message)
-                        .setPositiveButton(R.string.action_ok, null)
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setPositiveButton(buttonText, null)
                         .create()
                         .show());
     }
 
     /**
+     * Displays an AlertDialog
+     */
+    @SuppressWarnings("SameParameterValue")
+    private static void displayAlertDialog(@NonNull final Context context,
+                                           @StringRes final int message, @StringRes final int buttonText) {
+        new Handler(Looper.getMainLooper()).post(() ->
+                new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
+                        .setMessage(message)
+                        .setPositiveButton(buttonText, null)
+                        .create()
+                        .show());
+    }
+
+    /**
+     * Displays an AlertDialog that notifies the user about a connection error.
+     */
+    public static void displayConnectionErrorDialog(@NonNull final Context context) {
+        displayAlertDialog(context, R.string.title_connection_error_alert_message,
+                R.string.text_connection_error_alert_message, R.string.action_ok);
+    }
+
+    /**
      * Displays the AlertDialog through which the user can choose the desired theme.
      */
-    public static void displayThemesAlertDialog(@NonNull final Context context) {
-        final int selectedPosition = mapToPosition(Preferences.getTheme());
+    public static void displayThemesAlertDialog(@NonNull final Context context,
+                                                @NonNull final SimpleCallback<Integer> callback) {
+        final int selectedPosition = mapThemeToPosition(Preferences.getTheme());
 
-        new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
-                .setTitle(R.string.title_theme_alert)
-                .setSingleChoiceItems(R.array.themes_array, selectedPosition, (dialog, which) -> {
-                    final int mode = mapToTheme(which);
-                    Preferences.setTheme(mode);
-                    AppCompatDelegate.setDefaultNightMode(mode);
-                    dialog.dismiss();
-                })
-                .create()
-                .show();
+        new Handler(Looper.getMainLooper()).post(() ->
+                new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
+                        .setTitle(R.string.title_theme_alert)
+                        .setSingleChoiceItems(R.array.themes_array, selectedPosition, (dialog, whichPosition) -> {
+                            final int mode = Utils.mapPositionToTheme(whichPosition);
+                            callback.onComplete(mode);
+                            dialog.dismiss();
+                        })
+                        .create()
+                        .show());
+    }
+
+    /**
+     * Displays the AlertDialog through which the user can choose the time notice to be notified about
+     * his current reservation.
+     */
+    public static void displayNotificationAlertDialog(@NonNull final Context context, final int currentTimeNotice,
+                                                      @NonNull final SimpleCallback<Integer> callback) {
+        final int selectedPosition = Utils.mapTimeNoticeToPosition(currentTimeNotice);
+        final AtomicReference<Integer> newSelectedPosition = new AtomicReference<>(-1);
+
+        new Handler(Looper.getMainLooper()).post(() ->
+                new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
+                        .setTitle(R.string.title_notify_alert)
+                        .setSingleChoiceItems(R.array.time_notices_array, selectedPosition, (dialog, whichPosition) -> {
+                            // when user clicks on an item, save his choice
+                            newSelectedPosition.set(whichPosition);
+                        })
+                        .setPositiveButton(R.string.action_done, (dialog, whichButton) -> {
+                            // when the user clicks OK, the selected time notice is returned
+                            final int selectedTimeNotice = Utils.mapPositionToTImeNotice(newSelectedPosition.get());
+                            callback.onComplete(selectedTimeNotice);
+                            dialog.dismiss();
+                        })
+                        .create()
+                        .show());
+    }
+
+    /**
+     * Displays an AlertDialog telling the user that there is no option to open maps navigation
+     * on his device.
+     */
+    public static void displayMapsNotFoundError(@NonNull final Context context) {
+        displayAlertDialog(context, R.string.text_maps_error_alert_dialog, R.string.action_ok);
     }
 
     /**
      * Displays an AlertDialog telling the user to enable location.
      */
     public static void displayLocationErrorDialog(@NonNull final Context context) {
-        new MaterialAlertDialogBuilder(context, R.style.AppTheme_Clup_RoundedAlertDialog)
-                .setMessage(R.string.text_location_error_alert_message)
-                .setPositiveButton(R.string.action_ok, null)
-                .create()
+        displayAlertDialog(context, R.string.text_location_error_alert_message, R.string.action_ok);
+    }
+
+    /**
+     * Displays a SnackBar that will be attached to the given anchor view.
+     */
+    @SuppressWarnings("SameParameterValue")
+    private static void displayErrorSnackbar(@NonNull final View parent, @Nullable final View anchorView,
+                                             @StringRes final int text) {
+        final TypedValue typedValue = new TypedValue();
+        final Resources.Theme theme = parent.getContext().getTheme();
+
+        theme.resolveAttribute(R.attr.colorError, typedValue, true);
+        @ColorInt int colorError = typedValue.data;
+
+        theme.resolveAttribute(R.attr.colorOnError, typedValue, true);
+        @ColorInt int colorOnError = typedValue.data;
+
+        Snackbar.make(parent, text, Snackbar.LENGTH_LONG)
+                .setAnchorView(anchorView)
+                .setBackgroundTint(colorError)
+                .setTextColor(colorOnError)
                 .show();
     }
 
-    public static void displayReservationErrorSnackBar(@NonNull final View parent, @NonNull final View anchorView) {
-        Snackbar.make(parent, R.string.reservation_error_text, Snackbar.LENGTH_LONG)
-                .setAnchorView(anchorView)
+    /**
+     * Displays a SnackBar.
+     */
+    public static void displaySnackbar(@NonNull final View parent, @StringRes final int text) {
+        Snackbar.make(parent, text, Snackbar.LENGTH_LONG)
                 .show();
+    }
+
+    public static void displayShopsErrorSnackBar(@NonNull final View parent) {
+        displayErrorSnackbar(parent, null, R.string.text_error_shops_snack_bar);
+    }
+
+    /**
+     * Displays a SnackBar telling the user that a reservation error has occurred
+     */
+    public static void displayReservationErrorSnackBar(@NonNull final View parent, @NonNull final View anchorView) {
+        displayErrorSnackbar(parent, anchorView, R.string.reservation_error_text);
     }
 
     /**
      * Maps a theme-preference value to the corresponding position in the AlertDialog.
      */
-    public static int mapToPosition(final int themeValue) {
+    private static int mapThemeToPosition(final int themeValue) {
         /*  -1 -> 2
          *   1 -> 0
          *   2 -> 1 */
@@ -157,7 +255,7 @@ public class Utils {
     /**
      * Maps the position in the AlertDialog to the corresponding theme-preference.
      */
-    public static int mapToTheme(final int position) {
+    private static int mapPositionToTheme(final int position) {
         switch (position) {
             case 0:
                 return AppCompatDelegate.MODE_NIGHT_NO;
@@ -165,6 +263,42 @@ public class Utils {
                 return AppCompatDelegate.MODE_NIGHT_YES;
             default:
                 return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        }
+    }
+
+    /**
+     * Maps the given time notice to the corresponding position in the AlertDialog.
+     */
+    private static int mapTimeNoticeToPosition(final int timeNoticeValue) {
+        switch (timeNoticeValue) {
+            case Reservation.TimeNotice.FIFTEEN_MINUTES:
+                return 0;
+            case Reservation.TimeNotice.THIRTY_MINUTES:
+                return 1;
+            case Reservation.TimeNotice.ONE_HOUR:
+                return 2;
+            case Reservation.TimeNotice.TWO_HOURS:
+                return 3;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Maps the given position to the corresponding time notice.
+     */
+    private static int mapPositionToTImeNotice(final int position) {
+        switch (position) {
+            case 0:
+                return Reservation.TimeNotice.FIFTEEN_MINUTES;
+            case 1:
+                return Reservation.TimeNotice.THIRTY_MINUTES;
+            case 2:
+                return Reservation.TimeNotice.ONE_HOUR;
+            case 3:
+                return Reservation.TimeNotice.TWO_HOURS;
+            default:
+                throw new RuntimeException("User selected to return NOT_SET, did you handle the logic properly?");
         }
     }
 

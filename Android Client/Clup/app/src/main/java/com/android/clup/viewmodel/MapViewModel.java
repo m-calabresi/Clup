@@ -2,8 +2,6 @@ package com.android.clup.viewmodel;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Handler;
@@ -17,8 +15,9 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModel;
 
 import com.android.clup.R;
-import com.android.clup.model.AvailableDay;
-import com.android.clup.model.Date;
+import com.android.clup.api.QueueService;
+import com.android.clup.concurrent.Callback;
+import com.android.clup.concurrent.Result;
 import com.android.clup.model.Model;
 import com.android.clup.model.Shop;
 import com.android.clup.ui.Utils;
@@ -30,10 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -42,7 +38,6 @@ public class MapViewModel extends ViewModel {
 
     // The entry point to the Fused Location Provider.
     private final FusedLocationProviderClient fusedLocationProviderClient;
-    private final Geocoder geocoder;
 
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -53,13 +48,16 @@ public class MapViewModel extends ViewModel {
     private Location lastKnownLocation;
     private GoogleMap map;
 
+    private final QueueService queueService;
+
     public static final float BOTTOM_SHEET_HALF_EXPANDED_RATIO = 0.6f;
 
     public MapViewModel(@NonNull final Activity activity) {
         this.model = Model.getInstance();
 
         this.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
-        this.geocoder = new Geocoder(activity, Locale.getDefault());
+
+        this.queueService = new QueueService();
     }
 
     public void setGoogleMap(@NonNull final GoogleMap map) {
@@ -172,80 +170,26 @@ public class MapViewModel extends ViewModel {
     }
 
     /**
-     * Returns the address associated to the given coordinates (if exists), a given placeholder string
-     * otherwise.
-     */
-    @NonNull
-    public String getAddressByCoordinates(@NonNull final LatLng coordinates, @NonNull final String altText) {
-        String address = "";
-        String city = "";
-        String state = "";
-
-        try {
-            final List<Address> addresses = this.geocoder.getFromLocation(coordinates.latitude, coordinates.longitude, 1);
-            if (addresses != null && addresses.size() > 0) {
-                // civic number or null
-                final String throughFare = addresses.get(0).getThoroughfare();
-
-                // street address or null
-                final String subThroughFare = addresses.get(0).getSubThoroughfare();
-
-                // "street address, civic number" or "street address" or ""
-                address = throughFare != null ? throughFare : "";
-                address += (subThroughFare != null && !address.equals("")) ? ", " + subThroughFare : "";
-
-                // "city" or ""
-                city = addresses.get(0).getLocality();
-                city = city != null ? city : "";
-
-                // "state" or ""
-                state = addresses.get(0).getAdminArea();
-                state = state != null ? state : "";
-            }
-        } catch (@NonNull final IOException e) {
-            e.printStackTrace();
-        }
-
-        // "address,\ncity, state" or "city, state" or "address\ncity" or "address,\nstate" or "address,\n" or "city," or "state" or ""
-        String completeAddress = "";
-        completeAddress += !address.equals("") ? address + "\n" : "";
-        completeAddress += !city.equals("") ? city + ", " : "";
-        completeAddress += !state.equals("") ? state : "";
-
-        // one of the above or "unknown location" string
-        completeAddress = !completeAddress.equals("") ? completeAddress : altText;
-        return completeAddress;
-    }
-
-    /**
      * Return the list of shops to be displayed in the UI.
-     * TODO replace with API call
      */
-    public List<Shop> getShops() {
+    public void getShops(@NonNull final Callback<List<Shop>> callback) {
         if (this.model.getShops() == null) {
-            // dummy list
-            final LatLng coords1 = new LatLng(45.4659, 9.1914);
-            final LatLng coords2 = new LatLng(1122.1, 1245.2);
-
-            final Date date1 = Date.fromString("11-02-2020");
-            final Date date2 = Date.fromString("12-02-2020");
-            final Date date3 = Date.fromString("13-02-2020");
-
-            final AvailableDay availableDay1 = new AvailableDay(date1, Arrays.asList("12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"));
-            final AvailableDay availableDay2 = new AvailableDay(date2, Arrays.asList("16:00", "17:00", "18:00", "19:00"));
-            final AvailableDay availableDay3 = new AvailableDay(date3, Arrays.asList("15:00", "16:00", "17:00", "20:00"));
-
-            final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay1, availableDay2, availableDay3, availableDay2, availableDay3, availableDay1, availableDay2, availableDay3, availableDay1, availableDay2, availableDay3);
-            //final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay2, availableDay3);
-
-            final Shop shop1 = new Shop("Local shop", coords1, availableDays);
-            final Shop shop2 = new Shop("Supermarket", coords2, availableDays);
-
-            //List<Shop> shops = Arrays.asList(shop1, shop2, shop1, shop2, shop1, shop2, shop1, shop2, shop1, shop2);
-            List<Shop> shops = Arrays.asList(shop1, shop2, shop1);
-            this.model.setShops(shops);
+            this.queueService.getShops(result -> {
+                Result<List<Shop>> shopsResult;
+                if (result instanceof Result.Success) {
+                    final List<Shop> shops = ((Result.Success<List<Shop>>) result).data;
+                    shopsResult = new Result.Success<>(shops);
+                    this.model.setShops(shops);
+                } else {
+                    final String errorMessage = ((Result.Error<List<Shop>>) result).message;
+                    shopsResult = new Result.Error<>(errorMessage);
+                }
+                callback.onComplete(shopsResult);
+            });
+        } else {
+            final Result.Success<List<Shop>> cached = new Result.Success<>(this.model.getShops());
+            callback.onComplete(cached);
         }
-        return this.model.getShops();
     }
 
     /**

@@ -1,35 +1,98 @@
 package com.android.clup.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
+import com.android.clup.model.Model;
 import com.android.clup.viewmodel.DetailsViewModel;
+
+import static com.android.clup.notification.NotificationService.EXTRA_POSITION;
 
 public class DetailsActivity extends AppCompatActivity {
     private DetailsViewModel viewModel;
+    private Button notifyButton;
+
+    private final View.OnClickListener notifyButtonOnClickListener = view -> this.viewModel.toggleNotification(this, this.notifyButton);
+    private final View.OnClickListener directionsButtonOnClickListener = view -> this.viewModel.navigateToSelectedShop(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        final ProgressBar progressBar = findViewById(R.id.progressBar);
-        final ImageView imageView = findViewById(R.id.imageView);
+        this.viewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
+
+        // enter the activity by clicking on the notification
+        if (getIntent().hasExtra(EXTRA_POSITION)) {
+            final int position = getIntent().getIntExtra(EXTRA_POSITION, Model.INVALID_INDEX);
+            this.viewModel.setSelectedReservationPosition(position);
+        }
+
+        final Toolbar toolbar = findViewById(R.id.details_toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        final CardView cardView = findViewById(R.id.details_qr_card_view);
+        this.viewModel.handleCardViewBackground(this, cardView);
 
         final int onColor = getResources().getColor(R.color.qr_code_on_color);
         final int offColor = getResources().getColor(R.color.qr_code_off_color);
 
-        this.viewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
-        final Bitmap qrCode = this.viewModel.generateQRCode(onColor, offColor);
-
-        progressBar.setVisibility(View.GONE);
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
+        final ImageView imageView = findViewById(R.id.qr_code_image_view);
+        final Bitmap qrCode = this.viewModel.getReservationQrCode(onColor, offColor);
         imageView.setImageBitmap(qrCode);
+        imageView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+
+        final String shopName = this.viewModel.getReservationShopName();
+        final TextView shopNameTextView = findViewById(R.id.shop_name_text_view);
+        shopNameTextView.setText(shopName);
+
+        final String date = this.viewModel.getReservationDate();
+        final TextView dateTextView = findViewById(R.id.date_text_view);
+        dateTextView.setText(date);
+
+        final String hour = this.viewModel.getReservationHour();
+        final TextView hourTextView = findViewById(R.id.hour_text_view);
+        hourTextView.setText(hour);
+
+        final Button directionsButton = findViewById(R.id.directions_button);
+        directionsButton.setOnClickListener(directionsButtonOnClickListener);
+
+        this.notifyButton = findViewById(R.id.notify_button);
+        this.viewModel.initButton(this.notifyButton);
+        this.notifyButton.setOnClickListener(notifyButtonOnClickListener);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.onBackActionPerformed();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.onBackActionPerformed();
+        this.finish();
+        return true;
+    }
+
+    private void onBackActionPerformed() {
+        final Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 }

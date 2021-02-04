@@ -10,9 +10,6 @@
         <item name="colorSecondary">@color/gray_900</item>
         <item name="colorSecondaryVariant">@color/lime_500</item>
         <item name="colorOnSecondary">@color/white</item>
-
-        <item name="snackbarStyle">@style/AppTheme.Clup.Snackbar.Style</item>
-        <item name="snackbarTextViewStyle">@style/AppTheme.Clup.Snackbar.Text</item>
     </style>
 
     <!-- MAIN ACTIVITY THEME -->
@@ -55,6 +52,19 @@
         <item name="android:background">?android:colorBackground</item>
     </style>
 
+    <!-- DETAILS ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Details" parent="AppTheme.Clup.Select">
+
+    </style>
+
+    <style name="AppTheme.Clup.Details.ConstraintLayout" parent="">
+        <item name="background">?android:colorBackground</item>
+    </style>
+
+    <style name="AppTheme.Clup.CoordinatorLayout" parent="Widget.Support.CoordinatorLayout">
+        <item name="android:background">?android:colorBackground</item>
+    </style>
+
     <!-- SPLASH SCREEN THEME -->
     <style name="AppTheme.Clup.Splash" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -80,8 +90,14 @@
         <item name="titleTextColor">@color/white</item>
     </style>
 
-    <!-- BUTTON FINAL THEME -->
+    <!-- BUTTON FINAL THEMES -->
     <style name="AppTheme.Clup.FilledRoundButton" parent="@style/AppTheme.Clup.MaterialRoundedButton">
+        <item name="rippleColor">@color/gray_800</item>
+    </style>
+
+    <style name="AppTheme.Clup.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/black</item>
+        <item name="iconTint">@color/black</item>
         <item name="rippleColor">@color/gray_800</item>
     </style>
 
@@ -119,6 +135,13 @@
         <item name="android:textSize">@dimen/item_title_text_view_text_size</item>
     </style>
 
+    <style name="AppTheme.Clup.InfoTitleTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:lines">1</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white_alpha_30</item>
+        <item name="android:textSize">@dimen/info_title_text_view</item>
+    </style>
+
     <!-- SUBTITLE TEXT VIEW THEMES -->
     <style name="AppTheme.Clup.SubtitleTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/helvetica_neue_light</item>
@@ -140,8 +163,20 @@
         <item name="android:textColor">@color/white_alpha_80</item>
     </style>
 
+    <style name="AppTheme.Clup.DetailsTextView" parent="AppTheme.Clup.SubtitleTextView">
+        <item name="android:textColor">@color/white_alpha_80</item>
+        <item name="drawableTint">@color/white_alpha_80</item>
+        <item name="android:drawablePadding">12dp</item>
+    </style>
+
+    <style name="AppTheme.Clup.InfoSubtitleTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white_alpha_30</item>
+        <item name="android:textSize">@dimen/info_subtitle_text_view</item>
+    </style>
+
     <!-- CARD VIEW ITEM THEMES -->
-    <style name="AppTheme.Clup.CardView" parent="Widget.MaterialComponents.CardView">
+    <style name="AppTheme.Clup.ItemCardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">@dimen/card_corner_radius</item>
         <item name="cardElevation">@dimen/card_elevation</item>
 
@@ -150,14 +185,21 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="AppTheme.Clup.TopRoundedCardView">
+    <style name="AppTheme.Clup.TopRoundedCardView" parent="">
         <item name="cardElevation">0dp</item>
         <item name="cardCornerRadius">20dp</item>
         <item name="android:backgroundTint">@color/white_alpha_90</item>
     </style>
 
+    <style name="AppTheme.Clup.ActionsCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="android:backgroundTint">@color/lime_500_alpha_50</item>
+
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardElevation">@dimen/card_no_elevation</item>
+    </style>
+
     <!-- RECYCLER VIEW CONTAINER THEME -->
-    <style name="AppTheme.Clup.BottomSheetRecyclerView">
+    <style name="AppTheme.Clup.BottomSheetRecyclerView" parent="">
         <item name="android:background">?android:colorBackground</item>
 
         <item name="behavior_hideable">false</item>

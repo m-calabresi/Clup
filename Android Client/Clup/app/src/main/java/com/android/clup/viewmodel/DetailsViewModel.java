@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -197,16 +196,9 @@ public class DetailsViewModel extends ViewModel {
         final String shopName = selectedReservation.getShopName();
         final String timeNoticeString = Reservation.TimeNotice.toTimeString(context, timeNotice);
 
-        Log.i("AAA", "Shop name: " + shopName);
-        Log.i("AAA", "timeNoticeString: " + timeNoticeString);
-
         final double endTime = selectedReservation.getDate().toMillis(selectedReservation.getHour()); // time of the appointment
         final double beforeTime = Date.minutesToMillis(timeNotice); // amount of time before the appointment the user wants to be notified (eg. 15 min, 1h...)
         final double expireTime = endTime - beforeTime;
-
-        Log.i("AAA", "endTime: " + endTime);
-        Log.i("AAA", "beforeTime: " + beforeTime);
-        Log.i("AAA", "expireTime: " + expireTime);
 
         // schedule the notification
         NotificationService.scheduleNotification(context, position, shopName, timeNoticeString, expireTime);

@@ -7,6 +7,7 @@
     <color name="lime_700">#FF64FFB7</color>
     <color name="lime_600">#FF41a878</color>
     <color name="lime_900">#FF15BD82</color>
+    <color name="gray_50">#FFF8F9FA</color>
     <color name="gray_legacy">#FFBCBFC0</color>
     <color name="gray_400">#FFBBBBBB</color>
     <color name="gray_700">#FF545454</color>
@@ -22,7 +23,9 @@
     <color name="white_alpha_46">#75FFFFFF</color>
     <color name="white_alpha_80">#CCFFFFFF</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">@android:color/transparent</color>
 
+    <!-- icon colors -->
     <color name="ic_check_color">@color/lime_700</color>
 
     <!-- button colors -->

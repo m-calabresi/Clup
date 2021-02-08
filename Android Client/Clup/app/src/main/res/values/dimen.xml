@@ -25,10 +25,11 @@
     <dimen name="card_view_margin">12dp</dimen>
     <dimen name="card_corner_radius">15dp</dimen>
     <dimen name="card_large_corner_radius">20dp</dimen>
-    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_default_elevation">1dp</dimen>
+    <dimen name="card_high_elevation">10dp</dimen>
     <dimen name="card_no_elevation">0dp</dimen>
 
-    <dimen name="peek_height">135dp</dimen>
+    <dimen name="peek_height">146dp</dimen>
 
     <!-- 16dp (top margin) + 56dp (extended FAB) + 16dp (bottom margin) -->
     <dimen name="footer_height">88dp</dimen>

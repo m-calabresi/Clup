@@ -210,7 +210,7 @@
     <!-- CARD VIEW ITEM THEMES -->
     <style name="AppTheme.Clup.ItemCardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">@dimen/card_corner_radius</item>
-        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="cardElevation">@dimen/card_default_elevation</item>
 
         <item name="android:layout_margin">@dimen/card_view_margin</item>
 
@@ -232,7 +232,7 @@
 
     <!-- RECYCLER VIEW CONTAINER THEME -->
     <style name="AppTheme.Clup.BottomSheetRecyclerView" parent="">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/gray_50</item>
 
         <item name="behavior_hideable">false</item>
         <item name="behavior_peekHeight">@dimen/peek_height</item>
@@ -251,6 +251,11 @@
         <item name="backgroundTint">@color/lime_700</item>
         <item name="iconTint">@color/gray_900</item>
         <item name="android:textColor">@color/gray_900</item>
+    </style>
+
+    <!-- FLOATING ACTION BUTTON THEME -->
+    <style name="AppTheme.Clup.LocationFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+
     </style>
 
     <!-- CHIP THEMES -->

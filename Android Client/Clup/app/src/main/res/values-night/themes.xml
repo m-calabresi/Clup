@@ -178,7 +178,7 @@
     <!-- CARD VIEW ITEM THEMES -->
     <style name="AppTheme.Clup.ItemCardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">@dimen/card_corner_radius</item>
-        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="cardElevation">@dimen/card_default_elevation</item>
 
         <item name="android:layout_margin">@dimen/card_view_margin</item>
 
@@ -219,6 +219,11 @@
         <item name="backgroundTint">@color/lime_500</item>
         <item name="iconTint">@color/gray_900</item>
         <item name="android:textColor">@color/gray_900</item>
+    </style>
+
+    <!-- FLOATING ACTION BUTTON THEME -->
+    <style name="AppTheme.Clup.LocationFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/gray_800</item>
     </style>
 
     <!-- CHIP THEMES -->

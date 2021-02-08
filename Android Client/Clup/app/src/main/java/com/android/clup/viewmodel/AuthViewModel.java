@@ -114,9 +114,19 @@ public class AuthViewModel extends ViewModel {
 
     /**
      * Check the given username to validate it.
+     * A username is valid only if:
+     * <p>
+     * ^                start of line
+     * [a-zA-Z -]{2,}   will except a name with at least two characters including -
+     * \s               will look for white space between name and surname
+     * [a-zA-Z]+        needs at least 1 character
+     * \'?-?            possibility of **'** or **-** for double barreled and hyphenated surnames
+     * [a-zA-Z]{2,}     will except a name with at least two characters
+     * \s?              possibility of another whitespace
+     * ([a-zA-Z]+)?     possibility of a second surname
      */
     public boolean isValidUsername(@NonNull final String username) {
-        return username.trim().contains(" ");
+        return username.trim().matches("^([a-zA-Z -]{2,}\\s[a-zA-z]+'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]+)?)");
     }
 
     /**

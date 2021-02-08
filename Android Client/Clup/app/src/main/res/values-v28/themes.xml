@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- CARD VIEW ITEM THEMES -->
+    <style name="AppTheme.Clup.ItemCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardElevation">@dimen/card_high_elevation</item>
+        <item name="android:outlineAmbientShadowColor">@color/gray_legacy</item>
+        <item name="android:outlineSpotShadowColor">@color/gray_legacy</item>
+
+        <item name="android:layout_margin">@dimen/card_view_margin</item>
+
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="rippleColor">@color/black_alpha_09</item>
+    </style>
+</resources>

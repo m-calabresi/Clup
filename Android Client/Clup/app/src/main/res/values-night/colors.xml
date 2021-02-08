@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- icon colors -->
     <color name="ic_check_color">@color/lime_500</color>
 
     <!-- button colors -->

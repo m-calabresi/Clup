@@ -112,9 +112,9 @@ public class SelectActivity extends AppCompatActivity {
      * Close the current activity and go back to the previous one.
      */
     private void onBackActionPerformed() {
-        this.viewModel.resetSelectedShopPosition();
-        this.viewModel.resetSelectedDayPosition();
-        this.viewModel.resetSelectedHourPosition();
+        this.viewModel.resetSelectedShop();
+        this.viewModel.resetSelectedDay();
+        this.viewModel.resetSelectedTime();
 
         final Intent intent = new Intent();
         setResult(RESULT_CANCELED, intent);

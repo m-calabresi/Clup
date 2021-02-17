@@ -26,7 +26,7 @@ public class QueueService {
      * Return the UUID code associated to the Queue in which the user is being added.
      */
     public void getUuid(@NonNull final String username, @NonNull final String shopName, @NonNull final String date,
-                        @NonNull final String hour, @NonNull final Callback<String> callback) {
+                        @NonNull final String time, @NonNull final Callback<String> callback) {
         executor.execute(() -> {
             // TODO replace with API call
 

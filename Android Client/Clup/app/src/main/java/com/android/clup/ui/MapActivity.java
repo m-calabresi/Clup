@@ -141,14 +141,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     /**
      * Handle the result of a recyclerview item being clicked.
-     * <p>
-     * NOTE: the user must be able to select a shop only one time (this means that a user can go
-     * to a shop only once per week). This is necessary since the shop name is used as identifier
-     * for the reservation both on client and on server.
      */
     @Override
     public void onRecyclerViewItemClicked(final int position) {
-        this.viewModel.setSelectedShopPosition(position);
+        this.viewModel.setSelectedShop(position);
         final Intent intent = new Intent(this, SelectActivity.class);
         startActivity(intent);
         this.viewModel.handleExpansion(this.bottomSheetBehavior);

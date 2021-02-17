@@ -17,7 +17,7 @@
 
     <!-- qr-code colors -->
     <color name="qr_code_on_color">@color/white</color>
-    <color name="qr_code_off_color">@android:color/transparent</color>
+    <color name="qr_code_off_color">@color/transparent</color>
 
     <!-- chip colors -->
     <color name="selected_background_color">@color/lime_200_alpha_65</color>

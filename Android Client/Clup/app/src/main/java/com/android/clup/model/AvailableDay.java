@@ -11,11 +11,11 @@ public class AvailableDay {
     @NonNull
     private final Date date;
     @NonNull
-    private final List<String> hours;
+    private final List<String> times;
 
-    public AvailableDay(@NonNull final Date date, @NonNull final List<String> hours) {
+    public AvailableDay(@NonNull final Date date, @NonNull final List<String> times) {
         this.date = date;
-        this.hours = hours;
+        this.times = times;
     }
 
     @NonNull
@@ -24,7 +24,7 @@ public class AvailableDay {
     }
 
     @NonNull
-    public List<String> getHours() {
-        return this.hours;
+    public List<String> getTimes() {
+        return this.times;
     }
 }

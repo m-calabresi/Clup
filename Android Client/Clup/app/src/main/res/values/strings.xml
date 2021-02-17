@@ -9,17 +9,18 @@
     <string name="title_notify_alert">Notify me</string>
 
     <string name="text_verify_number">Enter your mobile number to receive a verification code</string>
-    <string name="text_verify_code">Enter the verification code sent to +%1$s</string>
-    <string name="text_prefix">+</string>
+    <string name="text_verify_code">Enter the verification code sent to +%1$s</string> <!-- copy-paste +%1$s and leave a space between "to" and +%1$s -->
+    <string name="text_prefix">+</string> <!-- not sure if this can be translated. If not, copy-paste it -->
     <string name="text_choose_name">Insert your full name, it will be visible to other Clup users.</string>
     <string name="text_unknown_location">Unknown location.</string>
-    <string name="text_notification_set">Notification has been set</string>
-    <string name="text_notification_cancelled">Notification cancelled</string>
+    <string name="text_notification_set">Notification enabled</string>
+    <string name="text_notification_cancelled">Notification disabled</string>
+    <string name="text_friendly_message">Hi, %1$s</string> <!-- eg. Hi, Mark --> <!-- copy-paste %1$s and leave a space between the comma and %1$s -->
 
     <string name="action_verify">Verify</string>
     <string name="action_next">Next</string>
     <string name="action_retry">Retry</string>
-    <string name="action_retry_in">Retry in\u0020</string>
+    <string name="action_retry_in">Retry in\u0020</string> <!-- copy-paste the \u0020 and DON'T leave a space between "in" and \u0020 -->
     <string name="action_select_theme">Theme</string>
     <string name="action_book">Book</string>
     <string name="action_ok">OK</string>
@@ -46,13 +47,13 @@
     <string name="array_item_dark">Dark</string>
     <string name="array_item_system_default">System default</string>
 
-    <string name="info_title_text">Hi I\'m a QR code!</string>
-    <string name="info_subtitle_text">Scan me before entering the store,\ndon\'t forget to wear your mask!</string>
+    <string name="info_title_text">Hi I\'m a QR code!</string> <!-- if you use the apostrophe, remember to escape it by putting a "\" before it -->
+    <string name="info_subtitle_text">Scan me before entering the store,\ndon\'t forget to wear your mask!</string> <!-- copy-paste the \n and DON'T leave a space between \n and the next word, also escape the apostrophe if you use it -->
 
     <string name="channel_name">Reservations</string>
     <string name="channel_description">Remind you in advance that your turn is close.</string>
-    <string name="notification_title">%1$s reservation</string> <!-- eg. LocalSop reservation -->
-    <string name="notification_content">Don\'t forget your appointment in %1$s</string> <!-- eg. Don't forget your appointment in 30 minutes -->
+    <string name="notification_title">%1$s reservation</string> <!-- eg. LocalSop reservation --> <!-- copy-paste the %1$s and leave a space between it and the next word -->
+    <string name="notification_content">Don\'t forget your appointment in %1$s</string> <!-- eg. Don't forget your appointment in 30 minutes --> <!-- copy-paste the %1$s and leave a space between the previous word and "1$s, also escape the apostrophe if you use it -->
 
     <string name="time_fifteen_minutes">15 minutes</string>
     <string name="time_thirty_minutes">30 minutes</string>
@@ -67,5 +68,5 @@
     <string name="accessibility_qr_code_image_view">QR code to show at the shop entrance</string>
     <string name="accessibility_action_back">Back</string>
     <string name="accessibility_action_location">Locate your current position on the map</string>
-    <string name="accessibility_success_image_view">Authentication is successful</string>
+    <string name="accessibility_success_image_view">Authentication successful</string>
 </resources>

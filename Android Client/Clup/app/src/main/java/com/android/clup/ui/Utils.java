@@ -182,7 +182,7 @@ public class Utils {
                         })
                         .setPositiveButton(R.string.action_done, (dialog, whichButton) -> {
                             // when the user clicks OK, the selected time notice is returned
-                            final int selectedTimeNotice = Utils.mapPositionToTImeNotice(newSelectedPosition.get());
+                            final int selectedTimeNotice = Utils.mapPositionToTimeNotice(newSelectedPosition.get());
                             callback.onComplete(selectedTimeNotice);
                             dialog.dismiss();
                         })
@@ -293,7 +293,7 @@ public class Utils {
     /**
      * Maps the given position to the corresponding time notice.
      */
-    private static int mapPositionToTImeNotice(final int position) {
+    private static int mapPositionToTimeNotice(final int position) {
         switch (position) {
             case 0:
                 return Reservation.TimeNotice.FIFTEEN_MINUTES;

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
-    private final OnRecyclerViewItemClickedCallback itemListener;
+    private final OnRecyclerViewItemClickedCallback onRecyclerViewItemClickedCallback;
 
     @NonNull
     private final List<Shop> shops;
@@ -30,7 +30,7 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             super(v);
 
             final View.OnClickListener cardViewOnClickListener = view ->
-                    itemListener.onRecyclerViewItemClicked(getBindingAdapterPosition());
+                    onRecyclerViewItemClickedCallback.onRecyclerViewItemClicked(getBindingAdapterPosition());
             final CardView cardView = v.findViewById(R.id.shop_card_view);
             cardView.setOnClickListener(cardViewOnClickListener);
 
@@ -39,10 +39,10 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    public ShopRecyclerViewAdapter(@NonNull final OnRecyclerViewItemClickedCallback itemListener,
+    public ShopRecyclerViewAdapter(@NonNull final OnRecyclerViewItemClickedCallback callback,
                                    @NonNull final List<Shop> shops) {
         super();
-        this.itemListener = itemListener;
+        this.onRecyclerViewItemClickedCallback = callback;
         this.shops = shops;
     }
 

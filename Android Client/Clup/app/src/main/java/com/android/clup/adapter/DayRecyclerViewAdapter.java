@@ -31,37 +31,37 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public class DayViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView dayTextView;
-        private final ChipGroup hoursChipGroup;
+        private final ChipGroup timeChipGroup;
 
         public DayViewHolder(@NonNull final View v) {
             super(v);
             this.dayTextView = v.findViewById(R.id.day_text_view);
 
-            this.hoursChipGroup = v.findViewById(R.id.hours_chip_group);
-            this.hoursChipGroup.setTag(View.generateViewId());
+            this.timeChipGroup = v.findViewById(R.id.time_chip_group);
+            this.timeChipGroup.setTag(View.generateViewId());
 
             // when a chip is clicked, notifies all other groups that they need to uncheck their chips
-            final ChipGroup.OnCheckedChangeListener hoursChipGroupOnCheckedChangeListener = (group, checkedId) -> {
+            final ChipGroup.OnCheckedChangeListener timeChipGroupOnCheckedChangeListener = (group, checkedId) -> {
                 // prevents the propagation of triggers when all other groups are cleared
                 if (checkedId != View.NO_ID) {
                     viewModel.setGroupTagLiveData(group.getTag());
 
                     final Chip selectedChip = group.findViewById(checkedId);
-                    final String selectedHour = selectedChip.getText().toString();
-                    final int selectedHourIndex = shop.getAvailableDays().get(getBindingAdapterPosition()).getHours().indexOf(selectedHour);
+                    final String selectedTime = selectedChip.getText().toString();
+                    final int selectedTimeIndex = shop.getAvailableDays().get(getBindingAdapterPosition()).getTimes().indexOf(selectedTime);
 
-                    viewModel.setSelectedDayPosition(getBindingAdapterPosition());
-                    viewModel.setSelectedHourPosition(selectedHourIndex);
+                    viewModel.setSelectedDay(getBindingAdapterPosition());
+                    viewModel.setSelectedTime(selectedTimeIndex);
                 }
             };
 
             // when a group receives a notification telling to clear its chips, it does so only if it isn't the original caller
             final Observer<Integer> groupTagLiveDataObserver = groupTag -> {
-                if (((int) this.hoursChipGroup.getTag() != groupTag))
-                    this.hoursChipGroup.clearCheck();
+                if (((int) this.timeChipGroup.getTag() != groupTag))
+                    this.timeChipGroup.clearCheck();
             };
 
-            this.hoursChipGroup.setOnCheckedChangeListener(hoursChipGroupOnCheckedChangeListener);
+            this.timeChipGroup.setOnCheckedChangeListener(timeChipGroupOnCheckedChangeListener);
             viewModel.getGroupIdLiveData().observe(lifecycleOwner, groupTagLiveDataObserver);
         }
     }
@@ -95,6 +95,7 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return viewHolder;
     }
 
+    // TODO try to test on a device
     @Override
     public int getItemViewType(final int position) {
         if (position == this.shop.getAvailableDays().size())
@@ -109,10 +110,11 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             final AvailableDay availableDay = this.shop.getAvailableDays().get(position);
 
             viewHolder.dayTextView.post(() -> viewHolder.dayTextView.setText(availableDay.getDate().formatted()));
-            SelectViewModel.setHourChips(viewHolder.hoursChipGroup, availableDay.getHours());
+            SelectViewModel.setTimeChips(viewHolder.timeChipGroup, availableDay.getTimes());
         }
     }
 
+    // TODO try to test on a device
     @Override
     public int getItemCount() {
         return this.shop.getAvailableDays().size() + 1;

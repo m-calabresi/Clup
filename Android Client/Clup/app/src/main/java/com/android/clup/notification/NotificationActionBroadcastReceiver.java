@@ -8,11 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.android.clup.api.MapsService;
-import com.android.clup.model.Model;
-import com.android.clup.model.Reservation;
+import com.google.android.gms.maps.model.LatLng;
 
 import static androidx.core.app.NotificationCompat.EXTRA_NOTIFICATION_ID;
-import static com.android.clup.notification.NotificationService.EXTRA_POSITION;
+import static com.android.clup.notification.NotificationService.EXTRA_RESERVATION_COORDINATES;
 
 /**
  * This class is used to execute code when the user clicks on the action button inside the notification.
@@ -30,14 +29,10 @@ public class NotificationActionBroadcastReceiver extends BroadcastReceiver {
         // pull up notification shade
         context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 
-        // retrieve the interested reservation
-        final int selectedReservationPosition = intent.getIntExtra(EXTRA_POSITION, Model.INVALID_INDEX);
-        final Model model = Model.getInstance();
-
-        model.setSelectedReservationIndex(selectedReservationPosition);
-        final Reservation selectedReservation = model.getSelectedReservation();
+        // retrieve the interested coordinates
+        final LatLng coords = intent.getParcelableExtra(EXTRA_RESERVATION_COORDINATES);
 
         // launch the google map navigation
-        MapsService.launchNavigation(context, selectedReservation.getCoords(), true);
+        MapsService.launchNavigation(context, coords, true);
     }
 }

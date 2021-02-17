@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.clup.R;
 import com.android.clup.api.MapsService;
-import com.android.clup.model.Date;
 import com.android.clup.model.Model;
 import com.android.clup.model.Reservation;
 import com.android.clup.notification.NotificationService;
@@ -34,9 +33,9 @@ public class DetailsViewModel extends ViewModel {
         this.model = Model.getInstance();
 
         // reset unused fields
-        this.model.resetSelectedShopIndex();
-        this.model.resetSelectedDayIndex();
-        this.model.resetSelectedHourIndex();
+        this.model.resetSelectedShop();
+        this.model.resetSelectedDay();
+        this.model.resetSelectedTime();
     }
 
     /**
@@ -65,18 +64,18 @@ public class DetailsViewModel extends ViewModel {
     }
 
     /**
-     * Return the hour of the reservation.
+     * Return the time of the reservation.
      */
     @NonNull
-    public String getReservationHour() {
-        return this.model.getSelectedReservation().getHour();
+    public String getReservationTime() {
+        return this.model.getSelectedReservation().getDate().getTime();
     }
 
     /**
-     * Set the reservation index to retrieve the correct reservation to be displayed.
+     * Set the reservation to be displayed.
      */
-    public void setSelectedReservationPosition(final int position) {
-        this.model.setSelectedReservationIndex(position);
+    public void setSelectedReservation(@NonNull final Reservation reservation) {
+        this.model.setSelectedReservation(reservation);
     }
 
     /**
@@ -113,18 +112,18 @@ public class DetailsViewModel extends ViewModel {
         @DrawableRes int iconId;
         @StringRes int actionId;
 
-        switch (this.model.getSelectedReservation().getNotificationStatus()) {
-            case Reservation.NotificationStatus.ENABLED:
-                iconId = R.drawable.ic_notification_on;
-                actionId = R.string.action_notification_on;
+        switch (this.model.getSelectedReservation().getTimeNotice()) {
+            case Reservation.TimeNotice.NOT_SET:
+                iconId = R.drawable.ic_notification_not_set;
+                actionId = R.string.action_notify_me;
                 break;
-            case Reservation.NotificationStatus.DISABLED:
+            case Reservation.TimeNotice.DISABLED:
                 iconId = R.drawable.ic_notification_off;
                 actionId = R.string.action_notification_off;
                 break;
             default:
-                iconId = R.drawable.ic_notification_unassigned;
-                actionId = R.string.action_notify_me;
+                iconId = R.drawable.ic_notification_on;
+                actionId = R.string.action_notification_on;
                 break;
         }
         button.setCompoundDrawablesRelativeWithIntrinsicBounds(iconId, 0, 0, 0);
@@ -133,35 +132,32 @@ public class DetailsViewModel extends ViewModel {
 
     /**
      * Toggles the notification status between on and off.
-     * THis method handles both the graphical part and the calls to the logical part.
+     * This method handles both the graphical part and the calls to the logical part.
      */
-    public void toggleNotification(@NonNull final Context context, @NonNull final Button button) {
+    public void toggleNotificationUi(@NonNull final Context context, @NonNull final Button button) {
+        final int timeNotice = this.model.getSelectedReservation().getTimeNotice();
 
-        if (this.model.getSelectedReservation().getNotificationStatus() == Reservation.NotificationStatus.ENABLED) {
+        if (timeNotice != Reservation.TimeNotice.NOT_SET && timeNotice != Reservation.TimeNotice.DISABLED) {
             conditionallyDisableNotifications(context);
             cancelNotification(context);
 
             @DrawableRes final int iconId = R.drawable.ic_notification_off;
             @StringRes final int actionId = R.string.action_notification_off;
-            final int notificationStatus = Reservation.NotificationStatus.DISABLED;
-            final int timeNotice = Reservation.TimeNotice.NOT_SET;
             @StringRes final int snackbarTextId = R.string.text_notification_cancelled;
 
-            toggleNotification(context, button, iconId, actionId, notificationStatus, timeNotice, snackbarTextId);
+            toggleNotificationUi(context, button, iconId, actionId, snackbarTextId);
         } else {
             final int currentTimeNotice = this.model.getSelectedReservation().getTimeNotice();
 
             Utils.displayNotificationAlertDialog(context, currentTimeNotice, newTimeNotice -> {
-
                 NotificationService.enableNotificationReceiver(context);
                 scheduleNotification(context, newTimeNotice);
 
                 @DrawableRes final int iconId = R.drawable.ic_notification_on;
                 @StringRes final int actionId = R.string.action_notification_on;
-                final int notificationStatus = Reservation.NotificationStatus.ENABLED;
                 @StringRes final int snackbarTextId = R.string.text_notification_set;
 
-                toggleNotification(context, button, iconId, actionId, notificationStatus, newTimeNotice, snackbarTextId);
+                toggleNotificationUi(context, button, iconId, actionId, snackbarTextId);
             });
         }
     }
@@ -169,10 +165,9 @@ public class DetailsViewModel extends ViewModel {
     /**
      * Toggle the notification-related UI components depending on the given parameters.
      */
-    private void toggleNotification(@NonNull final Context context, @NonNull final Button button,
-                                    @DrawableRes final int iconId, @StringRes final int actionId,
-                                    final int notificationStatus, final int timeNotice,
-                                    @StringRes final int snackBarTextId) {
+    private void toggleNotificationUi(@NonNull final Context context, @NonNull final Button button,
+                                      @DrawableRes final int iconId, @StringRes final int actionId,
+                                      @StringRes final int snackBarTextId) {
         // set button icon and text
         button.setCompoundDrawablesRelativeWithIntrinsicBounds(iconId, 0, 0, 0);
         button.setText(actionId);
@@ -180,43 +175,33 @@ public class DetailsViewModel extends ViewModel {
         // display confirmation snackbar
         final View parent = ((Activity) (context)).findViewById(R.id.layout_activity_details);
         Utils.displaySnackbar(parent, snackBarTextId);
-
-        // update the notification information
-        this.model.setSelectedReservationNotificationInfo(notificationStatus, timeNotice);
     }
 
     /**
      * Schedule the notification for the selected reservation with the given time notice.
      */
     private void scheduleNotification(@NonNull final Context context, final int timeNotice) {
-        // gather the information to schedule the notification
+        // get the selected reservation
         final Reservation selectedReservation = this.model.getSelectedReservation();
-
-        final int position = this.model.getSelectedReservationIndex();
-        final String shopName = selectedReservation.getShopName();
-        final String timeNoticeString = Reservation.TimeNotice.toTimeString(context, timeNotice);
-
-        final double endTime = selectedReservation.getDate().toMillis(selectedReservation.getHour()); // time of the appointment
-        final double beforeTime = Date.minutesToMillis(timeNotice); // amount of time before the appointment the user wants to be notified (eg. 15 min, 1h...)
-        final double expireTime = endTime - beforeTime;
+        // update the notification information
+        this.model.setSelectedReservationTimeNotice(timeNotice);
 
         // schedule the notification
-        NotificationService.scheduleNotification(context, position, shopName, timeNoticeString, expireTime);
+        NotificationService.scheduleNotification(context, selectedReservation);
     }
 
     /**
      * Cancel the notification associated with the current reservation.
      */
     private void cancelNotification(@NonNull final Context context) {
-        // gather the information to schedule the notification
+        // get the selected reservation
         final Reservation reservation = this.model.getSelectedReservation();
 
-        final int position = this.model.getSelectedReservationIndex();
-        final String shopName = reservation.getShopName();
-        final String timeNotice = Reservation.TimeNotice.toTimeString(context, reservation.getTimeNotice());
-
         // cancel the notification
-        NotificationService.cancelNotification(context, position, shopName, timeNotice);
+        NotificationService.cancelNotification(context, reservation);
+
+        // update the notification information
+        this.model.setSelectedReservationTimeNotice(Reservation.TimeNotice.DISABLED);
     }
 
     /**
@@ -235,9 +220,8 @@ public class DetailsViewModel extends ViewModel {
      */
     private boolean isAnyNotificationSet() {
         for (Reservation reservation : this.model.getReservations())
-            if (reservation.getTimeNotice() != Reservation.TimeNotice.NOT_SET) {
+            if (reservation.getTimeNotice() != Reservation.TimeNotice.NOT_SET)
                 return true;
-            }
         return false;
     }
 }

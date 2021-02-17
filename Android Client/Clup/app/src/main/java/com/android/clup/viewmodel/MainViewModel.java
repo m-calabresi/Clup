@@ -8,7 +8,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.clup.model.Model;
 import com.android.clup.model.Preferences;
+import com.android.clup.model.Reservation;
 import com.android.clup.ui.Utils;
+
+import java.util.List;
 
 public class MainViewModel extends ViewModel {
     @NonNull
@@ -26,5 +29,26 @@ public class MainViewModel extends ViewModel {
             Preferences.setTheme(mode);
             AppCompatDelegate.setDefaultNightMode(mode);
         });
+    }
+
+    /**
+     * Set the selected reservation.
+     */
+    public void setSelectedReservation(final int position) {
+        this.model.setSelectedReservation(this.model.getReservations().get(position));
+    }
+
+    /**
+     * Return the list of reservation the user has booked.
+     */
+    public List<Reservation> getReservations() {
+        return this.model.getReservations();
+    }
+
+    /**
+     * Return the friendly name of the user.
+     */
+    public String getFriendlyName() {
+        return this.model.getFriendlyName();
     }
 }

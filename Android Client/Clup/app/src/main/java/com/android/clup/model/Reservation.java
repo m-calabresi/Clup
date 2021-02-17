@@ -1,6 +1,8 @@
 package com.android.clup.model;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -11,36 +13,19 @@ import com.google.android.gms.maps.model.LatLng;
 /**
  * A class representing a reservation made by the user.
  */
-public class Reservation {
-    /**
-     * The status of the notification.
-     */
-    public static class NotificationStatus {
-        /**
-         * The user has never interact with the notification UI.
-         */
-        public static final int NOT_SET = -1;
-        /**
-         * The user has interacted with the notification UI and chosen to disable notifications for
-         * a specific reservation.
-         */
-        public static final int DISABLED = 0;
-        /**
-         * The user has interacted with the notification UI and chosen to enable notifications for
-         * a specific reservation.
-         */
-        public static final int ENABLED = 1;
-    }
-
+public class Reservation implements Comparable<Reservation>, Parcelable {
     /**
      * The amount of time in advance (w.r.t. the appointment) the user wants to be notified.
      */
     public static class TimeNotice {
         /**
-         * The user has never interacted with the reservation and no notice has been specified or
-         * the user has chosen not to be notified.
+         * The user has never interacted with the reservation and no notice has been specified.
          */
-        public static final int NOT_SET = -1;
+        public static final int NOT_SET = -2;
+        /**
+         * The user has interacted with the reservation and he has chosen not to be notified.
+         */
+        public static final int DISABLED = -1;
         /**
          * The user has chosen to be notified 15 minutes in advance.
          */
@@ -85,6 +70,17 @@ public class Reservation {
         }
     }
 
+    @NonNull
+    public static final Parcelable.Creator<Reservation> CREATOR = new Parcelable.Creator<Reservation>() {
+        public Reservation createFromParcel(@NonNull final Parcel in) {
+            return new Reservation(in);
+        }
+
+        public Reservation[] newArray(final int size) {
+            return new Reservation[size];
+        }
+    };
+
     /**
      * The name of the shop at which the user booked his reservation.
      */
@@ -95,11 +91,6 @@ public class Reservation {
      */
     @NonNull
     private final Date date;
-    /**
-     * The hour at which the user booked his reservation.
-     */
-    @NonNull
-    private final String hour;
     /**
      * The unique identifier associated to this reservation. It ill be used from the server side
      * logic to manage reservations and from the client application to build the corresponding QR code.
@@ -112,12 +103,6 @@ public class Reservation {
     @NonNull
     private final LatLng coords;
     /**
-     * The status of the notifications for the current reservation.
-     *
-     * @see NotificationStatus
-     */
-    private int notificationStatus;
-    /**
      * The time in advance (w.r.t the reservation time) at which the user wants to be notified.
      *
      * @see TimeNotice
@@ -125,21 +110,26 @@ public class Reservation {
     private int timeNotice;
 
     public Reservation(@NonNull final String shopName, @NonNull final Date date,
-                       @NonNull final String hour, @NonNull final String uuid,
-                       @NonNull final LatLng coords, final int notificationStatus, final int timeNotice) {
+                       @NonNull final String uuid, @NonNull final LatLng coords,
+                       final int timeNotice) {
         this.shopName = shopName;
         this.date = date;
-        this.hour = hour;
         this.uuid = uuid;
         this.coords = coords;
-        this.notificationStatus = notificationStatus;
         this.timeNotice = timeNotice;
     }
 
     public Reservation(@NonNull final String shopName, @NonNull final Date date,
-                       @NonNull final String hour, @NonNull final String uuid,
-                       @NonNull final LatLng coords) {
-        this(shopName, date, hour, uuid, coords, NotificationStatus.NOT_SET, TimeNotice.NOT_SET);
+                       @NonNull final String uuid, @NonNull final LatLng coords) {
+        this(shopName, date, uuid, coords, TimeNotice.NOT_SET);
+    }
+
+    private Reservation(@NonNull final Parcel in) {
+        this.shopName = in.readString();
+        this.date = in.readParcelable(Date.class.getClassLoader());
+        this.uuid = in.readString();
+        this.coords = in.readParcelable(LatLng.class.getClassLoader());
+        this.timeNotice = in.readInt();
     }
 
     @NonNull
@@ -153,11 +143,6 @@ public class Reservation {
     }
 
     @NonNull
-    public String getHour() {
-        return this.hour;
-    }
-
-    @NonNull
     public String getUuid() {
         return this.uuid;
     }
@@ -167,19 +152,39 @@ public class Reservation {
         return this.coords;
     }
 
-    void setNotificationStatus(final int notificationStatus) {
-        this.notificationStatus = notificationStatus;
-    }
-
-    public int getNotificationStatus() {
-        return this.notificationStatus;
-    }
-
     void setTimeNotice(final int timeNotice) {
         this.timeNotice = timeNotice;
     }
 
     public int getTimeNotice() {
         return this.timeNotice;
+    }
+
+    /**
+     * Compare the current reservation with the given one: a reservation comes before another
+     * if its book date and time precedes the other's, a reservation comes after another if its book
+     * date and time follows the other's, otherwise the two reservations are scheduled for the same
+     * date and time.
+     * <p>
+     * This method returns -1 if the current reservation comes before the given one, 1 if the
+     * current reservation comes after the other, 0 otherwise.
+     */
+    @Override
+    public int compareTo(@NonNull final Reservation reservation) {
+        return Long.compare(this.date.toMillis(), reservation.getDate().toMillis());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull final Parcel dest, final int flags) {
+        dest.writeString(this.shopName);
+        dest.writeParcelable(this.date, flags);
+        dest.writeString(this.uuid);
+        dest.writeParcelable(this.coords, flags);
+        dest.writeInt(this.timeNotice);
     }
 }

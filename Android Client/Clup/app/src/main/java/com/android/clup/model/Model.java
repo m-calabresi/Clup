@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.android.clup.json.JsonParser;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,8 +14,6 @@ public final class Model {
         @NonNull
         private static final Model INSTANCE = new Model();
     }
-
-    public static final int INVALID_INDEX = -1;
 
     //--- USER DATA ---
     /**
@@ -36,17 +35,20 @@ public final class Model {
     @Nullable
     private List<Shop> shops;
     /**
-     * The index of the {@link #shops} corresponding to the selected shop.
+     * The selected shop.
      */
-    private int selectedShopIndex;
+    @Nullable
+    private Shop selectedShop;
     /**
-     * The index of the selected shop, indicating the selected day.
+     * The selected day.
      */
-    private int selectedDayIndex;
+    @Nullable
+    private AvailableDay selectedDay;
     /**
-     * The index of the selected day, indicating the selected hour.
+     * The selected time.
      */
-    private int selectedHourIndex;
+    @Nullable
+    private String selectedTime;
 
     //--- RESERVATIONS DATA ---
     /**
@@ -55,22 +57,22 @@ public final class Model {
     @Nullable
     private List<Reservation> reservations;
     /**
-     * The index of the {@link #reservations} corresponding to the reservation the user is currently
-     * interacting with.
+     * The reservation the user is currently interacting with.
      */
-    private int selectedReservationIndex;
+    @Nullable
+    private Reservation selectedReservation;
 
     private Model() {
         this.fullname = null;
         this.friendlyName = null;
 
         this.shops = null;
-        this.selectedShopIndex = INVALID_INDEX;
-        this.selectedDayIndex = INVALID_INDEX;
-        this.selectedHourIndex = INVALID_INDEX;
+        this.selectedShop = null;
+        this.selectedDay = null;
+        this.selectedTime = null;
 
         this.reservations = null;
-        this.selectedReservationIndex = INVALID_INDEX;
+        this.selectedReservation = null;
     }
 
     @NonNull
@@ -87,51 +89,52 @@ public final class Model {
         return this.shops;
     }
 
-    public void setSelectedShopIndex(final int selectedShopIndex) {
-        this.selectedShopIndex = selectedShopIndex;
+    public void setSelectedShop(@NonNull final Shop shop) {
+        this.selectedShop = shop;
     }
 
     @NonNull
     public Shop getSelectedShop() {
-        if (this.selectedShopIndex != INVALID_INDEX)
-            return Objects.requireNonNull(this.shops).get(this.selectedShopIndex);
-        throw new NullPointerException("No index was set before calling this method, did you call 'setSelectedShopIndex'?");
+        if (this.selectedShop != null)
+            return this.selectedShop;
+        throw new NullPointerException("No item was set before calling this method, did you call 'setSelectedShop'?");
     }
 
-    public void resetSelectedShopIndex() {
-        this.selectedShopIndex = INVALID_INDEX;
+    public void resetSelectedShop() {
+        this.selectedShop = null;
     }
 
-    public void setSelectedDayIndex(final int selectedDayIndex) {
-        this.selectedDayIndex = selectedDayIndex;
+    public void setSelectedDay(@NonNull final AvailableDay day) {
+        this.selectedDay = day;
     }
 
     @NonNull
     public AvailableDay getSelectedDay() {
-        if (this.selectedDayIndex != INVALID_INDEX)
-            return getSelectedShop().getAvailableDays().get(this.selectedDayIndex);
-        throw new NullPointerException("No index was set before calling this method, did you call 'setSelectedDayIndex'?");
+        if (this.selectedDay != null)
+            return this.selectedDay;
+        throw new NullPointerException("No item was set before calling this method, did you call 'setSelectedDay'?");
     }
 
-    public void resetSelectedDayIndex() {
-        this.selectedDayIndex = INVALID_INDEX;
+    public void resetSelectedDay() {
+        this.selectedDay = null;
     }
 
-    public void setSelectedHourIndex(final int selectedHourIndex) {
-        this.selectedHourIndex = selectedHourIndex;
+    public void setSelectedTime(@NonNull final String time) {
+        this.selectedTime = time;
     }
 
     @NonNull
-    public String getSelectedHour() {
-        if (this.selectedHourIndex != INVALID_INDEX)
-            return getSelectedDay().getHours().get(this.selectedHourIndex);
-        throw new NullPointerException("No index was set before calling this method, did you call 'setSelectedHourIndex'?");
+    public String getSelectedTime() {
+        if (this.selectedTime != null)
+            return this.selectedTime;
+        throw new NullPointerException("No item was set before calling this method, did you call 'setSelectedTime'?");
     }
 
-    public void resetSelectedHourIndex() {
-        this.selectedHourIndex = INVALID_INDEX;
+    public void resetSelectedTime() {
+        this.selectedTime = null;
     }
 
+    // TODO test on a device
     @NonNull
     public List<Reservation> getReservations() {
         if (this.reservations == null)
@@ -139,16 +142,20 @@ public final class Model {
         return this.reservations;
     }
 
+    // TODO test on a device
     public void addReservation(@NonNull final Reservation reservation) {
         getReservations().add(reservation);
-        JsonParser.saveReservations(Objects.requireNonNull(this.reservations));
+        Collections.sort(getReservations()); // sort reservations by date and time (nearest reservations first)
+        JsonParser.saveReservations(getReservations());
     }
 
+    // TODO test on a device
     public void setFriendlyName(@NonNull final String friendlyName) {
         this.friendlyName = friendlyName;
         Preferences.setFriendlyName(this.friendlyName);
     }
 
+    // TODO test on a device
     @NonNull
     public String getFriendlyName() {
         if (this.friendlyName == null)
@@ -156,11 +163,13 @@ public final class Model {
         return this.friendlyName;
     }
 
+    // TODO test on a device
     public void setFullname(@NonNull final String fullname) {
         this.fullname = fullname;
         Preferences.setFullname(fullname);
     }
 
+    // TODO test on a device
     @NonNull
     public String getFullname() {
         if (this.fullname == null)
@@ -168,22 +177,19 @@ public final class Model {
         return this.fullname;
     }
 
-    public void setSelectedReservationIndex(final int selectedReservationIndex) {
-        this.selectedReservationIndex = selectedReservationIndex;
+    public void setSelectedReservation(@NonNull final Reservation reservation) {
+        this.selectedReservation = reservation;
     }
 
-    public int getSelectedReservationIndex() {
-        if (this.selectedReservationIndex != INVALID_INDEX)
-            return this.selectedReservationIndex;
-        throw new NullPointerException("No index was set before calling this method, did you call 'setSelectedReservationIndex'?");
-    }
-
+    @NonNull
     public Reservation getSelectedReservation() {
-        return getReservations().get(getSelectedReservationIndex());
+        if (this.selectedReservation != null)
+            return this.selectedReservation;
+        throw new NullPointerException("No value was set before calling this method, did you call 'setSelectedReservation'?");
     }
 
-    public void setSelectedReservationNotificationInfo(final int notificationStatus, final int timeNotice) {
-        getSelectedReservation().setNotificationStatus(notificationStatus);
+    // TODO test on a device
+    public void setSelectedReservationTimeNotice(final int timeNotice) {
         getSelectedReservation().setTimeNotice(timeNotice);
         JsonParser.saveReservations(Objects.requireNonNull(this.reservations));
     }

@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.List;
+import java.util.Objects;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -198,10 +199,10 @@ public class MapViewModel extends ViewModel {
     }
 
     /**
-     * Store index corresponding to the shop selected by the user.
+     * Store the shop selected by the user.
      */
-    public void setSelectedShopPosition(final int position) {
-        this.model.setSelectedShopIndex(position);
+    public void setSelectedShop(final int position) {
+        this.model.setSelectedShop(Objects.requireNonNull(this.model.getShops()).get(position));
     }
 
     /**

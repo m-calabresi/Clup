@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+// TODO try to test on a device
 public class JsonParser {
     @NonNull
     private static final String RESERVATIONS_FILE_NAME = "reservations.json";
@@ -34,7 +35,7 @@ public class JsonParser {
     @NonNull
     private static final String DATE_NAME = "date";
     @NonNull
-    private static final String HOUR_NAME = "hour";
+    private static final String TIME_NAME = "time";
     @NonNull
     private static final String UUID_NAME = "uuid";
     @NonNull
@@ -43,8 +44,6 @@ public class JsonParser {
     private static final String LAT_NAME = "lat";
     @NonNull
     private static final String LNG_NAME = "lng";
-    @NonNull
-    private static final String NOTIFICATION_STATUS_NAME = "notificationStatus";
     @NonNull
     private static final String TIME_NOTICE = "timeNotice";
 
@@ -122,13 +121,13 @@ public class JsonParser {
         try {
             final String shopName = jsonReservation.getString(SHOP_NAME);
             final Date date = Date.fromString(jsonReservation.getString(DATE_NAME));
-            final String hour = jsonReservation.getString(HOUR_NAME);
+            final String time = jsonReservation.getString(TIME_NAME);
             final String uuid = jsonReservation.getString(UUID_NAME);
             final LatLng coords = JsonParser.toCoords(jsonReservation.getJSONObject(COORDS_NAME));
-            final int notificationStatus = jsonReservation.getInt(NOTIFICATION_STATUS_NAME);
             final int timeNotice = jsonReservation.getInt(TIME_NOTICE);
 
-            return new Reservation(shopName, date, hour, uuid, coords, notificationStatus, timeNotice);
+            date.setTime(time);
+            return new Reservation(shopName, date, uuid, coords, timeNotice);
         } catch (JSONException e) {
             throw new RuntimeException("Unable to convert JSONObject to Reservation: " + e.getLocalizedMessage());
         }
@@ -183,10 +182,9 @@ public class JsonParser {
 
             jsonReservation.put(SHOP_NAME, reservation.getShopName());
             jsonReservation.put(DATE_NAME, reservation.getDate().plain());
-            jsonReservation.put(HOUR_NAME, reservation.getHour());
+            jsonReservation.put(TIME_NAME, reservation.getDate().getTime());
             jsonReservation.put(UUID_NAME, reservation.getUuid());
             jsonReservation.put(COORDS_NAME, JsonParser.toJsonCoords(reservation.getCoords()));
-            jsonReservation.put(NOTIFICATION_STATUS_NAME, reservation.getNotificationStatus());
             jsonReservation.put(TIME_NOTICE, reservation.getTimeNotice());
 
             return jsonReservation;

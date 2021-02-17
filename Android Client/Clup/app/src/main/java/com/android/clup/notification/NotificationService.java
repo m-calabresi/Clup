@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 
 import com.android.clup.R;
+import com.android.clup.model.Date;
+import com.android.clup.model.Reservation;
 import com.android.clup.ui.DetailsActivity;
 
 import java.util.ArrayList;
@@ -38,7 +41,9 @@ public class NotificationService {
     private static final String NOTIFICATION_GROUP_KEY = PACKAGE_NAME + ".RESERVATIONS_GROUP";
 
     @NonNull
-    public static final String EXTRA_POSITION = PACKAGE_NAME + ".EXTRA_POSITION";
+    public static final String EXTRA_RESERVATION = PACKAGE_NAME + ".EXTRA_RESERVATION";
+    @NonNull
+    public static final String EXTRA_RESERVATION_COORDINATES = EXTRA_RESERVATION + ".COORDINATES";
     @NonNull
     public static final String EXTRA_NOTIFICATION = PACKAGE_NAME + ".EXTRA_NOTIFICATION";
     public static final int NOTIFICATION_ID_NOT_SET = -1;
@@ -72,25 +77,19 @@ public class NotificationService {
     /**
      * Immediately shows a notification with action button.
      *
-     * @param context             the application context from which the notification starts.
-     * @param notificationId      a unique id for the current notification. It must be the same only if
-     *                            the notification to display is related to the same reservation.
-     * @param reservationPosition the position in the reservations list corresponding to the
-     *                            interested reservation. Used to display proper content when
-     *                            the associated activity starts.
-     * @param shopName            the name of the shop the user has an appointment at.
-     * @param timeNotice          the amount of time (chosen by the user in another context) before the
-     *                            actual appointment the user chosen to be notified at.
+     * @param context        the application context from which the notification starts.
+     * @param notificationId a unique id for the current notification. It must be the same only if
+     *                       the notification to display is related to the same reservation.
+     * @param reservation    the reservation upon which the notification is built.
      */
     @NonNull
     private static Notification buildNotification(@NonNull final Context context, final int notificationId,
-                                                  final int reservationPosition, @NonNull final String shopName,
-                                                  @NonNull final String timeNotice) {
+                                                  @NonNull final Reservation reservation) {
         // Create an explicit intent to launch DetailsActivity when the notification is clicked
         final Intent intent = new Intent(context, DetailsActivity.class);
         // Specify the reservation interested by the notification. It will be used by DetailsActivity
         // to display related content
-        intent.putExtra(EXTRA_POSITION, reservationPosition);
+        intent.putExtra(EXTRA_RESERVATION, reservation);
 
         // Create the TaskStackBuilder and add the intent, which inflates the back stack.
         // This allows the user to go back to the previous activity even if it was not present before
@@ -105,10 +104,11 @@ public class NotificationService {
         final Intent directionsIntent = new Intent(context, NotificationActionBroadcastReceiver.class);
         directionsIntent.setAction(ACTION_DIRECTIONS + System.currentTimeMillis()); // millis are required in order to force the update of a new action (that otherwise is being cached)
         directionsIntent.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
-        directionsIntent.putExtra(EXTRA_POSITION, reservationPosition);
+        directionsIntent.putExtra(EXTRA_RESERVATION_COORDINATES, reservation.getCoords());
         final PendingIntent directionsPendingIntent = PendingIntent.getBroadcast(context, 0, directionsIntent, 0);
 
-        final CharSequence textTitle = context.getString(R.string.notification_title, shopName);
+        final CharSequence textTitle = context.getString(R.string.notification_title, reservation.getShopName());
+        final String timeNotice = Reservation.TimeNotice.toTimeString(context, reservation.getTimeNotice());
         final CharSequence textContent = context.getString(R.string.notification_content, timeNotice);
         final CharSequence actionName = context.getString(R.string.action_directions);
         @ColorInt final int notificationAccentColor = context.getResources().getColor(R.color.notification_accent_color);
@@ -134,24 +134,22 @@ public class NotificationService {
      * Schedule a notification to be show after the given amount of time.
      * All parameters MUST be immutable and deterministic, otherwise the cancelling procedure can't be performed.
      *
-     * @param context             the application context from which the notification starts.
-     * @param reservationPosition the position in the reservations list corresponding to the
-     *                            interested reservation. Used to display proper content when
-     *                            the associated activity starts.
-     *                            the notification to display is related to the same reservation.
-     * @param shopName            the name of the shop the user has an appointment at.
-     * @param timeNotice          the amount of time (chosen by the user in another context) before the
-     *                            actual appointment the user chosen to be notified at.
-     * @param expireTime          the amount of time (in milliseconds) after which the notification
-     *                            has to be displayed.
+     * @param context     the application context from which the notification starts.
+     * @param reservation the reservation upon which the notification is built.
      */
     public static void scheduleNotification(@NonNull final Context context,
-                                            final int reservationPosition, @NonNull final String shopName,
-                                            @NonNull final String timeNotice, final double expireTime) {
-        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        final PendingIntent alarmIntent = NotificationService.buildPendingIntent(context, reservationPosition, shopName, timeNotice);
+                                            @NonNull final Reservation reservation) {
+        // time of the appointment
+        final long endTime = reservation.getDate().toMillis();
+        Log.i("AAA", "reservation will be at: " + endTime);
+        // amount of time before the appointment the user wants to be notified (eg. 15 min, 1h...)
+        final long beforeTime = Date.minutesToMillis(reservation.getTimeNotice());
+        // time at which the notification should appear
+        final long expireTime = endTime - beforeTime;
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, (long) expireTime, alarmIntent);
+        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        final PendingIntent alarmIntent = NotificationService.buildPendingIntent(context, reservation);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, expireTime, alarmIntent);
     }
 
     /**
@@ -159,20 +157,13 @@ public class NotificationService {
      * If the PendingIntent created does not correspond exactly to the PendingIntent used to schedule
      * the notification, the cancel operation is ignored.
      *
-     * @param context             the application context from which the notification starts.
-     * @param reservationPosition the position in the reservations list corresponding to the
-     *                            interested reservation. Used to display proper content when
-     *                            the associated activity starts.
-     *                            the notification to display is related to the same reservation.
-     * @param shopName            the name of the shop the user has an appointment at.
-     * @param timeNotice          the amount of time (chosen by the user in another context) before the
-     *                            actual appointment the user chosen to be notified at.
+     * @param context     the application context from which the notification starts.
+     * @param reservation the reservation corresponding to the notification ot be cancelled.
      */
     public static void cancelNotification(@NonNull final Context context,
-                                          final int reservationPosition, @NonNull final String shopName,
-                                          @NonNull final String timeNotice) {
+                                          @NonNull final Reservation reservation) {
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        final PendingIntent alarmIntent = NotificationService.buildPendingIntent(context, reservationPosition, shopName, timeNotice);
+        final PendingIntent alarmIntent = NotificationService.buildPendingIntent(context, reservation);
 
         alarmManager.cancel(alarmIntent);
     }
@@ -180,24 +171,16 @@ public class NotificationService {
     /**
      * Build a PendingIntent with given information.
      *
-     * @param context             the application context from which the notification starts.
-     * @param reservationPosition the position in the reservations list corresponding to the
-     *                            interested reservation. Used to display proper content when
-     *                            the associated activity starts.
-     *                            the notification to display is related to the same reservation.
-     * @param shopName            the name of the shop the user has an appointment at.
-     * @param timeNotice          the amount of time (chosen by the user in another context) before the
-     *                            actual appointment the user chosen to be notified at.
+     * @param context     the application context from which the notification starts.
+     * @param reservation the reservation upon which the notification is built.
      * @return the PendingIntent.
      */
     private static PendingIntent buildPendingIntent(@NonNull final Context context,
-                                                    final int reservationPosition,
-                                                    @NonNull final String shopName,
-                                                    @NonNull final String timeNotice) {
-        final int notificationId = NotificationService.generateId(shopName);
+                                                    @NonNull final Reservation reservation) {
+        final int notificationId = NotificationService.generateId(reservation.getShopName());
 
-        final Notification notification = NotificationService.buildNotification(context, notificationId, reservationPosition, shopName, timeNotice);
-        final Intent intent = new Intent(context, NotificationElapsedBroadcastReceiver.class);
+        final Notification notification = NotificationService.buildNotification(context, notificationId, reservation);
+        final Intent intent = new Intent(context, NotificationBroadcastReceiver.class);
         intent.putExtra(EXTRA_NOTIFICATION, notification);
         intent.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
         return PendingIntent.getBroadcast(context, notificationId, intent, 0);
@@ -209,12 +192,8 @@ public class NotificationService {
      * to listen for device restart to restore them.
      */
     public static void disableNotificationReceiver(@NonNull final Context context) {
-        final ComponentName receiver = new ComponentName(context, NotificationDeviceBootReceiver.class);
-        final PackageManager packageManager = context.getPackageManager();
-
-        packageManager.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);
+        NotificationService.setNotificationReceiverStatus(context,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
     }
 
     /**
@@ -224,11 +203,19 @@ public class NotificationService {
      * notifications.
      */
     public static void enableNotificationReceiver(@NonNull final Context context) {
-        final ComponentName receiver = new ComponentName(context, NotificationDeviceBootReceiver.class);
+        NotificationService.setNotificationReceiverStatus(context,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+    }
+
+    /**
+     * Set the status of the receiver in the manifest to the given status.
+     */
+    private static void setNotificationReceiverStatus(@NonNull final Context context, final int status) {
+        final ComponentName receiver = new ComponentName(context, NotificationDeviceBootBroadcastReceiver.class);
         final PackageManager packageManager = context.getPackageManager();
 
         packageManager.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                status,
                 PackageManager.DONT_KILL_APP);
     }
 

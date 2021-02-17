@@ -16,7 +16,7 @@ import static com.android.clup.notification.NotificationService.NOTIFICATION_ID_
  * This class is used to execute code when the scheduled notification time is elapsed.
  * It creates and displays the notification to the user
  */
-public class NotificationElapsedBroadcastReceiver extends BroadcastReceiver {
+public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(@NonNull final Context context, @NonNull final Intent intent) {

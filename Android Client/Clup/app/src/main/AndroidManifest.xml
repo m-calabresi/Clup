@@ -20,11 +20,11 @@
         tools:ignore="AllowBackup,UnusedAttribute">
 
         <receiver
-            android:name=".notification.NotificationElapsedBroadcastReceiver"
+            android:name=".notification.NotificationBroadcastReceiver"
             android:process=":remote" />
 
         <receiver
-            android:name=".notification.NotificationDeviceBootReceiver"
+            android:name=".notification.NotificationDeviceBootBroadcastReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

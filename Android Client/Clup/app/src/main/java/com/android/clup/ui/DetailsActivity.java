@@ -15,16 +15,16 @@ import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.clup.R;
-import com.android.clup.model.Model;
+import com.android.clup.model.Reservation;
 import com.android.clup.viewmodel.DetailsViewModel;
 
-import static com.android.clup.notification.NotificationService.EXTRA_POSITION;
+import static com.android.clup.notification.NotificationService.EXTRA_RESERVATION;
 
 public class DetailsActivity extends AppCompatActivity {
     private DetailsViewModel viewModel;
     private Button notifyButton;
 
-    private final View.OnClickListener notifyButtonOnClickListener = view -> this.viewModel.toggleNotification(this, this.notifyButton);
+    private final View.OnClickListener notifyButtonOnClickListener = view -> this.viewModel.toggleNotificationUi(this, this.notifyButton);
     private final View.OnClickListener directionsButtonOnClickListener = view -> this.viewModel.navigateToSelectedShop(this);
 
     @Override
@@ -35,9 +35,9 @@ public class DetailsActivity extends AppCompatActivity {
         this.viewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
 
         // enter the activity by clicking on the notification
-        if (getIntent().hasExtra(EXTRA_POSITION)) {
-            final int position = getIntent().getIntExtra(EXTRA_POSITION, Model.INVALID_INDEX);
-            this.viewModel.setSelectedReservationPosition(position);
+        if (getIntent().hasExtra(EXTRA_RESERVATION)) {
+            final Reservation reservation = getIntent().getParcelableExtra(EXTRA_RESERVATION);
+            this.viewModel.setSelectedReservation(reservation);
         }
 
         final Toolbar toolbar = findViewById(R.id.details_toolbar);
@@ -65,9 +65,9 @@ public class DetailsActivity extends AppCompatActivity {
         final TextView dateTextView = findViewById(R.id.date_text_view);
         dateTextView.setText(date);
 
-        final String hour = this.viewModel.getReservationHour();
-        final TextView hourTextView = findViewById(R.id.hour_text_view);
-        hourTextView.setText(hour);
+        final String time = this.viewModel.getReservationTime();
+        final TextView timeTextView = findViewById(R.id.time_text_view);
+        timeTextView.setText(time);
 
         final Button directionsButton = findViewById(R.id.directions_button);
         directionsButton.setOnClickListener(directionsButtonOnClickListener);
@@ -91,8 +91,8 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     /**
-     * Called every time a back action is performed (both from the navigation back button and from the back
-     * arrow in the toolbar).
+     * Called every time a back action is performed (both from the navigation back button and
+     * from the back arrow in the toolbar).
      * <p>
      * Close the current activity and also the {@link MapActivity} that is still present in the
      * stack.

@@ -44,55 +44,55 @@ public class SelectViewModel extends ViewModel {
     }
 
     /**
-     * Reset the index corresponding to the shop selected by the user.
+     * Reset the shop selected by the user.
      * This is done to allow the user to select another shop by going back in MapActivity and pick
-     * another shop.
+     * another one.
      */
-    public void resetSelectedShopPosition() {
-        this.model.resetSelectedShopIndex();
+    public void resetSelectedShop() {
+        this.model.resetSelectedShop();
     }
 
     /**
-     * Store index corresponding to the day selected by the user.
+     * Store the day selected by the user.
      */
-    public void setSelectedDayPosition(final int position) {
-        this.model.setSelectedDayIndex(position);
+    public void setSelectedDay(final int position) {
+        this.model.setSelectedDay(this.model.getSelectedShop().getAvailableDays().get(position));
     }
 
     /**
-     * Reset the index corresponding to the day selected by the user.
+     * Reset the day selected by the user.
      */
-    public void resetSelectedDayPosition() {
-        this.model.resetSelectedDayIndex();
+    public void resetSelectedDay() {
+        this.model.resetSelectedDay();
     }
 
     /**
-     * Store index corresponding to the hour selected by the user.
+     * Store the time selected by the user.
      */
-    public void setSelectedHourPosition(final int position) {
-        this.model.setSelectedHourIndex(position);
+    public void setSelectedTime(final int position) {
+        this.model.setSelectedTime(this.model.getSelectedDay().getTimes().get(position));
     }
 
     /**
-     * Reset the index corresponding to the shop selected by the user.
+     * Reset the shop selected by the user.
      */
-    public void resetSelectedHourPosition() {
-        this.model.resetSelectedHourIndex();
+    public void resetSelectedTime() {
+        this.model.resetSelectedTime();
     }
 
     /**
-     * Utility method to fill a ChipGroup with chips that contains values specified by hours.
+     * Utility method to fill a ChipGroup with chips that contains values specified by times.
      */
-    public static void setHourChips(@NonNull final ChipGroup parent, @NonNull final List<String> hours) {
+    public static void setTimeChips(@NonNull final ChipGroup parent, @NonNull final List<String> times) {
         parent.post(() -> {
             if (parent.getChildCount() > 0)
                 parent.removeAllViews();
 
             final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
-            for (int i = 0; i < hours.size(); i++) {
-                final String foodName = hours.get(i);
-                final Chip chip = (Chip) layoutInflater.inflate(R.layout.item_hour, parent, false);
+            for (int i = 0; i < times.size(); i++) {
+                final String foodName = times.get(i);
+                final Chip chip = (Chip) layoutInflater.inflate(R.layout.item_time, parent, false);
                 chip.setText(foodName);
 
                 parent.addView(chip);
@@ -121,20 +121,22 @@ public class SelectViewModel extends ViewModel {
      */
     public void bookReservation(@NonNull Callback<Boolean> callback) {
         final String shopName = this.model.getSelectedShop().getName();
+
         final Date date = this.model.getSelectedDay().getDate();
-        final String hour = this.model.getSelectedHour();
+        final String time = this.model.getSelectedTime();
+        date.setTime(time);
+
         final LatLng coords = this.model.getSelectedShop().getCoordinates();
 
-        this.queueService.getUuid(this.model.getFullname(), shopName, date.plain(), hour, result -> {
+        this.queueService.getUuid(this.model.getFullname(), shopName, date.plain(), time, result -> {
             Result<Boolean> bookResult;
 
             if (result instanceof Result.Success) {
                 final String uuid = ((Result.Success<String>) result).data;
 
-                final Reservation reservation = new Reservation(shopName, date, hour, uuid, coords);
+                final Reservation reservation = new Reservation(shopName, date, uuid, coords);
                 this.model.addReservation(reservation);
-                // last reservation added is put in the last position of the list
-                this.model.setSelectedReservationIndex(this.model.getReservations().size() - 1);
+                this.model.setSelectedReservation(reservation);
 
                 bookResult = new Result.Success<>(true);
             } else {

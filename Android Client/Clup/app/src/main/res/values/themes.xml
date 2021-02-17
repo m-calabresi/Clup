@@ -16,9 +16,9 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
 
-        <item name="android:statusBarColor">@color/gray_legacy</item>
+        <item name="android:statusBarColor">@color/lime_500</item>
 
-        <item name="android:navigationBarColor">@color/gray_legacy</item>
+        <item name="android:navigationBarColor">@color/lime_500</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
@@ -28,7 +28,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/transparent</item>
 
         <item name="android:navigationBarColor">@color/gray_legacy</item>
 
@@ -49,6 +49,10 @@
 
     <style name="AppTheme.Clup.Select.Background" parent="">
         <item name="android:background">@color/lime_500</item>
+    </style>
+
+    <style name="AppTheme.Clup.Main.Background" parent="AppTheme.Clup.Select.Background">
+
     </style>
 
     <!-- DETAILS ACTIVITY THEMES -->
@@ -83,14 +87,12 @@
         <item name="titleTextColor">@color/black</item>
     </style>
 
-    <!-- TOOLBAR THEMES -->
     <style name="AppTheme.Clup.DetailsMaterialToolbar" parent="AppTheme.Clup.SelectMaterialToolbar">
 
     </style>
 
     <style name="AppTheme.Clup.MainMaterialToolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:background">?android:colorBackground</item>
-        <item name="titleTextColor">@color/black</item>
+        <item name="android:background">@color/lime_500</item>
     </style>
 
     <!-- BUTTON BASE THEME -->

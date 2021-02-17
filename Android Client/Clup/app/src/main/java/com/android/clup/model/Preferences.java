@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.android.clup.ApplicationContext;
 
+// TODO test on a device
 /**
  * A helper class used to load and store shared preferences.
  */

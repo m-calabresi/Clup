@@ -117,7 +117,7 @@ public class AuthViewModel extends ViewModel {
      * A username is valid only if:
      * <p>
      * ^                start of line
-     * [a-zA-Z -]{2,}   will except a name with at least two characters including -
+     * [a-zA-Z-]{2,}   will except a name with at least two characters including -
      * \s               will look for white space between name and surname
      * [a-zA-Z]+        needs at least 1 character
      * \'?-?            possibility of **'** or **-** for double barreled and hyphenated surnames
@@ -126,7 +126,7 @@ public class AuthViewModel extends ViewModel {
      * ([a-zA-Z]+)?     possibility of a second surname
      */
     public boolean isValidUsername(@NonNull final String username) {
-        return username.trim().matches("^([a-zA-Z -]{2,}\\s[a-zA-z]+'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]+)?)");
+        return username.trim().matches("^([a-zA-Z-]{2,}\\s[a-zA-z]+'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]+)?)");
     }
 
     /**

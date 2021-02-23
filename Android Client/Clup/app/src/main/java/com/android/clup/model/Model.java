@@ -134,7 +134,6 @@ public final class Model {
         this.selectedTime = null;
     }
 
-    // TODO test on a device
     @NonNull
     public List<Reservation> getReservations() {
         if (this.reservations == null)
@@ -142,20 +141,17 @@ public final class Model {
         return this.reservations;
     }
 
-    // TODO test on a device
     public void addReservation(@NonNull final Reservation reservation) {
         getReservations().add(reservation);
         Collections.sort(getReservations()); // sort reservations by date and time (nearest reservations first)
         JsonParser.saveReservations(getReservations());
     }
 
-    // TODO test on a device
     public void setFriendlyName(@NonNull final String friendlyName) {
         this.friendlyName = friendlyName;
         Preferences.setFriendlyName(this.friendlyName);
     }
 
-    // TODO test on a device
     @NonNull
     public String getFriendlyName() {
         if (this.friendlyName == null)
@@ -163,13 +159,11 @@ public final class Model {
         return this.friendlyName;
     }
 
-    // TODO test on a device
     public void setFullname(@NonNull final String fullname) {
         this.fullname = fullname;
         Preferences.setFullname(fullname);
     }
 
-    // TODO test on a device
     @NonNull
     public String getFullname() {
         if (this.fullname == null)
@@ -188,7 +182,6 @@ public final class Model {
         throw new NullPointerException("No value was set before calling this method, did you call 'setSelectedReservation'?");
     }
 
-    // TODO test on a device
     public void setSelectedReservationTimeNotice(final int timeNotice) {
         getSelectedReservation().setTimeNotice(timeNotice);
         JsonParser.saveReservations(Objects.requireNonNull(this.reservations));

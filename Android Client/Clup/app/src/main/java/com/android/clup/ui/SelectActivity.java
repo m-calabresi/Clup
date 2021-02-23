@@ -40,7 +40,7 @@ public class SelectActivity extends AppCompatActivity {
                 showReservationError();
         });
     };
-    private final Observer<Integer> doneButtonGroupIdLiveDataObserver = groupTag -> doneButton.setVisibility(View.VISIBLE);
+    private final Observer<Integer> doneButtonGroupTagLiveDataObserver = groupTag -> doneButton.setVisibility(View.VISIBLE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class SelectActivity extends AppCompatActivity {
         this.doneButton = findViewById(R.id.done_button);
         Utils.enableProgressButton(this.doneButton, this);
         this.doneButton.setOnClickListener(doneButtonOnClickListener);
-        this.viewModel.getGroupIdLiveData().observe(this, this.doneButtonGroupIdLiveDataObserver);
+        this.viewModel.getGroupTagLiveData().observe(this, this.doneButtonGroupTagLiveDataObserver);
     }
 
     /**

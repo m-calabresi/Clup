@@ -72,10 +72,12 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
 
     @NonNull
     public static final Parcelable.Creator<Reservation> CREATOR = new Parcelable.Creator<Reservation>() {
+        @NonNull
         public Reservation createFromParcel(@NonNull final Parcel in) {
             return new Reservation(in);
         }
 
+        @NonNull
         public Reservation[] newArray(final int size) {
             return new Reservation[size];
         }

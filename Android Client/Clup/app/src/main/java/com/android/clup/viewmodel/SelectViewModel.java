@@ -24,14 +24,14 @@ public class SelectViewModel extends ViewModel {
     @NonNull
     private final Model model;
     @NonNull
-    private final MutableLiveData<Integer> groupIdLiveData;
+    private final MutableLiveData<Integer> groupTagLiveData;
 
     @NonNull
     private final QueueService queueService;
 
     public SelectViewModel() {
         this.model = Model.getInstance();
-        this.groupIdLiveData = new MutableLiveData<>();
+        this.groupTagLiveData = new MutableLiveData<>();
         this.queueService = new QueueService();
     }
 
@@ -104,8 +104,8 @@ public class SelectViewModel extends ViewModel {
      * A MutableLiveData that reacts to chips selection.
      */
     @NonNull
-    public MutableLiveData<Integer> getGroupIdLiveData() {
-        return this.groupIdLiveData;
+    public MutableLiveData<Integer> getGroupTagLiveData() {
+        return this.groupTagLiveData;
     }
 
     /**
@@ -113,7 +113,7 @@ public class SelectViewModel extends ViewModel {
      * that this group is now the only one containing a selected chip.
      */
     public void setGroupTagLiveData(@NonNull final Object groupTag) {
-        this.groupIdLiveData.setValue((int) groupTag);
+        this.groupTagLiveData.setValue((int) groupTag);
     }
 
     /**

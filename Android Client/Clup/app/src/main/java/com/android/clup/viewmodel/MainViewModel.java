@@ -41,6 +41,7 @@ public class MainViewModel extends ViewModel {
     /**
      * Return the list of reservation the user has booked.
      */
+    @NonNull
     public List<Reservation> getReservations() {
         return this.model.getReservations();
     }
@@ -48,6 +49,7 @@ public class MainViewModel extends ViewModel {
     /**
      * Return the friendly name of the user.
      */
+    @NonNull
     public String getFriendlyName() {
         return this.model.getFriendlyName();
     }

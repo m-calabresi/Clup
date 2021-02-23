@@ -26,6 +26,7 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @NonNull
     private final SelectViewModel viewModel;
 
+    @NonNull
     private final Shop shop;
 
     public class DayViewHolder extends RecyclerView.ViewHolder {
@@ -62,7 +63,7 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             };
 
             this.timeChipGroup.setOnCheckedChangeListener(timeChipGroupOnCheckedChangeListener);
-            viewModel.getGroupIdLiveData().observe(lifecycleOwner, groupTagLiveDataObserver);
+            viewModel.getGroupTagLiveData().observe(lifecycleOwner, groupTagLiveDataObserver);
         }
     }
 
@@ -95,7 +96,6 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return viewHolder;
     }
 
-    // TODO try to test on a device
     @Override
     public int getItemViewType(final int position) {
         if (position == this.shop.getAvailableDays().size())
@@ -114,7 +114,6 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    // TODO try to test on a device
     @Override
     public int getItemCount() {
         return this.shop.getAvailableDays().size() + 1;

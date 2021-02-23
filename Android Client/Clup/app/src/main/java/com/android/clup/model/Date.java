@@ -16,11 +16,13 @@ import java.util.Locale;
 public class Date implements Parcelable {
     @NonNull
     public static final Creator<Date> CREATOR = new Creator<Date>() {
+        @NonNull
         @Override
         public Date createFromParcel(@NonNull final Parcel in) {
             return new Date(in);
         }
 
+        @NonNull
         @Override
         public Date[] newArray(final int size) {
             return new Date[size];
@@ -94,6 +96,7 @@ public class Date implements Parcelable {
     /**
      * Return the current time in the format {@code HH:mm}.
      */
+    @NonNull
     public String getTime() {
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(calendar.getTime());

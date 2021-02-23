@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-// TODO try to test on a device
 public class JsonParser {
     @NonNull
     private static final String RESERVATIONS_FILE_NAME = "reservations.json";
@@ -59,7 +58,6 @@ public class JsonParser {
      */
     @NonNull
     public static List<Reservation> loadReservations() {
-
         try {
             final JSONObject jsonObject = JsonParser.loadJsonFromFile(ApplicationContext.get(), RESERVATIONS_FILE_NAME);
             final JSONArray reservationsArray = jsonObject.getJSONArray(RESERVATIONS_ARRAY_NAME);
@@ -244,7 +242,7 @@ public class JsonParser {
                     return JsonParser.toJsonObject(jsonString);
                 }
             }
-        } catch (IOException e) {
+        } catch (@NonNull final IOException e) {
             throw new RuntimeException("Unable to load JSONObject from file: " + e.getLocalizedMessage());
         }
     }

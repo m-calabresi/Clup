@@ -1,5 +1,6 @@
 package com.android.clup.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.test.core.app.ActivityScenario;
 
@@ -23,6 +24,7 @@ public class DayRecyclerViewAdapterTest {
     private DayRecyclerViewAdapter adapter;
     private int size;
 
+    @NonNull
     private List<Shop> generateShops() {
         // dummy list
         final LatLng coords1 = new LatLng(45.4659, 9.1914);

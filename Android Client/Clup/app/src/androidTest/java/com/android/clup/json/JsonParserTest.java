@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 
 public class JsonParserTest {
     // NOTE: change this string according to the file name in JsonParser class.
+    @NonNull
     private static final String filename = "reservations.json";
 
     private AuthActivity activity;

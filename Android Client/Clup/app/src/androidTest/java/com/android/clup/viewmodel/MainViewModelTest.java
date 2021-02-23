@@ -23,8 +23,11 @@ public class MainViewModelTest {
     @Before
     public void setUp() {
         try (final ActivityScenario<AuthActivity> scenario = ActivityScenario.launch(AuthActivity.class)) {
-            scenario.onActivity(activity ->
-                    this.viewModel = new ViewModelProvider(activity).get(MainViewModel.class));
+            scenario.onActivity(activity -> {
+                this.viewModel = new ViewModelProvider(activity).get(MainViewModel.class);
+
+                clearReservations();
+            });
         }
     }
 
@@ -32,13 +35,12 @@ public class MainViewModelTest {
     public void setSelectedReservation() {
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
-        date.setTime("15:20");
-        final String uuid = "15yhr544r";
+        date.setTime("12:00");
+        final String uuid = "15yhr5988uh";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
         final Reservation reservation = new Reservation(shopName, date, uuid, coords);
 
-        clearReservations();
         Model.getInstance().addReservation(reservation);
 
         this.viewModel.setSelectedReservation(0);
@@ -63,7 +65,6 @@ public class MainViewModelTest {
 
         final Reservation reservation = new Reservation(shopName, date, uuid, coords);
 
-        clearReservations();
         Model.getInstance().addReservation(reservation);
         final List<Reservation> reservations = Model.getInstance().getReservations();
         final List<Reservation> retrievedReservations = this.viewModel.getReservations();
@@ -95,7 +96,7 @@ public class MainViewModelTest {
 
         // give time to the executor to finish its job
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

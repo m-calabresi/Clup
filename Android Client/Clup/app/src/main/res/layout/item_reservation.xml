@@ -1,52 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_reservation_layout"
+    android:id="@+id/main_card_view"
+    style="@style/AppTheme.Clup.ReservationCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    android:padding="12dp">
+    android:clickable="true"
+    android:focusable="true">
 
-    <TextView
-        android:id="@+id/shop_name_text_view"
-        style="@style/AppTheme.Clup.ItemTitleTextView"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="22dp">
 
-    <TextView
-        android:id="@+id/date_text_view"
-        style="@style/AppTheme.Clup.ItemSubtitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="12dp"
-        android:gravity="center_vertical"
-        app:drawableStartCompat="@drawable/ic_calendar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shop_name_text_view" />
+        <TextView
+            android:id="@+id/store_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:drawableStartCompat="@drawable/ic_store"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/time_text_view"
-        style="@style/AppTheme.Clup.ItemSubtitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="12dp"
-        android:gravity="center_vertical"
-        app:drawableStartCompat="@drawable/ic_clock"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date_text_view" />
+        <TextView
+            android:id="@+id/shop_name_text_view"
+            style="@style/AppTheme.Clup.ItemTitleTextView"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/store_icon"
+            app:layout_constraintTop_toTopOf="@id/store_icon"
+            app:layout_constraintBottom_toBottomOf="@id/store_icon"/>
 
-    <TextView
-        android:id="@+id/notification_text_view"
-        style="@style/AppTheme.Clup.ItemSubtitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="12dp"
-        android:gravity="center_vertical"
-        app:drawableStartCompat="@drawable/ic_notification_on"
-        app:drawableTint="@color/gray_400"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/time_text_view" />
+        <TextView
+            android:id="@+id/date_time_text_view"
+            style="@style/AppTheme.Clup.ItemSubtitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="12dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="@id/shop_name_text_view"
+            app:layout_constraintTop_toBottomOf="@id/shop_name_text_view" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/notification_text_view"
+            style="@style/AppTheme.Clup.ItemSubtitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            app:drawableStartCompat="@drawable/ic_notification_small"
+            app:layout_constraintStart_toStartOf="@id/shop_name_text_view"
+            app:layout_constraintTop_toBottomOf="@id/date_time_text_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

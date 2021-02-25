@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/name_text_view"
-            style="@style/AppTheme.Clup.ItemTitleTextView"
+            style="@style/AppTheme.Clup.ItemTitleTextView.Alt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="12dp"
@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/address_text_view"
-            style="@style/AppTheme.Clup.ItemSubtitleTextView"
+            style="@style/AppTheme.Clup.ItemSubtitleTextView.Alt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"

@@ -157,11 +157,20 @@
         <item name="android:textSize">@dimen/title_text_view_text_size</item>
     </style>
 
+    <style name="AppTheme.Clup.WelcomeTextView" parent="AppTheme.Clup.TitleTextView">
+
+    </style>
+
     <style name="AppTheme.Clup.ItemTitleTextView" parent="">
         <item name="android:textAlignment">textStart</item>
         <item name="android:textColor">@color/black</item>
-
         <item name="android:textSize">@dimen/item_title_text_view_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.Clup.ItemTitleTextView.Alt" parent="AppTheme.Clup.ItemTitleTextView">
+        <item name="android:textSize">@dimen/item_title_text_view_alt_text_size</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="AppTheme.Clup.InfoTitleTextView" parent="Widget.MaterialComponents.TextView">
@@ -183,6 +192,10 @@
     <style name="AppTheme.Clup.ItemSubtitleTextView" parent="AppTheme.Clup.SubtitleTextView">
         <item name="android:textSize">@dimen/item_subtitle_text_view_text_size</item>
         <item name="android:textAlignment">textStart</item>
+    </style>
+
+    <style name="AppTheme.Clup.ItemSubtitleTextView.Alt" parent="AppTheme.Clup.ItemSubtitleTextView">
+
     </style>
 
     <style name="AppTheme.Clup.MediumItemSubtitleTextView" parent="">
@@ -230,6 +243,10 @@
 
         <item name="cardCornerRadius">@dimen/card_corner_radius</item>
         <item name="cardElevation">@dimen/card_no_elevation</item>
+    </style>
+
+    <style name="AppTheme.Clup.ReservationCardView" parent="AppTheme.Clup.ActionsCardView">
+        <item name="android:backgroundTint">@color/transparent</item>
     </style>
 
     <!-- RECYCLER VIEW CONTAINER THEME -->

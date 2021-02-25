@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
@@ -25,8 +25,7 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
 
     public class ReservationViewHolder extends RecyclerView.ViewHolder {
         private final TextView shopNameTextView;
-        private final TextView dateTextView;
-        private final TextView timeTextView;
+        private final TextView dateTimeTextView;
         private final TextView notificationTextView;
 
         public ReservationViewHolder(@NonNull final View itemView) {
@@ -35,12 +34,11 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
             final View.OnClickListener reservationViewOnClickListener = view ->
                     onRecyclerViewItemClickedCallback.onRecyclerViewItemClicked(getBindingAdapterPosition());
 
-            final ConstraintLayout parent = itemView.findViewById(R.id.item_reservation_layout);
+            final CardView parent = itemView.findViewById(R.id.main_card_view);
             parent.setOnClickListener(reservationViewOnClickListener);
 
             this.shopNameTextView = parent.findViewById(R.id.shop_name_text_view);
-            this.dateTextView = parent.findViewById(R.id.date_text_view);
-            this.timeTextView = parent.findViewById(R.id.time_text_view);
+            this.dateTimeTextView = parent.findViewById(R.id.date_time_text_view);
             this.notificationTextView = parent.findViewById(R.id.notification_text_view);
         }
     }
@@ -86,10 +84,24 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
             final ReservationViewHolder viewHolder = (ReservationViewHolder) holder;
             final Reservation reservation = this.reservations.get(position);
 
+            final String summary = viewHolder.itemView.getContext().getString(R.string.text_reservation_summary,
+                    reservation.getDate().formatted(), reservation.getDate().getTime());
+
             viewHolder.shopNameTextView.setText(reservation.getShopName());
-            viewHolder.dateTextView.setText(reservation.getDate().formatted());
-            viewHolder.timeTextView.setText(reservation.getDate().getTime());
-            viewHolder.notificationTextView.setText(Integer.toString(reservation.getTimeNotice())); // TODO replace with formatted text (if exists, otherwise hide)
+            viewHolder.dateTimeTextView.setText(summary);
+
+            if (reservation.getTimeNotice() != Reservation.TimeNotice.NOT_SET &&
+                    reservation.getTimeNotice() != Reservation.TimeNotice.DISABLED) {
+                viewHolder.notificationTextView.setVisibility(View.VISIBLE);
+
+                final String timeNoticeString = Reservation.TimeNotice
+                        .toTimeString(viewHolder.itemView.getContext(), reservation.getTimeNotice());
+                final String timeNoticeSummary = viewHolder.itemView.getContext()
+                        .getString(R.string.text_notification_summary, timeNoticeString);
+
+                viewHolder.notificationTextView.setText(timeNoticeSummary);
+            } else
+                viewHolder.notificationTextView.setVisibility(View.GONE);
         }
     }
 

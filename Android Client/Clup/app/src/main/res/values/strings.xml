@@ -16,6 +16,9 @@
     <string name="text_notification_set">Notification enabled</string>
     <string name="text_notification_cancelled">Notification disabled</string>
     <string name="text_friendly_message">Hi, %1$s</string> <!-- eg. Hi, Mark --> <!-- copy-paste %1$s and leave a space between the comma and %1$s -->
+    <string name="text_reservation_summary">%1$s at %2$s</string> <!-- eg. Wednesday, 21 june at 12:30 --> <!-- copy paste %1$s and %2$s, translate "at" and leave the two spaces before and after "at"-->
+    <string name="text_notification_summary">%1$s before</string> <!-- eg. 30 minutes before --> <!-- copy paste %1$s and leave a space between it and "before" -->
+    <string name="text_empty_view">You have no reservations\nBook one!</string> <!-- copy-paste the \n and DON'T leave a space between \n and the next word -->
 
     <string name="action_verify">Verify</string>
     <string name="action_next">Next</string>
@@ -48,7 +51,7 @@
     <string name="array_item_system_default">System default</string>
 
     <string name="info_title_text">Hi I\'m a QR code!</string> <!-- if you use the apostrophe, remember to escape it by putting a "\" before it -->
-    <string name="info_subtitle_text">Scan me before entering the store,\ndon\'t forget to wear your mask!</string> <!-- copy-paste the \n and DON'T leave a space between \n and the next word, also escape the apostrophe if you use it -->
+    <string name="info_subtitle_text">Scan me before entering the store,\ndon\'t forget to wear your mask!</string> <!-- copy-paste the \n and DON'T leave a space between \n and the previous-next words, also escape the apostrophe if you use it -->
 
     <string name="channel_name">Reservations</string>
     <string name="channel_description">Remind you in advance that your turn is close.</string>

@@ -18,7 +18,7 @@ class ReservationRecyclerViewAdapterTest {
 
     @BeforeEach
     void setup() {
-        final OnRecyclerViewItemClickedCallback callback = position -> {
+        final OnListItemClickedCallback callback = position -> {
         };
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");

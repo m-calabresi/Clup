@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
-import com.android.clup.adapter.OnRecyclerViewItemClickedCallback;
+import com.android.clup.adapter.OnListItemClickedCallback;
 import com.android.clup.adapter.ShopRecyclerViewAdapter;
 import com.android.clup.concurrent.Result;
 import com.android.clup.model.Shop;
@@ -31,7 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 import java.util.Objects;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, OnRecyclerViewItemClickedCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, OnListItemClickedCallback {
     private MapViewModel viewModel;
 
     private TextView padView;
@@ -67,7 +67,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        this.viewModel = new ViewModelProvider(this, new MapViewModelFactory(this)).get(MapViewModel.class);
+        this.viewModel = new ViewModelProvider(this, new MapViewModelFactory(this, this)).get(MapViewModel.class);
         Utils.setFullScreenStatusBar(this);
 
         final View mapActivityView = findViewById(R.id.layout_activity_map);
@@ -93,8 +93,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 final ShopRecyclerViewAdapter adapter = new ShopRecyclerViewAdapter(this, shops);
                 recyclerView.setAdapter(adapter);
-
-                // TODO add markers on the map
             } else
                 displayErrorSnackBar();
         });
@@ -124,10 +122,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull final GoogleMap googleMap) {
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style));
-        this.viewModel.setGoogleMap(googleMap);
+        this.viewModel.setGoogleMap(this, googleMap);
 
         // Prompt the user for permission.
         this.viewModel.startLocationPermissionRequest(this);
+
+        // add markers on the map
+        this.viewModel.addMarkers(this);
     }
 
     /**
@@ -147,7 +148,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.viewModel.setSelectedShop(position);
         final Intent intent = new Intent(this, SelectActivity.class);
         startActivity(intent);
-        this.viewModel.handleExpansion(this.bottomSheetBehavior);
+        this.viewModel.adjustExpansion(this.bottomSheetBehavior);
     }
 
     /**

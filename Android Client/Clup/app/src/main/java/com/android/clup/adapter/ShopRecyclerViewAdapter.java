@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
-    private final OnRecyclerViewItemClickedCallback onRecyclerViewItemClickedCallback;
+    private final OnListItemClickedCallback onListItemClickedCallback;
 
     @NonNull
     private final List<Shop> shops;
@@ -30,7 +30,7 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             super(v);
 
             final View.OnClickListener cardViewOnClickListener = view ->
-                    onRecyclerViewItemClickedCallback.onRecyclerViewItemClicked(getBindingAdapterPosition());
+                    onListItemClickedCallback.onRecyclerViewItemClicked(getBindingAdapterPosition());
             final CardView cardView = v.findViewById(R.id.shop_card_view);
             cardView.setOnClickListener(cardViewOnClickListener);
 
@@ -39,10 +39,10 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    public ShopRecyclerViewAdapter(@NonNull final OnRecyclerViewItemClickedCallback callback,
+    public ShopRecyclerViewAdapter(@NonNull final OnListItemClickedCallback callback,
                                    @NonNull final List<Shop> shops) {
         super();
-        this.onRecyclerViewItemClickedCallback = callback;
+        this.onListItemClickedCallback = callback;
         this.shops = shops;
     }
 
@@ -66,8 +66,7 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         });
 
         viewHolder.addressTextView.post(() -> {
-            final String altText = viewHolder.itemView.getContext().getString(R.string.text_unknown_location);
-            final String address = MapsService.getAddressByCoordinates(viewHolder.itemView.getContext(), shop.getCoordinates(), altText);
+            final String address = MapsService.getAddressByCoordinates(viewHolder.itemView.getContext(), shop.getCoordinates());
             viewHolder.addressTextView.setText(address);
         });
     }

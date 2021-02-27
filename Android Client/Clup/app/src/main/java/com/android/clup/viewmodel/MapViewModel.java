@@ -1,6 +1,7 @@
 package com.android.clup.viewmodel;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -16,6 +17,9 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModel;
 
 import com.android.clup.R;
+import com.android.clup.adapter.InfoWindowAdapter;
+import com.android.clup.adapter.OnListItemClickedCallback;
+import com.android.clup.api.MapsService;
 import com.android.clup.api.QueueService;
 import com.android.clup.concurrent.Callback;
 import com.android.clup.concurrent.Result;
@@ -26,7 +30,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
@@ -38,6 +45,8 @@ import static android.content.Context.LOCATION_SERVICE;
 public class MapViewModel extends ViewModel {
     @NonNull
     private final Model model;
+
+    private final OnListItemClickedCallback recyclerViewItemClickedCallback;
 
     // The entry point to the Fused Location Provider.
     @NonNull
@@ -58,16 +67,27 @@ public class MapViewModel extends ViewModel {
 
     public static final float BOTTOM_SHEET_HALF_EXPANDED_RATIO = 0.6f;
 
-    public MapViewModel(@NonNull final Activity activity) {
+    public MapViewModel(@NonNull final Activity activity, @NonNull final OnListItemClickedCallback recyclerViewItemClickedCallback) {
         this.model = Model.getInstance();
 
         this.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
+        this.recyclerViewItemClickedCallback = recyclerViewItemClickedCallback;
 
         this.queueService = new QueueService();
     }
 
-    public void setGoogleMap(@NonNull final GoogleMap map) {
+    public void setGoogleMap(@NonNull final Context context, @NonNull final GoogleMap map) {
         this.map = map;
+        this.map.getUiSettings().setCompassEnabled(false);
+        this.map.setInfoWindowAdapter(new InfoWindowAdapter(context));
+
+        // handles the click on the marker InfoView
+        final GoogleMap.OnInfoWindowClickListener markerInfoWindowClickListener = marker -> {
+            // retrieve the position of the clicked item
+            final int position = (int) marker.getTag();
+            recyclerViewItemClickedCallback.onRecyclerViewItemClicked(position);
+        };
+        this.map.setOnInfoWindowClickListener(markerInfoWindowClickListener);
     }
 
     /**
@@ -210,10 +230,30 @@ public class MapViewModel extends ViewModel {
      * bak action when the user decides to go back through multiple activities (back button will
      * otherwise be hidden).
      */
-    public void handleExpansion(@NonNull final BottomSheetBehavior<View> bottomSheetBehavior) {
+    public void adjustExpansion(@NonNull final BottomSheetBehavior<View> bottomSheetBehavior) {
         new Handler(Looper.getMainLooper()).post(() -> {
             if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
         });
+    }
+
+    /**
+     * Add markers on the map in the position specified by the retrieved shops.
+     */
+    public void addMarkers(@NonNull final Context context) {
+        for (int position = 0; position < this.model.getShops().size(); position++) {
+            final Shop shop = this.model.getShops().get(position);
+
+            final BitmapDescriptor icon = Utils.vectorToBitmap(context, R.drawable.marker_shop);
+            final String title = shop.getName();
+            final String snippet = MapsService.getAddressByCoordinates(context, shop.getCoordinates());
+
+            final Marker marker = this.map.addMarker(new MarkerOptions()
+                    .position(shop.getCoordinates())
+                    .icon(icon)
+                    .title(title)
+                    .snippet(snippet));
+            marker.setTag(position);
+        }
     }
 }

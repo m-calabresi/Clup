@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
-import com.android.clup.adapter.OnRecyclerViewItemClickedCallback;
+import com.android.clup.adapter.OnListItemClickedCallback;
 import com.android.clup.adapter.ReservationRecyclerViewAdapter;
 import com.android.clup.model.Preferences;
 import com.android.clup.model.Reservation;
@@ -28,7 +28,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnRecyclerViewItemClickedCallback {
+public class MainActivity extends AppCompatActivity implements OnListItemClickedCallback {
     private MainViewModel viewModel;
     private ReservationRecyclerViewAdapter adapter;
 

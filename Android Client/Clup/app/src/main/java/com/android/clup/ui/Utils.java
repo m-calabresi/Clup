@@ -3,6 +3,9 @@ package com.android.clup.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.TypedValue;
@@ -12,11 +15,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
@@ -29,6 +34,8 @@ import com.github.razir.progressbutton.ButtonTextAnimatorExtensionsKt;
 import com.github.razir.progressbutton.DrawableButton;
 import com.github.razir.progressbutton.DrawableButtonExtensionsKt;
 import com.github.razir.progressbutton.ProgressButtonHolderKt;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -379,5 +386,20 @@ public class Utils {
 
             return WindowInsetsCompat.CONSUMED;
         });
+    }
+
+    /**
+     * Convert the given resource id (corresponding to a vector drawable resource) into a {@code BitmapDescriptor}
+     * entity.
+     */
+    @NonNull
+    public static BitmapDescriptor vectorToBitmap(@NonNull final Context context, @DrawableRes int id) {
+        final Drawable vectorDrawable = ResourcesCompat.getDrawable(context.getResources(), id, null);
+        final Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
+
+        vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }

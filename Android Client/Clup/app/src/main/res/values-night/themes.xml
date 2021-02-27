@@ -101,6 +101,11 @@
         <item name="rippleColor">@color/gray_800</item>
     </style>
 
+    <style name="AppTheme.Clup.InfoWindowRoundButton" parent="@style/AppTheme.Clup.MaterialRoundedButton">
+        <item name="android:backgroundTint">@color/lime_500</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <!-- PAD TEXT VIEW THEME -->
     <style name="AppTheme.Clup.PadTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:background">@color/gray_900</item>
@@ -213,6 +218,11 @@
 
     <style name="AppTheme.Clup.ReservationCardView" parent="AppTheme.Clup.ActionsCardView">
         <item name="android:backgroundTint">@color/transparent</item>
+    </style>
+
+    <style name="AppTheme.Clup.InfoWindowCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">@dimen/card_no_elevation</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
     </style>
 
     <!-- RECYCLER VIEW CONTAINER THEME -->

@@ -19,7 +19,7 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     private static final int VIEW_TYPE_DAY = 1;
 
     @NonNull
-    private final OnRecyclerViewItemClickedCallback onRecyclerViewItemClickedCallback;
+    private final OnListItemClickedCallback onListItemClickedCallback;
     @NonNull
     private final List<Reservation> reservations;
 
@@ -32,7 +32,7 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
             super(itemView);
 
             final View.OnClickListener reservationViewOnClickListener = view ->
-                    onRecyclerViewItemClickedCallback.onRecyclerViewItemClicked(getBindingAdapterPosition());
+                    onListItemClickedCallback.onRecyclerViewItemClicked(getBindingAdapterPosition());
 
             final CardView parent = itemView.findViewById(R.id.main_card_view);
             parent.setOnClickListener(reservationViewOnClickListener);
@@ -49,9 +49,9 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
         }
     }
 
-    public ReservationRecyclerViewAdapter(@NonNull final OnRecyclerViewItemClickedCallback callback,
+    public ReservationRecyclerViewAdapter(@NonNull final OnListItemClickedCallback callback,
                                           @NonNull final List<Reservation> reservations) {
-        this.onRecyclerViewItemClickedCallback = callback;
+        this.onListItemClickedCallback = callback;
         this.reservations = reservations;
     }
 

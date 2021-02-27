@@ -9,6 +9,7 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
+import com.android.clup.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
@@ -56,8 +57,7 @@ public class MapsService {
      */
     @NonNull
     public static String getAddressByCoordinates(@NonNull final Context context,
-                                                 @NonNull final LatLng coordinates,
-                                                 @NonNull final String altText) {
+                                                 @NonNull final LatLng coordinates) {
         final Geocoder geocoder = new Geocoder(context, Locale.getDefault());
 
         String address = "";
@@ -96,6 +96,8 @@ public class MapsService {
         completeAddress += !state.equals("") ? state : "";
 
         // one of the above or "unknown location" string
+        final String altText = context.getString(R.string.text_unknown_location);
+
         completeAddress = !completeAddress.equals("") ? completeAddress : altText;
         return completeAddress;
     }

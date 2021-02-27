@@ -19,7 +19,7 @@ class ShopRecyclerViewAdapterTest {
 
     @BeforeEach
     void setUp() {
-        final OnRecyclerViewItemClickedCallback callback = position -> {
+        final OnListItemClickedCallback callback = position -> {
         };
 
         final LatLng coords = new LatLng(45.4659, 9.1914);

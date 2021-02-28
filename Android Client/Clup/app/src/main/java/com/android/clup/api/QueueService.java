@@ -46,9 +46,9 @@ public class QueueService {
             final LatLng coords1 = new LatLng(45.4659, 9.1914);
             final LatLng coords2 = new LatLng(45.698342, 9.204998);
 
-            final Date date1 = Date.fromString("11-02-2021");
-            final Date date2 = Date.fromString("12-02-2021");
-            final Date date3 = Date.fromString("13-02-2021");
+            final Date date1 = Date.fromString("28-02-2021");
+            final Date date2 = Date.fromString("02-07-2021");
+            final Date date3 = Date.fromString("03-07-2021");
 
             final AvailableDay availableDay1 = new AvailableDay(date1, Arrays.asList("12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"));
             final AvailableDay availableDay2 = new AvailableDay(date2, Arrays.asList("16:00", "17:00", "18:00", "19:00"));

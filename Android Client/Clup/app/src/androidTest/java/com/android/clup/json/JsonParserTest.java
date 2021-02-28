@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -108,13 +109,21 @@ public class JsonParserTest {
         final String expectedJsonString = "{\"reservations\":[{\"shopName\":\"" + shopName
                 + "\",\"date\":\"" + date.plain() + "\",\"time\":\"" + date.getTime()
                 + "\",\"uuid\":\"" + uuid + "\",\"coords\":{\"lat\":"
-                + coords.latitude + ",\"lng\":" + coords.longitude + "},\"timeNotice\":-2}]}";
+                + coords.latitude + ",\"lng\":" + coords.longitude + "},\"timeNotice\":-2,\"expired\":false}]}";
 
         clearReservations();
         saveReservations(reservations);
 
         // ensure that the string has been encoded successfully
         assertEquals(expectedJsonString, readJsonFile());
+
+        final List<Reservation> emptyReservations = new ArrayList<>();
+
+        clearReservations();
+        saveReservations(emptyReservations);
+
+        // ensure that empty list is encoded as empty file
+        assertEquals("{}", readJsonFile());
     }
 
     @Test(expected = RuntimeException.class)

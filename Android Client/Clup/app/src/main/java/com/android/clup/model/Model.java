@@ -7,7 +7,7 @@ import com.android.clup.json.JsonParser;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.ListIterator;
 
 public final class Model {
     private static class ModelHelper {
@@ -136,8 +136,10 @@ public final class Model {
 
     @NonNull
     public List<Reservation> getReservations() {
-        if (this.reservations == null)
+        if (this.reservations == null) {
             this.reservations = JsonParser.loadReservations();
+            removeExpiredReservations();
+        }
         return this.reservations;
     }
 
@@ -149,15 +151,6 @@ public final class Model {
     public void removeReservation(@NonNull final Reservation reservation) {
         getReservations().remove(reservation);
         finalizeReservations();
-    }
-
-    /**
-     * Finalize reservations by sorting them (upcoming reservations first), then stores the sorted
-     * reservations to local storage.
-     */
-    private void finalizeReservations() {
-        Collections.sort(getReservations()); // sort reservations by date and time (upcoming reservations first)
-        JsonParser.saveReservations(getReservations());
     }
 
     public void setFriendlyName(@NonNull final String friendlyName) {
@@ -201,6 +194,40 @@ public final class Model {
 
     public void setSelectedReservationTimeNotice(final int timeNotice) {
         getSelectedReservation().setTimeNotice(timeNotice);
-        JsonParser.saveReservations(Objects.requireNonNull(this.reservations));
+        finalizeReservations();
+    }
+
+    /**
+     * Finalize reservations by sorting them (upcoming reservations first), then stores the sorted
+     * reservations to local storage.
+     */
+    private void finalizeReservations() {
+        Collections.sort(getReservations()); // sort reservations by date and time (upcoming reservations first)
+        removeExpiredReservations();
+        JsonParser.saveReservations(getReservations());
+    }
+
+    /**
+     * Check for reservations that has expired and set the corresponding flag accordingly.
+     * Check for expired reservations that have passed the {@code EXPIRE_TIME} and remove them from
+     * the list.
+     */
+    private void removeExpiredReservations() {
+        final long currentTime = Date.now();
+        final ListIterator<Reservation> iterator = getReservations().listIterator();
+
+        while (iterator.hasNext()) {
+            final Reservation reservation = iterator.next();
+
+            final long reservationDate = reservation.getDate().toMillis();
+            final long expireDate = reservationDate + Reservation.EXPIRE_TIME;
+
+            // reservation has expired but is still inside the EXPIRE_TIME
+            if (currentTime > reservationDate && currentTime < expireDate)
+                reservation.setExpired(true);
+                // reservation has expired and has passed the EXPIRE_TIME
+            else if (currentTime > expireDate)
+                iterator.remove();
+        }
     }
 }

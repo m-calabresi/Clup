@@ -15,6 +15,12 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public class Reservation implements Comparable<Reservation>, Parcelable {
     /**
+     * The amount of time in milliseconds during which an expired reservation remains visible to
+     * the user (default is 1 hour).
+     */
+    public static final long EXPIRE_TIME = 60 * 60 * 1000;
+
+    /**
      * The amount of time in advance (w.r.t. the appointment) the user wants to be notified.
      */
     public static class TimeNotice {
@@ -111,6 +117,12 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
      */
     private int timeNotice;
 
+    /**
+     * Whether the current reservation has expired or not. Expired reservations will still be visible
+     * for a given amount of time to account for user delay.
+     */
+    private boolean expired;
+
     public Reservation(@NonNull final String shopName, @NonNull final Date date,
                        @NonNull final String uuid, @NonNull final LatLng coords,
                        final int timeNotice) {
@@ -119,6 +131,7 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
         this.uuid = uuid;
         this.coords = coords;
         this.timeNotice = timeNotice;
+        this.expired = false;
     }
 
     public Reservation(@NonNull final String shopName, @NonNull final Date date,
@@ -132,6 +145,7 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
         this.uuid = in.readString();
         this.coords = in.readParcelable(LatLng.class.getClassLoader());
         this.timeNotice = in.readInt();
+        this.expired = in.readBoolean();
     }
 
     @NonNull
@@ -162,6 +176,14 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
         return this.timeNotice;
     }
 
+    public void setExpired(final boolean expired) {
+        this.expired = expired;
+    }
+
+    public boolean isExpired() {
+        return this.expired;
+    }
+
     /**
      * Compare the current reservation with the given one: a reservation comes before another
      * if its book date and time precedes the other's, a reservation comes after another if its book
@@ -188,5 +210,6 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
         dest.writeString(this.uuid);
         dest.writeParcelable(this.coords, flags);
         dest.writeInt(this.timeNotice);
+        dest.writeBoolean(this.expired);
     }
 }

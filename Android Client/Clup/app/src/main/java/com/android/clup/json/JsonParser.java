@@ -45,6 +45,8 @@ public class JsonParser {
     private static final String LNG_NAME = "lng";
     @NonNull
     private static final String TIME_NOTICE = "timeNotice";
+    @NonNull
+    private static final String EXPIRED = "expired";
 
     @NonNull
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -72,10 +74,13 @@ public class JsonParser {
      * Save the given reservation list to a json file (overwriting the content already inside).
      */
     public static void saveReservations(@NonNull final List<Reservation> reservations) {
-        executor.execute(() -> {
-            final JSONObject jsonReservations = JsonParser.toJsonReservations(reservations);
-            JsonParser.storeJsonObject(ApplicationContext.get(), jsonReservations, RESERVATIONS_FILE_NAME);
-        });
+        if (!reservations.isEmpty()) {
+            executor.execute(() -> {
+                final JSONObject jsonReservations = JsonParser.toJsonReservations(reservations);
+                JsonParser.storeJsonObject(ApplicationContext.get(), jsonReservations, RESERVATIONS_FILE_NAME);
+            });
+        } else
+            JsonParser.initReservationsFile();
     }
 
     /**
@@ -123,9 +128,13 @@ public class JsonParser {
             final String uuid = jsonReservation.getString(UUID_NAME);
             final LatLng coords = JsonParser.toCoords(jsonReservation.getJSONObject(COORDS_NAME));
             final int timeNotice = jsonReservation.getInt(TIME_NOTICE);
+            final boolean expired = jsonReservation.getBoolean(EXPIRED);
 
             date.setTime(time);
-            return new Reservation(shopName, date, uuid, coords, timeNotice);
+            final Reservation reservation = new Reservation(shopName, date, uuid, coords, timeNotice);
+            reservation.setExpired(expired);
+
+            return reservation;
         } catch (JSONException e) {
             throw new RuntimeException("Unable to convert JSONObject to Reservation: " + e.getLocalizedMessage());
         }
@@ -184,6 +193,7 @@ public class JsonParser {
             jsonReservation.put(UUID_NAME, reservation.getUuid());
             jsonReservation.put(COORDS_NAME, JsonParser.toJsonCoords(reservation.getCoords()));
             jsonReservation.put(TIME_NOTICE, reservation.getTimeNotice());
+            jsonReservation.put(EXPIRED, reservation.isExpired());
 
             return jsonReservation;
         } catch (JSONException e) {

@@ -52,6 +52,10 @@ public class DetailsActivity extends AppCompatActivity {
         final CardView cardView = findViewById(R.id.details_qr_card_view);
         this.viewModel.handleCardViewBackground(this, cardView);
 
+        final CardView warningCardView = findViewById(R.id.expired_warning_card_view);
+        final int visibility = this.viewModel.isReservationExpired() ? View.VISIBLE : View.GONE;
+        warningCardView.setVisibility(visibility);
+
         final int onColor = getResources().getColor(R.color.qr_code_on_color);
         final int offColor = getResources().getColor(R.color.qr_code_off_color);
 

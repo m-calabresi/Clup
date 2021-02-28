@@ -161,6 +161,12 @@
         <item name="android:textSize">@dimen/info_title_text_view</item>
     </style>
 
+    <style name="AppTheme.Clup.InfoTitleTextView.Error" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/item_title_text_view_text_size</item>
+    </style>
+
     <!-- SUBTITLE TEXT VIEW THEMES -->
     <style name="AppTheme.Clup.SubtitleTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/helvetica_neue_light</item>
@@ -177,6 +183,13 @@
 
     <style name="AppTheme.Clup.ItemSubtitleTextView.Alt" parent="AppTheme.Clup.ItemSubtitleTextView">
 
+    </style>
+
+    <style name="AppTheme.Clup.ItemSubtitleTextView.Error" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">@dimen/item_subtitle_text_view_text_size</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/error_color</item>
     </style>
 
     <style name="AppTheme.Clup.MediumItemSubtitleTextView" parent="">
@@ -196,6 +209,12 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/white_alpha_30</item>
         <item name="android:textSize">@dimen/info_subtitle_text_view</item>
+    </style>
+
+    <style name="AppTheme.Clup.InfoSubtitleTextView.Error" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/error_color_alt</item>
+        <item name="android:textSize">@dimen/item_subtitle_text_view_text_size</item>
     </style>
 
     <!-- CARD VIEW ITEM THEMES -->

@@ -20,6 +20,7 @@
     <string name="text_reservation_summary">%1$s at %2$s</string> <!-- eg. Wednesday, 21 june at 12:30 --> <!-- copy paste %1$s and %2$s, translate "at" and leave the two spaces before and after "at"-->
     <string name="text_notification_summary">%1$s before</string> <!-- eg. 30 minutes before --> <!-- copy paste %1$s and leave a space between it and "before" -->
     <string name="text_empty_view">You have no reservations.\nBook one!</string> <!-- copy-paste the \n and DON'T leave a space between \n and the previous-next words -->
+    <string name="text_expired">Expired</string>
 
     <string name="action_verify">Verify</string>
     <string name="action_next">Next</string>
@@ -47,6 +48,8 @@
     <string name="text_error_snackbar_shop">Unable to load shops, retry in a while</string>
 
     <string name="text_warning_register">WARNING\nThis activity should not be here, it is here only for demonstration purposes.\n\nBy clicking on the below button you will mark the user as registered that is, the user has entered the shop meaning that the current reservation must be invalidated.</string>
+    <string name="title_warning_expire">This reservation is expired.</string>
+    <string name="text_warning_expire">It will still be visible for 1 hour from the reservation time.</string>
 
     <string name="array_item_light">Light</string>
     <string name="array_item_dark">Dark</string>

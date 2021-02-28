@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class DetailsViewModelTest {
     private DetailsViewModel viewModel;
@@ -68,6 +70,25 @@ public class DetailsViewModelTest {
         this.viewModel.setSelectedReservation(reservation);
 
         assertEquals(date.getTime(), this.viewModel.getReservationTime());
+    }
+
+    @Test
+    public void isReservationExpired() {
+        final String shopName = "Shop Name";
+        final Date date = Date.fromString("12-02-2021");
+        date.setTime("12:00");
+        final String uuid = "15yhr54rf";
+        final LatLng coords = new LatLng(12.65432, 6.23456);
+
+        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+
+        this.viewModel.setSelectedReservation(reservation);
+
+        assertFalse(this.viewModel.isReservationExpired());
+
+        reservation.setExpired(true);
+
+        assertTrue(this.viewModel.isReservationExpired());
     }
 
     @Test

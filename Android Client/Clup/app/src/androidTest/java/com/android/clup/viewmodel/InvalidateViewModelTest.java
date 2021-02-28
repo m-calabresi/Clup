@@ -1,5 +1,6 @@
 package com.android.clup.viewmodel;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.test.core.app.ActivityScenario;
 
@@ -35,7 +36,7 @@ public class InvalidateViewModelTest {
         final String shopName1 = "shopName1";
         final String shopName2 = "shopName2";
 
-        final Date date = Date.fromString("12-02-2021");
+        final Date date = Date.fromString("12-02-2121");
         date.setTime("12:30");
 
         final String uuid1 = "ji876tgf";
@@ -47,13 +48,14 @@ public class InvalidateViewModelTest {
         final Reservation reservation2 = new Reservation(shopName2, date, uuid2, coords);
 
         clearReservations();
-        this.model.addReservation(reservation1);
-        this.model.addReservation(reservation2);
+        addReservation(reservation1);
+        addReservation(reservation2);
         this.model.setSelectedReservation(reservation1);
 
         final int beforeSize = this.model.getReservations().size();
 
         this.viewModel.invalidateSelectedReservation();
+        waitFor();
 
         final int afterSize = this.model.getReservations().size();
 
@@ -63,10 +65,18 @@ public class InvalidateViewModelTest {
     private void clearReservations() {
         // init json file & store created reservations
         JsonParser.initReservationsFile();
+        waitFor();
+    }
 
+    private void addReservation(@NonNull final Reservation reservation) {
+        this.model.addReservation(reservation);
+        waitFor();
+    }
+
+    private void waitFor() {
         // give time to the executor to finish its job
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

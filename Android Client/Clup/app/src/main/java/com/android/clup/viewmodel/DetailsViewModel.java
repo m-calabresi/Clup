@@ -72,6 +72,13 @@ public class DetailsViewModel extends ViewModel {
     }
 
     /**
+     * Return {@code true} if the reservation is expired, {@code false} otherwise.
+     */
+    public boolean isReservationExpired() {
+        return this.model.getSelectedReservation().isExpired();
+    }
+
+    /**
      * Set the reservation to be displayed.
      */
     public void setSelectedReservation(@NonNull final Reservation reservation) {

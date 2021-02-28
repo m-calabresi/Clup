@@ -117,6 +117,13 @@ public class Date implements Parcelable {
         return minutes * 60 * 1000;
     }
 
+    /**
+     * Return the current date in milliseconds.
+     */
+    public static long now() {
+        return Calendar.getInstance(Locale.getDefault()).getTimeInMillis();
+    }
+
     @Override
     public int describeContents() {
         return 0;

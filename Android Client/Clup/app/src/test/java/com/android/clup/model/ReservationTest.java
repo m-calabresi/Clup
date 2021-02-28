@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ReservationTest {
     private static final String DATE_STRING = "14-02-2021";
@@ -42,6 +44,18 @@ public class ReservationTest {
     @Test
     public void getCoords() {
         assertEquals(coords, this.reservation.getCoords());
+    }
+
+    @Test
+    public void isExpired() {
+        assertFalse(this.reservation.isExpired());
+    }
+
+    @Test
+    public void setExpired() {
+        assertFalse(this.reservation.isExpired());
+        this.reservation.setExpired(true);
+        assertTrue(this.reservation.isExpired());
     }
 
     @Test

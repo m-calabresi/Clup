@@ -1,5 +1,7 @@
 package com.android.clup.model;
 
+import androidx.annotation.NonNull;
+
 import com.android.clup.json.JsonParser;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -16,7 +18,8 @@ public class ModelTest {
         this.model = Model.getInstance();
     }
 
-    @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @Test(expected = IndexOutOfBoundsException.class)
     public void addReservation() {
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
@@ -27,15 +30,9 @@ public class ModelTest {
         final Reservation reservation = new Reservation(shopName, date, uuid, coords);
 
         clearReservations();
-        this.model.addReservation(reservation);
-        final Reservation retrievedReservation = this.model.getReservations().get(0);
+        addReservation(reservation);
 
-        assertEquals(shopName, retrievedReservation.getShopName());
-        assertEquals(date.plain(), retrievedReservation.getDate().plain());
-        assertEquals(date.getTime(), retrievedReservation.getDate().getTime());
-        assertEquals(uuid, retrievedReservation.getUuid());
-        assertEquals(coords.latitude, retrievedReservation.getCoords().latitude, 0);
-        assertEquals(coords.longitude, retrievedReservation.getCoords().longitude, 0);
+        this.model.getReservations().get(0);
     }
 
     @Test
@@ -43,7 +40,7 @@ public class ModelTest {
         final String shopName1 = "shopName1";
         final String shopName2 = "shopName2";
 
-        final Date date = Date.fromString("12-02-2021");
+        final Date date = Date.fromString("12-02-2121");
         date.setTime("12:30");
 
         final String uuid1 = "ji876tgf";
@@ -55,12 +52,12 @@ public class ModelTest {
         final Reservation reservation2 = new Reservation(shopName2, date, uuid2, coords);
 
         clearReservations();
-        this.model.addReservation(reservation1);
-        this.model.addReservation(reservation2);
+        addReservation(reservation1);
+        addReservation(reservation2);
 
         final int beforeLength = this.model.getReservations().size();
 
-        this.model.removeReservation(reservation1);
+        removeReservation(reservation1);
 
         final Reservation retrievedReservation = this.model.getReservations().get(0);
         final int afterLength = this.model.getReservations().size();
@@ -106,7 +103,7 @@ public class ModelTest {
         final Reservation reservation = new Reservation(shopName, date, uuid, coords);
 
         clearReservations();
-        this.model.addReservation(reservation);
+        addReservation(reservation);
         this.model.setSelectedReservation(reservation);
         this.model.setSelectedReservationTimeNotice(timeNotice);
 
@@ -115,10 +112,23 @@ public class ModelTest {
 
     private void clearReservations() {
         JsonParser.initReservationsFile();
+        waitFor();
+    }
 
+    private void addReservation(@NonNull final Reservation reservation) {
+        this.model.addReservation(reservation);
+        waitFor();
+    }
+
+    private void removeReservation(@NonNull final Reservation reservation) {
+        this.model.removeReservation(reservation);
+        waitFor();
+    }
+
+    private void waitFor() {
         // give time to the executor to finish its job
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -71,6 +71,11 @@ public class DateTest {
     }
 
     @Test
+    public void now() {
+        assertEquals(Calendar.getInstance().getTimeInMillis(), Date.now(), 10);
+    }
+
+    @Test
     public void describeContents() {
         assertEquals(0, this.date.describeContents());
     }

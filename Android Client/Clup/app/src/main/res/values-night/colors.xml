@@ -29,4 +29,7 @@
     <!-- notifications color accent -->
     <color name="notification_accent_color">@color/lime_500</color>
 
+    <!-- text colors -->
+    <color name="error_color">#FFCF6679</color>
+    <color name="error_color_alt">#FFFFCDD2</color>
 </resources>

@@ -27,6 +27,7 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
         private final TextView shopNameTextView;
         private final TextView dateTimeTextView;
         private final TextView notificationTextView;
+        private final TextView expiredWaringTextView;
 
         public ReservationViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -40,6 +41,7 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
             this.shopNameTextView = parent.findViewById(R.id.shop_name_text_view);
             this.dateTimeTextView = parent.findViewById(R.id.date_time_text_view);
             this.notificationTextView = parent.findViewById(R.id.notification_text_view);
+            this.expiredWaringTextView = parent.findViewById(R.id.expired_warning_text_view);
         }
     }
 
@@ -102,6 +104,9 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
                 viewHolder.notificationTextView.setText(timeNoticeSummary);
             } else
                 viewHolder.notificationTextView.setVisibility(View.GONE);
+
+            final int visibility = reservation.isExpired() ? View.VISIBLE : View.GONE;
+            viewHolder.expiredWaringTextView.setVisibility(visibility);
         }
     }
 

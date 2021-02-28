@@ -1,5 +1,6 @@
 package com.android.clup.viewmodel;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.test.core.app.ActivityScenario;
 
@@ -18,12 +19,15 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class MainViewModelTest {
+    private Model model;
+
     private MainViewModel viewModel;
 
     @Before
     public void setUp() {
         try (final ActivityScenario<AuthActivity> scenario = ActivityScenario.launch(AuthActivity.class)) {
             scenario.onActivity(activity -> {
+                this.model = Model.getInstance();
                 this.viewModel = new ViewModelProvider(activity).get(MainViewModel.class);
 
                 clearReservations();
@@ -33,19 +37,20 @@ public class MainViewModelTest {
 
     @Test
     public void setSelectedReservation() {
-        final String shopName = "Shop Name";
-        final Date date = Date.fromString("12-02-2021");
+        final String shopName = "shopName2";
+        final Date date = Date.fromString("12-02-2121");
         date.setTime("12:00");
         final String uuid = "15yhr5988uh";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
         final Reservation reservation = new Reservation(shopName, date, uuid, coords);
 
-        Model.getInstance().addReservation(reservation);
+        addReservation(reservation);
 
         this.viewModel.setSelectedReservation(0);
+        waitFor();
 
-        final Reservation selectedReservation = Model.getInstance().getSelectedReservation();
+        final Reservation selectedReservation = this.model.getSelectedReservation();
 
         assertEquals(shopName, selectedReservation.getShopName());
         assertEquals(date.plain(), selectedReservation.getDate().plain());
@@ -65,8 +70,8 @@ public class MainViewModelTest {
 
         final Reservation reservation = new Reservation(shopName, date, uuid, coords);
 
-        Model.getInstance().addReservation(reservation);
-        final List<Reservation> reservations = Model.getInstance().getReservations();
+        addReservation(reservation);
+        final List<Reservation> reservations = this.model.getReservations();
         final List<Reservation> retrievedReservations = this.viewModel.getReservations();
 
         // compare each reservation with the corresponding loaded one
@@ -85,15 +90,23 @@ public class MainViewModelTest {
 
     @Test
     public void getFriendlyName() {
-        Model.getInstance().setFriendlyName("FriendlyName");
+        this.model.setFriendlyName("FriendlyName");
 
-        assertEquals(Model.getInstance().getFriendlyName(), this.viewModel.getFriendlyName());
+        assertEquals(this.model.getFriendlyName(), this.viewModel.getFriendlyName());
     }
 
     private void clearReservations() {
         // clear reservations
         JsonParser.initReservationsFile();
+        waitFor();
+    }
 
+    private void addReservation(@NonNull final Reservation reservation) {
+        this.model.addReservation(reservation);
+        waitFor();
+    }
+
+    private void waitFor() {
         // give time to the executor to finish its job
         try {
             Thread.sleep(1000);

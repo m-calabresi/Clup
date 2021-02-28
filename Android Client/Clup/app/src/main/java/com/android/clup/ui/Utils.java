@@ -148,8 +148,8 @@ public class Utils {
      * Displays an AlertDialog that notifies the user about a connection error.
      */
     public static void displayConnectionErrorDialog(@NonNull final Context context) {
-        displayAlertDialog(context, R.string.title_connection_error_alert_message,
-                R.string.text_connection_error_alert_message, R.string.action_ok);
+        displayAlertDialog(context, R.string.title_error_connection_alert,
+                R.string.text_error_connection_alert, R.string.action_ok);
     }
 
     /**
@@ -202,14 +202,14 @@ public class Utils {
      * on his device.
      */
     public static void displayMapsNotFoundError(@NonNull final Context context) {
-        displayAlertDialog(context, R.string.text_maps_error_alert_dialog, R.string.action_ok);
+        displayAlertDialog(context, R.string.text_error_alert_maps, R.string.action_ok);
     }
 
     /**
      * Displays an AlertDialog telling the user to enable location.
      */
     public static void displayLocationErrorDialog(@NonNull final Context context) {
-        displayAlertDialog(context, R.string.text_location_error_alert_message, R.string.action_ok);
+        displayAlertDialog(context, R.string.text_error_alert_location, R.string.action_ok);
     }
 
     /**
@@ -243,14 +243,14 @@ public class Utils {
     }
 
     public static void displayShopsErrorSnackBar(@NonNull final View parent) {
-        displayErrorSnackbar(parent, null, R.string.text_error_shops_snack_bar);
+        displayErrorSnackbar(parent, null, R.string.text_error_snackbar_shop);
     }
 
     /**
      * Displays a SnackBar telling the user that a reservation error has occurred.
      */
     public static void displayReservationErrorSnackBar(@NonNull final View parent, @NonNull final View anchorView) {
-        displayErrorSnackbar(parent, anchorView, R.string.reservation_error_text);
+        displayErrorSnackbar(parent, anchorView, R.string.text_error_reservation);
     }
 
     /**

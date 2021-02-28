@@ -7,6 +7,7 @@
     <string name="title_theme_alert">Choose theme</string>
     <string name="title_activity_map">Map</string>
     <string name="title_notify_alert">Notify me</string>
+    <string name="title_error_connection_alert">You are offline</string>
 
     <string name="text_verify_number">Enter your mobile number to receive a verification code</string>
     <string name="text_verify_code">Enter the verification code sent to +%1$s</string> <!-- copy-paste +%1$s and leave a space between "to" and +%1$s -->
@@ -18,7 +19,7 @@
     <string name="text_friendly_message">Hi, %1$s</string> <!-- eg. Hi, Mark --> <!-- copy-paste %1$s and leave a space between the comma and %1$s -->
     <string name="text_reservation_summary">%1$s at %2$s</string> <!-- eg. Wednesday, 21 june at 12:30 --> <!-- copy paste %1$s and %2$s, translate "at" and leave the two spaces before and after "at"-->
     <string name="text_notification_summary">%1$s before</string> <!-- eg. 30 minutes before --> <!-- copy paste %1$s and leave a space between it and "before" -->
-    <string name="text_empty_view">You have no reservations\nBook one!</string> <!-- copy-paste the \n and DON'T leave a space between \n and the next word -->
+    <string name="text_empty_view">You have no reservations.\nBook one!</string> <!-- copy-paste the \n and DON'T leave a space between \n and the previous-next words -->
 
     <string name="action_verify">Verify</string>
     <string name="action_next">Next</string>
@@ -32,19 +33,20 @@
     <string name="action_notification_on">Notification on</string>
     <string name="action_notification_off">Notification off</string>
     <string name="action_directions">Directions</string>
+    <string name="action_invalidate">Invalidate</string>
 
-    <string name="error_name">This field is required</string>
-    <string name="error_phone">Invalid phone number</string>
-    <string name="error_code">Invalid or expired code</string>
-    <string name="error_fullname">Your full name is required</string>
+    <string name="text_error_name">This field is required</string>
+    <string name="text_error_phone">Invalid phone number</string>
+    <string name="text_error_code">Invalid or expired code</string>
+    <string name="text_error_fullname">Your full name is required</string>
+    <string name="text_error_alert_location">To continue, enable your device location</string>
+    <string name="text_error_location">Unable to find your location, try again</string>
+    <string name="text_error_connection_alert">Check your internet connection and try again</string>
+    <string name="text_error_reservation">An error occurred, retry.</string>
+    <string name="text_error_alert_maps">This feature is not available on your device.</string>
+    <string name="text_error_snackbar_shop">Unable to load shops, retry in a while</string>
 
-    <string name="text_location_error_alert_message">To continue, enable your device location</string>
-    <string name="location_error_text">Unable to find your location, try again</string>
-    <string name="text_connection_error_alert_message">Check your internet connection and try again</string>
-    <string name="title_connection_error_alert_message">You are offline</string>
-    <string name="reservation_error_text">An error occurred, retry.</string>
-    <string name="text_maps_error_alert_dialog">This feature is not available on your device.</string>
-    <string name="text_error_shops_snack_bar">Unable to load shops, retry in a while</string>
+    <string name="text_warning_register">WARNING\nThis activity should not be here, it is here only for demonstration purposes.\n\nBy clicking on the below button you will mark the user as registered that is, the user has entered the shop meaning that the current reservation must be invalidated.</string>
 
     <string name="array_item_light">Light</string>
     <string name="array_item_dark">Dark</string>
@@ -53,10 +55,10 @@
     <string name="info_title_text">Hi I\'m a QR code!</string> <!-- if you use the apostrophe, remember to escape it by putting a "\" before it -->
     <string name="info_subtitle_text">Scan me before entering the store,\ndon\'t forget to wear your mask!</string> <!-- copy-paste the \n and DON'T leave a space between \n and the previous-next words, also escape the apostrophe if you use it -->
 
-    <string name="channel_name">Reservations</string>
-    <string name="channel_description">Remind you in advance that your turn is close.</string>
+    <string name="notification_channel_name">Reservations</string>
+    <string name="notification_channel_description">Remind you in advance that your turn is close.</string>
     <string name="notification_title">%1$s reservation</string> <!-- eg. LocalSop reservation --> <!-- copy-paste the %1$s and leave a space between it and the next word -->
-    <string name="notification_content">Don\'t forget your appointment in %1$s</string> <!-- eg. Don't forget your appointment in 30 minutes --> <!-- copy-paste the %1$s and leave a space between the previous word and "1$s, also escape the apostrophe if you use it -->
+    <string name="notification_content">Don\'t forget your appointment in %1$s</string> <!-- eg. Don't forget your appointment in 30 minutes --> <!-- copy-paste the %1$s and leave a space between the previous word and "1$s", also escape the apostrophe if you use it -->
 
     <string name="time_fifteen_minutes">15 minutes</string>
     <string name="time_thirty_minutes">30 minutes</string>

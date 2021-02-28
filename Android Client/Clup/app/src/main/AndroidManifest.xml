@@ -22,7 +22,6 @@
         <receiver
             android:name=".notification.NotificationBroadcastReceiver"
             android:process=":remote" />
-
         <receiver
             android:name=".notification.NotificationDeviceBootBroadcastReceiver"
             android:enabled="false">
@@ -30,7 +29,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".notification.NotificationActionBroadcastReceiver"
             android:exported="false">
@@ -42,6 +40,11 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".ui.InvalidateActivity"
+            android:parentActivityName=".ui.DetailsActivity"
+            android:theme="@style/AppTheme.Clup.Register" />
 
         <activity
             android:name=".ui.DetailsActivity"

@@ -39,6 +39,43 @@ public class ModelTest {
     }
 
     @Test
+    public void removeReservation() {
+        final String shopName1 = "shopName1";
+        final String shopName2 = "shopName2";
+
+        final Date date = Date.fromString("12-02-2021");
+        date.setTime("12:30");
+
+        final String uuid1 = "ji876tgf";
+        final String uuid2 = "ji876tg4w";
+
+        final LatLng coords = new LatLng(11.75, 6.7654);
+
+        final Reservation reservation1 = new Reservation(shopName1, date, uuid1, coords);
+        final Reservation reservation2 = new Reservation(shopName2, date, uuid2, coords);
+
+        clearReservations();
+        this.model.addReservation(reservation1);
+        this.model.addReservation(reservation2);
+
+        final int beforeLength = this.model.getReservations().size();
+
+        this.model.removeReservation(reservation1);
+
+        final Reservation retrievedReservation = this.model.getReservations().get(0);
+        final int afterLength = this.model.getReservations().size();
+
+        assertEquals(beforeLength - 1, afterLength);
+
+        assertEquals(shopName2, retrievedReservation.getShopName());
+        assertEquals(date.plain(), retrievedReservation.getDate().plain());
+        assertEquals(date.getTime(), retrievedReservation.getDate().getTime());
+        assertEquals(uuid2, retrievedReservation.getUuid());
+        assertEquals(coords.latitude, retrievedReservation.getCoords().latitude, 0);
+        assertEquals(coords.longitude, retrievedReservation.getCoords().longitude, 0);
+    }
+
+    @Test
     public void setFriendlyName() {
         final String friendlyName = "MyFriendlyNameHere";
 

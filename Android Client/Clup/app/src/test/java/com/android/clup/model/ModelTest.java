@@ -2,27 +2,27 @@ package com.android.clup.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 
-class ModelTest {
+public class ModelTest {
     private Model model;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         this.model = Model.getInstance();
     }
 
     @Test
-    void getShops() {
+    public void getShops() {
         assertNull(this.model.getShops());
 
         // dummy list
@@ -49,7 +49,7 @@ class ModelTest {
     }
 
     @Test
-    void getSelectedShop() {
+    public void getSelectedShop() {
         assertThrows(NullPointerException.class, () -> this.model.getSelectedShop());
 
         // dummy shop
@@ -74,14 +74,14 @@ class ModelTest {
     }
 
     @Test
-    void resetSelectedShop() {
+    public void resetSelectedShop() {
         this.model.resetSelectedShop();
 
         assertThrows(NullPointerException.class, () -> this.model.getSelectedShop());
     }
 
     @Test
-    void getSelectedDay() {
+    public void getSelectedDay() {
         assertThrows(NullPointerException.class, () -> this.model.getSelectedDay());
 
         final Date date1 = Date.fromString("11-02-2021");
@@ -93,14 +93,14 @@ class ModelTest {
         assertEquals(availableDay1, this.model.getSelectedDay());
     }
 
-    @Test
-    void resetSelectedDay() {
+    @Test(expected = NullPointerException.class)
+    public void resetSelectedDay() {
         this.model.resetSelectedDay();
-        assertThrows(NullPointerException.class, () -> this.model.getSelectedDay());
+        this.model.getSelectedDay();
     }
 
     @Test
-    void getSelectedTime() {
+    public void getSelectedTime() {
         final String time = "12:00";
 
         assertThrows(NullPointerException.class, () -> this.model.getSelectedTime());
@@ -110,13 +110,13 @@ class ModelTest {
     }
 
     @Test
-    void resetSelectedTime() {
+    public void resetSelectedTime() {
         this.model.resetSelectedTime();
         assertThrows(NullPointerException.class, () -> this.model.getSelectedTime());
     }
 
     @Test
-    void getSelectedReservation() {
+    public void getSelectedReservation() {
         assertThrows(NullPointerException.class, () -> this.model.getSelectedReservation());
 
         final String shopName = "Shop Name";
@@ -129,5 +129,11 @@ class ModelTest {
         this.model.setSelectedReservation(reservation);
 
         assertEquals(reservation, this.model.getSelectedReservation());
+    }
+
+    @Test
+    public void resetSelectedReservation() {
+        this.model.resetSelectedReservation();
+        assertThrows(NullPointerException.class, () -> this.model.getSelectedReservation());
     }
 }

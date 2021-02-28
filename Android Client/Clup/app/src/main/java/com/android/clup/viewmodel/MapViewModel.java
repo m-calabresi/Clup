@@ -186,7 +186,7 @@ public class MapViewModel extends ViewModel {
                         }
                     } else {
                         // Current location is null, notify the user
-                        Toast.makeText(activity, R.string.location_error_text, Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, R.string.text_error_location, Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -241,7 +241,9 @@ public class MapViewModel extends ViewModel {
      * Add markers on the map in the position specified by the retrieved shops.
      */
     public void addMarkers(@NonNull final Context context) {
-        for (int position = 0; position < this.model.getShops().size(); position++) {
+        final int size = Objects.requireNonNull(this.model.getShops()).size();
+
+        for (int position = 0; position < size; position++) {
             final Shop shop = this.model.getShops().get(position);
 
             final BitmapDescriptor icon = Utils.vectorToBitmap(context, R.drawable.marker_shop);

@@ -34,7 +34,7 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
             final View.OnClickListener reservationViewOnClickListener = view ->
                     onListItemClickedCallback.onRecyclerViewItemClicked(getBindingAdapterPosition());
 
-            final CardView parent = itemView.findViewById(R.id.main_card_view);
+            final CardView parent = itemView.findViewById(R.id.item_reservation_card_view);
             parent.setOnClickListener(reservationViewOnClickListener);
 
             this.shopNameTextView = parent.findViewById(R.id.shop_name_text_view);

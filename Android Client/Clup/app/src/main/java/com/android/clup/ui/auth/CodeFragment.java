@@ -167,7 +167,7 @@ public class CodeFragment extends Fragment {
      */
     private void showErrorHint() {
         this.codeInputLayout.post(() -> {
-            final String errorMessage = getString(R.string.error_code);
+            final String errorMessage = getString(R.string.text_error_code);
             this.codeInputLayout.setError(errorMessage);
         });
     }

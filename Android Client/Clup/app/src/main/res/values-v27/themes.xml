@@ -47,6 +47,11 @@
 
     </style>
 
+    <!-- REGISTER ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Register" parent="AppTheme.Clup.Select">
+        <item name="android:statusBarColor">?android:colorBackground</item>
+    </style>
+
     <!-- SPLASH SCREEN THEME -->
     <style name="AppTheme.Clup.Splash" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>

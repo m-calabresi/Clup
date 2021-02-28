@@ -60,8 +60,8 @@ public class NotificationService {
      */
     public static void createNotificationChannel(@NonNull final Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            final CharSequence channelName = context.getString(R.string.channel_name);
-            final String channelDescription = context.getString(R.string.channel_description);
+            final CharSequence channelName = context.getString(R.string.notification_channel_name);
+            final String channelDescription = context.getString(R.string.notification_channel_description);
             final int importance = NotificationManager.IMPORTANCE_HIGH;
 
             final NotificationChannel channel = new NotificationChannel(CHANNEL_ID, channelName, importance);

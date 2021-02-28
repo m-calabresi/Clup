@@ -1,14 +1,14 @@
 package com.android.clup.model;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class DateTest {
+public class DateTest {
     // WARNING: FORMATTED_DATE may depend on the testing device locale, adjust this string accordingly
     private static final String FORMATTED_DATE = "Sunday, 14 February";
     private static final String PLAIN_DATE = "14-02-2021";
@@ -22,29 +22,29 @@ class DateTest {
 
     private Date date;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         this.date = Date.fromString(PLAIN_DATE);
     }
 
     @Test
-    void formatted() {
+    public void formatted() {
         assertEquals(FORMATTED_DATE, this.date.formatted());
     }
 
     @Test
-    void plain() {
+    public void plain() {
         assertEquals(PLAIN_DATE, this.date.plain());
     }
 
     @Test
-    void getTime() {
+    public void getTime() {
         this.date.setTime(TIME);
         assertEquals(TIME, this.date.getTime());
     }
 
     @Test
-    void toMillis() {
+    public void toMillis() {
         final int SECONDS = 0;
         final int MILLISECONDS = 0;
 
@@ -63,7 +63,7 @@ class DateTest {
     }
 
     @Test
-    void minutesToMillis() {
+    public void minutesToMillis() {
         final int minutes = 35;
         final int millis = minutes * 60 * 1000;
 
@@ -71,7 +71,7 @@ class DateTest {
     }
 
     @Test
-    void describeContents() {
+    public void describeContents() {
         assertEquals(0, this.date.describeContents());
     }
 }

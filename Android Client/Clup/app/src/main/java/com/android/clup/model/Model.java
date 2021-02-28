@@ -143,7 +143,20 @@ public final class Model {
 
     public void addReservation(@NonNull final Reservation reservation) {
         getReservations().add(reservation);
-        Collections.sort(getReservations()); // sort reservations by date and time (nearest reservations first)
+        finalizeReservations();
+    }
+
+    public void removeReservation(@NonNull final Reservation reservation) {
+        getReservations().remove(reservation);
+        finalizeReservations();
+    }
+
+    /**
+     * Finalize reservations by sorting them (upcoming reservations first), then stores the sorted
+     * reservations to local storage.
+     */
+    private void finalizeReservations() {
+        Collections.sort(getReservations()); // sort reservations by date and time (upcoming reservations first)
         JsonParser.saveReservations(getReservations());
     }
 
@@ -180,6 +193,10 @@ public final class Model {
         if (this.selectedReservation != null)
             return this.selectedReservation;
         throw new NullPointerException("No value was set before calling this method, did you call 'setSelectedReservation'?");
+    }
+
+    public void resetSelectedReservation() {
+        this.selectedReservation = null;
     }
 
     public void setSelectedReservationTimeNotice(final int timeNotice) {

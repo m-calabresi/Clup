@@ -26,6 +26,11 @@ public class DetailsActivity extends AppCompatActivity {
 
     private final View.OnClickListener notifyButtonOnClickListener = view -> this.viewModel.toggleNotificationUi(this, this.notifyButton);
     private final View.OnClickListener directionsButtonOnClickListener = view -> this.viewModel.navigateToSelectedShop(this);
+    private final View.OnLongClickListener imageViewOnLongClickListener = view -> {
+        final Intent intent = new Intent(this, InvalidateActivity.class);
+        startActivity(intent);
+        return false;
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,7 @@ public class DetailsActivity extends AppCompatActivity {
         final ImageView imageView = findViewById(R.id.qr_code_image_view);
         final Bitmap qrCode = this.viewModel.getReservationQrCode(onColor, offColor);
         imageView.setImageBitmap(qrCode);
+        imageView.setOnLongClickListener(imageViewOnLongClickListener);
         imageView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
 

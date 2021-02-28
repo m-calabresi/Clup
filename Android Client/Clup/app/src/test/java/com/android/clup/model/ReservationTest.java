@@ -2,12 +2,12 @@ package com.android.clup.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class ReservationTest {
+public class ReservationTest {
     private static final String DATE_STRING = "14-02-2021";
     private static final String TIME_STRING = "12:00";
 
@@ -18,34 +18,34 @@ class ReservationTest {
     private static final String uuid = "1245ythgfr6yu";
     private static final LatLng coords = new LatLng(12.34567, 12.87654);
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         date.setTime(TIME_STRING);
         this.reservation = new Reservation(shopName, date, uuid, coords);
     }
 
     @Test
-    void getShopName() {
+    public void getShopName() {
         assertEquals(shopName, this.reservation.getShopName());
     }
 
     @Test
-    void getDate() {
+    public void getDate() {
         assertEquals(date, this.reservation.getDate());
     }
 
     @Test
-    void getUuid() {
+    public void getUuid() {
         assertEquals(uuid, this.reservation.getUuid());
     }
 
     @Test
-    void getCoords() {
+    public void getCoords() {
         assertEquals(coords, this.reservation.getCoords());
     }
 
     @Test
-    void getTimeNotice() {
+    public void getTimeNotice() {
         assertEquals(Reservation.TimeNotice.NOT_SET, this.reservation.getTimeNotice());
 
         this.reservation.setTimeNotice(Reservation.TimeNotice.FIFTEEN_MINUTES);
@@ -53,7 +53,7 @@ class ReservationTest {
     }
 
     @Test
-    void compareTo() {
+    public void compareTo() {
         final String BEFORE_DATE = "13-02-2021";
         final String BEFORE_TIME = "11:00";
         final String AFTER_DATE = "15-02-2021";
@@ -108,7 +108,7 @@ class ReservationTest {
     }
 
     @Test
-    void describeContents() {
+    public void describeContents() {
         assertEquals(0, this.reservation.describeContents());
     }
 }

@@ -1,12 +1,12 @@
 package com.android.clup.notification;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class NotificationServiceTest {
+public class NotificationServiceTest {
     @Test
-    void generateId() {
+    public void generateId() {
         final String from = "Shop Name";
 
         final int expectedId = 83104111;

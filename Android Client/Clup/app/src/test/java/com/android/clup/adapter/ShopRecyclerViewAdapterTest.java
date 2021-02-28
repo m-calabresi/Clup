@@ -5,20 +5,20 @@ import com.android.clup.model.Date;
 import com.android.clup.model.Shop;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class ShopRecyclerViewAdapterTest {
+public class ShopRecyclerViewAdapterTest {
     private ShopRecyclerViewAdapter adapter;
     private int size;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         final OnListItemClickedCallback callback = position -> {
         };
 
@@ -34,7 +34,7 @@ class ShopRecyclerViewAdapterTest {
     }
 
     @Test
-    void getItemCount() {
+    public void getItemCount() {
         assertEquals(this.size, this.adapter.getItemCount());
     }
 }

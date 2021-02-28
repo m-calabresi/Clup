@@ -176,7 +176,7 @@ public class PhoneFragment extends Fragment {
      */
     private void showErrorHint() {
         this.phoneNumberTextInput.post(() -> {
-            final String errorMessage = getString(R.string.error_phone);
+            final String errorMessage = getString(R.string.text_error_phone);
             this.phoneNumberTextInput.setError(errorMessage);
         });
     }

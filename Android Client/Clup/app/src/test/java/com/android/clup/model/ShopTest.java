@@ -2,22 +2,22 @@ package com.android.clup.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class ShopTest {
+public class ShopTest {
     private Shop shop;
     private String shopName;
     private LatLng coords;
     private List<AvailableDay> availableDays;
 
-    @BeforeEach
-    void setup() {
+    @Before
+    public void setup() {
         this.shopName = "Shop Name";
         this.coords = new LatLng(12.7654, 5.76543);
 
@@ -35,17 +35,17 @@ class ShopTest {
     }
 
     @Test
-    void getName() {
+    public void getName() {
         assertEquals(this.shopName, this.shop.getName());
     }
 
     @Test
-    void getCoordinates() {
+    public void getCoordinates() {
         assertEquals(this.coords, this.shop.getCoordinates());
     }
 
     @Test
-    void getAvailableDays() {
+    public void getAvailableDays() {
         assertEquals(this.availableDays, this.shop.getAvailableDays());
     }
 }

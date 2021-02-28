@@ -38,7 +38,7 @@ public class NameFragment extends Fragment {
             this.viewModel.setUsername(username);
             this.viewModel.switchTo(PhoneFragment.class);
         } else {
-            final String errorMessage = getString(R.string.error_fullname);
+            final String errorMessage = getString(R.string.text_error_fullname);
             this.nameInputLayout.setError(errorMessage);
         }
     };
@@ -57,7 +57,7 @@ public class NameFragment extends Fragment {
         @Override
         public void onTextChanged(@NonNull final CharSequence s, final int start, final int before, final int count) {
             final boolean buttonVisible = s.length() > 0;
-            final String errorMessage = buttonVisible ? null : getString(R.string.error_name);
+            final String errorMessage = buttonVisible ? null : getString(R.string.text_error_name);
 
             viewModel.setNameFragmentButtonVisibilityStatus(buttonVisible);
             nameInputLayout.setError(errorMessage);

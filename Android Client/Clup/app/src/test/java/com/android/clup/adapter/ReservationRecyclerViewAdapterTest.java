@@ -4,20 +4,20 @@ import com.android.clup.model.Date;
 import com.android.clup.model.Reservation;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class ReservationRecyclerViewAdapterTest {
+public class ReservationRecyclerViewAdapterTest {
     private ReservationRecyclerViewAdapter adapter;
     private int size;
 
-    @BeforeEach
-    void setup() {
+    @Before
+    public void setup() {
         final OnListItemClickedCallback callback = position -> {
         };
         final String shopName = "Shop Name";
@@ -34,7 +34,7 @@ class ReservationRecyclerViewAdapterTest {
     }
 
     @Test
-    void getItemViewType() {
+    public void getItemViewType() {
         for (int i = 0; i < this.size; i++)
             assertEquals(1, this.adapter.getItemViewType(i));
 
@@ -43,7 +43,7 @@ class ReservationRecyclerViewAdapterTest {
 
 
     @Test
-    void getItemCount() {
+    public void getItemCount() {
         assertEquals(this.size + 1, this.adapter.getItemCount());
     }
 }

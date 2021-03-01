@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.clup.R;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,9 +21,10 @@ public class InfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         parentView = View.inflate(context, R.layout.item_info_window, null);
     }
 
+    @Nullable
     @Override
     public View getInfoContents(@NonNull final Marker marker) {
-        if (marker != null && marker.isInfoWindowShown()) {
+        if (marker.isInfoWindowShown()) {
             marker.hideInfoWindow();
             marker.showInfoWindow();
         }

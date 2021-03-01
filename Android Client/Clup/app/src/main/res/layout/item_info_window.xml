@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/info_window_card_view"
     style="@style/AppTheme.Clup.ItemCardView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
@@ -30,7 +29,6 @@
 
         <!-- Only for aesthetic purposes, actual click is handled in GoogleMap.setOnMarkerClickListener() -->
         <Button
-            android:id="@+id/button_info_window"
             style="@style/AppTheme.Clup.InfoWindowRoundButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

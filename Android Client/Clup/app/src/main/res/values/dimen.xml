@@ -13,7 +13,6 @@
 
     <dimen name="item_title_text_view_text_size">18sp</dimen>
     <dimen name="item_title_text_view_alt_text_size">24sp</dimen>
-    <dimen name="medium_item_subtitle_text_view_text_size">18sp</dimen>
     <dimen name="item_subtitle_text_view_text_size">14sp</dimen>
     <dimen name="info_title_text_view">23sp</dimen>
     <dimen name="info_subtitle_text_view">20sp</dimen>

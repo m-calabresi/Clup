@@ -1,10 +1,12 @@
 package com.android.clup.viewmodel;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.android.clup.model.Model;
 
 public class InvalidateViewModel extends ViewModel {
+    @NonNull
     private final Model model;
 
     public InvalidateViewModel() {

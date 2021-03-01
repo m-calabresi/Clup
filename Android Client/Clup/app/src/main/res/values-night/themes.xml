@@ -192,13 +192,6 @@
         <item name="android:textColor">@color/error_color</item>
     </style>
 
-    <style name="AppTheme.Clup.MediumItemSubtitleTextView" parent="">
-        <item name="android:textSize">@dimen/medium_item_subtitle_text_view_text_size</item>
-        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
-        <item name="android:textAlignment">textStart</item>
-        <item name="android:textColor">@color/white_alpha_80</item>
-    </style>
-
     <style name="AppTheme.Clup.DetailsTextView" parent="AppTheme.Clup.SubtitleTextView">
         <item name="android:textColor">@color/white_alpha_80</item>
         <item name="drawableTint">@color/white_alpha_80</item>
@@ -242,11 +235,6 @@
 
     <style name="AppTheme.Clup.ReservationCardView" parent="AppTheme.Clup.ActionsCardView">
         <item name="android:backgroundTint">@color/transparent</item>
-    </style>
-
-    <style name="AppTheme.Clup.InfoWindowCardView" parent="Widget.MaterialComponents.CardView">
-        <item name="cardElevation">@dimen/card_no_elevation</item>
-        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
     </style>
 
     <!-- RECYCLER VIEW CONTAINER THEME -->

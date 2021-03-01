@@ -30,7 +30,7 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             super(v);
 
             final View.OnClickListener cardViewOnClickListener = view ->
-                    onListItemClickedCallback.onRecyclerViewItemClicked(getBindingAdapterPosition());
+                    onListItemClickedCallback.onListItemClicked(getBindingAdapterPosition());
             final CardView cardView = v.findViewById(R.id.shop_card_view);
             cardView.setOnClickListener(cardViewOnClickListener);
 

@@ -1,38 +1,52 @@
 package com.android.clup.viewmodel;
 
-import android.view.LayoutInflater;
-
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.android.clup.R;
 import com.android.clup.api.QueueService;
 import com.android.clup.concurrent.Callback;
 import com.android.clup.concurrent.Result;
+import com.android.clup.model.AvailableDay;
 import com.android.clup.model.Date;
 import com.android.clup.model.Model;
 import com.android.clup.model.Reservation;
 import com.android.clup.model.Shop;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
-
-import java.util.List;
 
 public class SelectViewModel extends ViewModel {
     @NonNull
     private final Model model;
     @NonNull
-    private final MutableLiveData<Integer> groupTagLiveData;
-
-    @NonNull
     private final QueueService queueService;
+
+    /**
+     * {@code LiveData} responsible for the visibility status of some {@code View}.
+     */
+    @NonNull
+    private final MutableLiveData<Boolean> visibilityStatusLiveData;
 
     public SelectViewModel() {
         this.model = Model.getInstance();
-        this.groupTagLiveData = new MutableLiveData<>();
         this.queueService = new QueueService();
+
+        this.visibilityStatusLiveData = new MutableLiveData<>();
+    }
+
+    /**
+     * Return the visibility status to be observed by the interested {@code View}s.
+     */
+    @NonNull
+    public LiveData<Boolean> getVisibilityStatusLiveData() {
+        return this.visibilityStatusLiveData;
+    }
+
+    /**
+     * Trigger an update to the visibility status of all interested {@code View}s.
+     */
+    public void setVisibilityStatusLiveData(final boolean status) {
+        this.visibilityStatusLiveData.setValue(status);
     }
 
     /**
@@ -56,7 +70,8 @@ public class SelectViewModel extends ViewModel {
      * Store the day selected by the user.
      */
     public void setSelectedDay(final int position) {
-        this.model.setSelectedDay(this.model.getSelectedShop().getAvailableDays().get(position));
+        final AvailableDay availableDay = this.model.getSelectedShop().getAvailableDays().get(position);
+        this.model.setSelectedDay(availableDay);
     }
 
     /**
@@ -69,8 +84,8 @@ public class SelectViewModel extends ViewModel {
     /**
      * Store the time selected by the user.
      */
-    public void setSelectedTime(final int position) {
-        this.model.setSelectedTime(this.model.getSelectedDay().getTimes().get(position));
+    public void setSelectedTime(@NonNull final String time) {
+        this.model.setSelectedTime(time);
     }
 
     /**
@@ -78,42 +93,6 @@ public class SelectViewModel extends ViewModel {
      */
     public void resetSelectedTime() {
         this.model.resetSelectedTime();
-    }
-
-    /**
-     * Utility method to fill a ChipGroup with chips that contains values specified by times.
-     */
-    public static void setTimeChips(@NonNull final ChipGroup parent, @NonNull final List<String> times) {
-        parent.post(() -> {
-            if (parent.getChildCount() > 0)
-                parent.removeAllViews();
-
-            final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-
-            for (int i = 0; i < times.size(); i++) {
-                final String foodName = times.get(i);
-                final Chip chip = (Chip) layoutInflater.inflate(R.layout.item_time, parent, false);
-                chip.setText(foodName);
-
-                parent.addView(chip);
-            }
-        });
-    }
-
-    /**
-     * A MutableLiveData that reacts to chips selection.
-     */
-    @NonNull
-    public MutableLiveData<Integer> getGroupTagLiveData() {
-        return this.groupTagLiveData;
-    }
-
-    /**
-     * Set the current value of MutableLiveData to the given group ID, all observers will be notified
-     * that this group is now the only one containing a selected chip.
-     */
-    public void setGroupTagLiveData(@NonNull final Object groupTag) {
-        this.groupTagLiveData.setValue((int) groupTag);
     }
 
     /**

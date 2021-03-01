@@ -46,6 +46,7 @@ public class MapViewModel extends ViewModel {
     @NonNull
     private final Model model;
 
+    @NonNull
     private final OnListItemClickedCallback recyclerViewItemClickedCallback;
 
     // The entry point to the Fused Location Provider.
@@ -84,8 +85,8 @@ public class MapViewModel extends ViewModel {
         // handles the click on the marker InfoView
         final GoogleMap.OnInfoWindowClickListener markerInfoWindowClickListener = marker -> {
             // retrieve the position of the clicked item
-            final int position = (int) marker.getTag();
-            recyclerViewItemClickedCallback.onRecyclerViewItemClicked(position);
+            final int position = (int) Objects.requireNonNull(marker.getTag());
+            recyclerViewItemClickedCallback.onListItemClicked(position);
         };
         this.map.setOnInfoWindowClickListener(markerInfoWindowClickListener);
     }
@@ -222,7 +223,8 @@ public class MapViewModel extends ViewModel {
      * Store the shop selected by the user.
      */
     public void setSelectedShop(final int position) {
-        this.model.setSelectedShop(Objects.requireNonNull(this.model.getShops()).get(position));
+        final Shop shop = Objects.requireNonNull(this.model.getShops()).get(position);
+        this.model.setSelectedShop(shop);
     }
 
     /**

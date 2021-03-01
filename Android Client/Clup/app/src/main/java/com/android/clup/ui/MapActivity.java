@@ -144,7 +144,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
      * Handle the result of a recyclerview item being clicked.
      */
     @Override
-    public void onRecyclerViewItemClicked(final int position) {
+    public void onListItemClicked(final int position) {
         this.viewModel.setSelectedShop(position);
         final Intent intent = new Intent(this, SelectActivity.class);
         startActivity(intent);

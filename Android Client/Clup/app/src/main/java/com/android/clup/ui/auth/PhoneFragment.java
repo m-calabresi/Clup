@@ -37,7 +37,7 @@ public class PhoneFragment extends Fragment {
     @NonNull
     private final View.OnClickListener nextOnClickListener = view -> {
         Utils.hideSoftInput(requireActivity());
-        Utils.showProgressBar(this.nextButton);
+        Utils.startProgressBarAnimation(this.nextButton);
 
         this.viewModel.isConnectionAvailable(connectionResult -> {
             if (connectionResult instanceof Result.Success) {
@@ -52,7 +52,7 @@ public class PhoneFragment extends Fragment {
                     this.viewModel.setLocale(locale);
 
                     this.viewModel.startVerify(verificationResult -> {
-                        Utils.hideProgressBar(this.nextButton, getString(R.string.action_next));
+                        Utils.stopProgressBarAnimation(this.nextButton, getString(R.string.action_next));
 
                         if (verificationResult instanceof Result.Success) {
                             switchToNextFragment();
@@ -63,11 +63,11 @@ public class PhoneFragment extends Fragment {
                     });
                 } else {
                     Utils.displayConnectionErrorDialog(requireContext());
-                    Utils.hideProgressBar(this.nextButton, getString(R.string.action_next));
+                    Utils.stopProgressBarAnimation(this.nextButton, getString(R.string.action_next));
                 }
             } else {
                 Utils.displayConnectionErrorDialog(requireContext());
-                Utils.hideProgressBar(this.nextButton, getString(R.string.action_next));
+                Utils.stopProgressBarAnimation(this.nextButton, getString(R.string.action_next));
             }
         });
     };
@@ -141,7 +141,7 @@ public class PhoneFragment extends Fragment {
 
         this.nextButton = root.findViewById(R.id.next_button);
         this.nextButton.setOnClickListener(this.nextOnClickListener);
-        Utils.enableProgressButton(this.nextButton, getViewLifecycleOwner());
+        Utils.enableProgressBarAnimation(this.nextButton, getViewLifecycleOwner());
 
         final TextInputLayout prefixTextInput = root.findViewById(R.id.prefix_text_input);
         this.prefixEditText = prefixTextInput.findViewById(R.id.prefix_edit_text);

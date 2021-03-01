@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnListItemClicked
     }
 
     @Override
-    public void onRecyclerViewItemClicked(int position) {
+    public void onListItemClicked(int position) {
         this.viewModel.setSelectedReservation(position);
         startDetailsActivity();
     }

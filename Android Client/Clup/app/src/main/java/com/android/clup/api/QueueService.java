@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.android.clup.concurrent.Callback;
 import com.android.clup.concurrent.Result;
 import com.android.clup.model.AvailableDay;
+import com.android.clup.model.AvailableSlot;
 import com.android.clup.model.Date;
 import com.android.clup.model.Shop;
 import com.google.android.gms.maps.model.LatLng;
@@ -50,9 +51,21 @@ public class QueueService {
             final Date date2 = Date.fromString("02-07-2021");
             final Date date3 = Date.fromString("03-07-2021");
 
-            final AvailableDay availableDay1 = new AvailableDay(date1, Arrays.asList("12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"));
-            final AvailableDay availableDay2 = new AvailableDay(date2, Arrays.asList("16:00", "17:00", "18:00", "19:00"));
-            final AvailableDay availableDay3 = new AvailableDay(date3, Arrays.asList("15:00", "16:00", "17:00", "20:00"));
+            final AvailableSlot availableSlot1 = new AvailableSlot("12:30", Arrays.asList("Marco", "Giacomo"));
+            final AvailableSlot availableSlot2 = new AvailableSlot("13:30", Arrays.asList("Giovanni", "Aldo"));
+            final AvailableSlot availableSlot3 = new AvailableSlot("14:30", Arrays.asList("Simone", "Aldo"));
+            final AvailableSlot availableSlot4 = new AvailableSlot("15:30", Arrays.asList("Giovanni", "Aldo"));
+            final AvailableSlot availableSlot5 = new AvailableSlot("16:30", Arrays.asList("Dino", "Alberto"));
+            final AvailableSlot availableSlot6 = new AvailableSlot("17:30", Arrays.asList("Guido", "Aldo"));
+            final AvailableSlot availableSlot7 = new AvailableSlot("18:30", Arrays.asList("Piero", "Luca"));
+
+            final List<AvailableSlot> availableSlots1 = Arrays.asList(availableSlot1, availableSlot2, availableSlot3, availableSlot4, availableSlot5, availableSlot6, availableSlot7);
+            final List<AvailableSlot> availableSlots2 = Arrays.asList(availableSlot1, availableSlot2, availableSlot3, availableSlot4);
+            final List<AvailableSlot> availableSlots3 = Arrays.asList(availableSlot4, availableSlot5, availableSlot6, availableSlot7);
+
+            final AvailableDay availableDay1 = new AvailableDay(date1, availableSlots1);
+            final AvailableDay availableDay2 = new AvailableDay(date2, availableSlots2);
+            final AvailableDay availableDay3 = new AvailableDay(date3, availableSlots3);
 
             final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay1, availableDay2, availableDay3, availableDay2, availableDay3, availableDay1, availableDay2, availableDay3, availableDay1, availableDay2, availableDay3);
             //final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay2, availableDay3);

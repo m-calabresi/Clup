@@ -42,13 +42,13 @@ public class CodeFragment extends Fragment {
     private final View.OnClickListener nextButtonOnClickListener = view -> {
         this.retryButton.setEnabled(false);
         Utils.hideSoftInput(requireActivity());
-        Utils.showProgressBar(this.verifyButton);
+        Utils.startProgressBarAnimation(this.verifyButton);
 
         final String code = Objects.requireNonNull(this.codeEditText.getText()).toString();
 
         this.viewModel.checkVerify(code, result -> {
             Utils.hideSoftInput(requireActivity());
-            Utils.hideProgressBar(this.verifyButton, getString(R.string.action_verify));
+            Utils.stopProgressBarAnimation(this.verifyButton, getString(R.string.action_verify));
 
             if (result instanceof Result.Success) {
                 // final String message = ((Result.Success<String>) result).data;
@@ -136,7 +136,7 @@ public class CodeFragment extends Fragment {
 
         this.verifyButton = root.findViewById(R.id.verify_button);
         this.verifyButton.setOnClickListener(this.nextButtonOnClickListener);
-        Utils.enableProgressButton(this.verifyButton, getViewLifecycleOwner());
+        Utils.enableProgressBarAnimation(this.verifyButton, getViewLifecycleOwner());
 
         this.retryButton = root.findViewById(R.id.retry_button);
         this.retryButton.setOnClickListener(this.retryButtonOnClickListener);

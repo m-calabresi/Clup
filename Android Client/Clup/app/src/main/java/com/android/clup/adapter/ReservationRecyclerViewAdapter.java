@@ -33,7 +33,7 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
             super(itemView);
 
             final View.OnClickListener reservationViewOnClickListener = view ->
-                    onListItemClickedCallback.onRecyclerViewItemClicked(getBindingAdapterPosition());
+                    onListItemClickedCallback.onListItemClicked(getBindingAdapterPosition());
 
             final CardView parent = itemView.findViewById(R.id.item_reservation_card_view);
             parent.setOnClickListener(reservationViewOnClickListener);

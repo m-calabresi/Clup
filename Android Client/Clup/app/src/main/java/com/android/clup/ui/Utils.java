@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -36,9 +37,13 @@ import com.github.razir.progressbutton.DrawableButtonExtensionsKt;
 import com.github.razir.progressbutton.ProgressButtonHolderKt;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Unit;
@@ -65,7 +70,7 @@ public class Utils {
     }
 
     /**
-     * Shows the soft-input on the user device.
+     * Show the soft-input on the user device.
      */
     public static void showSoftInput(@NonNull final Activity activity, @NonNull final View view) {
         view.post(() -> {
@@ -76,19 +81,19 @@ public class Utils {
     }
 
     /**
-     * Enables the given button to expose a progress bar animation upon clicked.
-     * Must be called before {@link #showProgressBar(Button)}.
+     * Enable the given button to expose a progress bar animation upon clicked.
+     * Must be called before {@link #startProgressBarAnimation(Button)}.
      */
-    public static void enableProgressButton(@NonNull final Button button, @NonNull final LifecycleOwner lifecycleOwner) {
+    public static void enableProgressBarAnimation(@NonNull final Button button, @NonNull final LifecycleOwner lifecycleOwner) {
         ProgressButtonHolderKt.bindProgressButton(lifecycleOwner, button);
         ButtonTextAnimatorExtensionsKt.attachTextChangeAnimator(button);
     }
 
     /**
-     * Shows the progress bar animation on the given button upon clicked.
-     * Must be called after {@link #enableProgressButton(Button, LifecycleOwner)}.
+     * Start the progress bar animation on the given button upon clicked.
+     * Must be called after {@link #enableProgressBarAnimation(Button, LifecycleOwner)}.
      */
-    public static void showProgressBar(@NonNull final Button button) {
+    public static void startProgressBarAnimation(@NonNull final Button button) {
         button.setClickable(false);
 
         // start spinning animation
@@ -104,10 +109,10 @@ public class Utils {
     }
 
     /**
-     * Ends the progress bar animation on the given device.
-     * Must be called after {@link #showProgressBar(Button)}.
+     * End the progress bar animation on the given device.
+     * Must be called after {@link #startProgressBarAnimation(Button)}.
      */
-    public static void hideProgressBar(@NonNull final Button button, @NonNull final String newButtonText) {
+    public static void stopProgressBarAnimation(@NonNull final Button button, @NonNull final String newButtonText) {
         // stop spinning animation
         new Handler(Looper.getMainLooper()).post(() -> {
             DrawableButtonExtensionsKt.hideProgress(button, newButtonText);
@@ -131,7 +136,7 @@ public class Utils {
     }
 
     /**
-     * Displays an AlertDialog.
+     * Display an AlertDialog.
      */
     @SuppressWarnings("SameParameterValue")
     private static void displayAlertDialog(@NonNull final Context context,
@@ -145,7 +150,7 @@ public class Utils {
     }
 
     /**
-     * Displays an AlertDialog that notifies the user about a connection error.
+     * Display an AlertDialog that notifies the user about a connection error.
      */
     public static void displayConnectionErrorDialog(@NonNull final Context context) {
         displayAlertDialog(context, R.string.title_error_connection_alert,
@@ -153,7 +158,7 @@ public class Utils {
     }
 
     /**
-     * Displays the AlertDialog through which the user can choose the desired theme.
+     * Display the AlertDialog through which the user can choose the desired theme.
      */
     public static void displayThemesAlertDialog(@NonNull final Context context,
                                                 @NonNull final SimpleCallback<Integer> callback) {
@@ -172,7 +177,7 @@ public class Utils {
     }
 
     /**
-     * Displays the AlertDialog through which the user can choose the time notice to be notified about
+     * Display the AlertDialog through which the user can choose the time notice to be notified about
      * his current reservation.
      */
     public static void displayNotificationAlertDialog(@NonNull final Context context, final int currentTimeNotice,
@@ -198,7 +203,7 @@ public class Utils {
     }
 
     /**
-     * Displays an AlertDialog telling the user that there is no option to open maps navigation
+     * Display an AlertDialog telling the user that there is no option to open maps navigation
      * on his device.
      */
     public static void displayMapsNotFoundError(@NonNull final Context context) {
@@ -206,14 +211,14 @@ public class Utils {
     }
 
     /**
-     * Displays an AlertDialog telling the user to enable location.
+     * Display an AlertDialog telling the user to enable location.
      */
     public static void displayLocationErrorDialog(@NonNull final Context context) {
         displayAlertDialog(context, R.string.text_error_alert_location, R.string.action_ok);
     }
 
     /**
-     * Displays a SnackBar that will be attached to the given anchor view.
+     * Display a SnackBar that will be attached to the given anchor view.
      */
     @SuppressWarnings("SameParameterValue")
     private static void displayErrorSnackbar(@NonNull final View parent, @Nullable final View anchorView,
@@ -235,7 +240,7 @@ public class Utils {
     }
 
     /**
-     * Displays a SnackBar.
+     * Display a SnackBar.
      */
     public static void displaySnackbar(@NonNull final View parent, @StringRes final int text) {
         Snackbar.make(parent, text, Snackbar.LENGTH_LONG)
@@ -247,14 +252,14 @@ public class Utils {
     }
 
     /**
-     * Displays a SnackBar telling the user that a reservation error has occurred.
+     * Display a SnackBar telling the user that a reservation error has occurred.
      */
     public static void displayReservationErrorSnackBar(@NonNull final View parent, @NonNull final View anchorView) {
         displayErrorSnackbar(parent, anchorView, R.string.text_error_reservation);
     }
 
     /**
-     * Maps a theme-preference value to the corresponding position in the AlertDialog.
+     * Map a theme-preference value to the corresponding position in the AlertDialog.
      */
     private static int mapThemeToPosition(final int themeValue) {
         /*  -1 -> 2
@@ -266,7 +271,7 @@ public class Utils {
     }
 
     /**
-     * Maps the position in the AlertDialog to the corresponding theme-preference.
+     * Map the position in the AlertDialog to the corresponding theme-preference.
      */
     private static int mapPositionToTheme(final int position) {
         switch (position) {
@@ -280,7 +285,7 @@ public class Utils {
     }
 
     /**
-     * Maps the given time notice to the corresponding position in the AlertDialog.
+     * Map the given time notice to the corresponding position in the AlertDialog.
      */
     private static int mapTimeNoticeToPosition(final int timeNoticeValue) {
         switch (timeNoticeValue) {
@@ -298,7 +303,7 @@ public class Utils {
     }
 
     /**
-     * Maps the given position to the corresponding time notice.
+     * Map the given position to the corresponding time notice.
      */
     private static int mapPositionToTimeNotice(final int position) {
         switch (position) {
@@ -316,14 +321,14 @@ public class Utils {
     }
 
     /**
-     * Shows the given view.
+     * Show the given view.
      */
     public static void expandHeight(@NonNull final View view) {
         view.post(() -> view.setVisibility(View.VISIBLE));
     }
 
     /**
-     * Hides the given view.
+     * Hide the given view.
      */
     public static void reduceHeight(@NonNull final View view) {
         view.post(() -> view.setVisibility(View.GONE));
@@ -344,7 +349,7 @@ public class Utils {
     }
 
     /**
-     * Sets the status bar to be fullscreen.
+     * Set the status bar to be fullscreen.
      */
     @SuppressWarnings("deprecation")
     public static void setFullScreenStatusBar(@NonNull final Activity activity) {
@@ -355,7 +360,7 @@ public class Utils {
     }
 
     /**
-     * Sets the height of the padding view to fill the status bar region when the bottom sheet
+     * Set the height of the padding view to fill the status bar region when the bottom sheet
      * is fully expanded.
      */
     public static void setPadHeight(@NonNull final View parentView, @NonNull final View padView) {
@@ -371,7 +376,7 @@ public class Utils {
     }
 
     /**
-     * Sets the top and start margin for the given view based on the status bar height.
+     * Set the top and start margin for the given view based on the status bar height.
      */
     public static void setTopStartMargins(@NonNull final View parentView, @NonNull final View view) {
         ViewCompat.setOnApplyWindowInsetsListener(parentView, (v, insets) -> {
@@ -395,11 +400,31 @@ public class Utils {
     @NonNull
     public static BitmapDescriptor vectorToBitmap(@NonNull final Context context, @DrawableRes int id) {
         final Drawable vectorDrawable = ResourcesCompat.getDrawable(context.getResources(), id, null);
-        final Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        final Bitmap bitmap = Bitmap.createBitmap(Objects.requireNonNull(vectorDrawable).getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bitmap);
 
         vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    /**
+     * Fill a {@link ChipGroup} with chips that contains values specified by {@code values}.
+     */
+    public static void setTimeChips(@NonNull final ChipGroup parent, @NonNull final List<String> values) {
+        parent.post(() -> {
+            if (parent.getChildCount() > 0)
+                parent.removeAllViews();
+
+            final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+
+            for (int i = 0; i < values.size(); i++) {
+                final String value = values.get(i);
+                final Chip chip = (Chip) layoutInflater.inflate(R.layout.item_chip, parent, false);
+                chip.setText(value);
+
+                parent.addView(chip);
+            }
+        });
     }
 }

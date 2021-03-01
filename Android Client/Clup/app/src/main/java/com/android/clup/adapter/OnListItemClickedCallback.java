@@ -10,5 +10,5 @@ public interface OnListItemClickedCallback {
      *
      * @param position the position inside the list, where the clicked element is located.
      */
-    void onRecyclerViewItemClicked(final int position);
+    void onListItemClicked(final int position);
 }

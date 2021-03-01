@@ -8,18 +8,18 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.clup.R;
-import com.android.clup.adapter.DayRecyclerViewAdapter;
+import com.android.clup.adapter.SectionsPagerAdapter;
 import com.android.clup.concurrent.Result;
 import com.android.clup.model.Shop;
 import com.android.clup.viewmodel.SelectViewModel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class SelectActivity extends AppCompatActivity {
     private SelectViewModel viewModel;
@@ -29,10 +29,10 @@ public class SelectActivity extends AppCompatActivity {
     private final View.OnClickListener doneButtonOnClickListener = view -> {
         this.doneButton.setClickable(false);
         this.doneButton.setFocusable(false);
-        Utils.showProgressBar(this.doneButton);
+        Utils.startProgressBarAnimation(this.doneButton);
 
         this.viewModel.bookReservation(result -> {
-            Utils.hideProgressBar(this.doneButton, getString(R.string.action_done));
+            Utils.stopProgressBarAnimation(this.doneButton, getString(R.string.action_done));
 
             if (result instanceof Result.Success && ((Result.Success<Boolean>) result).data)
                 switchToNextActivity();
@@ -40,7 +40,28 @@ public class SelectActivity extends AppCompatActivity {
                 showReservationError();
         });
     };
-    private final Observer<Integer> doneButtonGroupTagLiveDataObserver = groupTag -> doneButton.setVisibility(View.VISIBLE);
+
+    private final Observer<Boolean> visibilityObserver = visible -> {
+        if (visible)
+            this.doneButton.show();
+        else
+            this.doneButton.hide();
+    };
+
+    private final ViewPager2.OnPageChangeCallback onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+        @Override
+        public void onPageSelected(final int position) {
+            super.onPageSelected(position);
+
+            // set the selected day based on the current page
+            viewModel.setSelectedDay(position);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(final int state) {
+            super.onPageScrollStateChanged(state);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +75,24 @@ public class SelectActivity extends AppCompatActivity {
         toolbar.setTitle(selectedShop.getName());
         setSupportActionBar(toolbar);
 
-        final CardView cardView = findViewById(R.id.select_card_view);
-        cardView.setBackgroundResource(R.drawable.rounded_view_background);
+        final TabLayout tabLayout = findViewById(R.id.select_tab_layout);
 
-        final RecyclerView recyclerView = findViewById(R.id.select_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        final ViewPager2 viewPager = findViewById(R.id.select_view_pager);
+        viewPager.setAdapter(new SectionsPagerAdapter(this));
+        viewPager.registerOnPageChangeCallback(this.onPageChangeCallback);
 
-        final DayRecyclerViewAdapter adapter = new DayRecyclerViewAdapter(this, this.viewModel);
-        recyclerView.setAdapter(adapter);
+        // called for every tab during initialization, set up each tab individually
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            final String date = this.viewModel.getSelectedShop().getAvailableDays().get(position).getDate().formatted();
+            tab.setText(date);
+        }).attach();
 
         this.doneButton = findViewById(R.id.done_button);
-        Utils.enableProgressButton(this.doneButton, this);
+        Utils.enableProgressBarAnimation(this.doneButton, this);
         this.doneButton.setOnClickListener(doneButtonOnClickListener);
-        this.viewModel.getGroupTagLiveData().observe(this, this.doneButtonGroupTagLiveDataObserver);
+        this.doneButton.setAnimateShowBeforeLayout(true);
+
+        this.viewModel.getVisibilityStatusLiveData().observe(this, this.visibilityObserver);
     }
 
     /**

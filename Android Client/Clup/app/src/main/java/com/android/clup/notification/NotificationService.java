@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -141,7 +140,6 @@ public class NotificationService {
                                             @NonNull final Reservation reservation) {
         // time of the appointment
         final long endTime = reservation.getDate().toMillis();
-        Log.i("AAA", "reservation will be at: " + endTime);
         // amount of time before the appointment the user wants to be notified (eg. 15 min, 1h...)
         final long beforeTime = Date.minutesToMillis(reservation.getTimeNotice());
         // time at which the notification should appear

@@ -5,17 +5,18 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 /**
- * An available day represents a day in which it is possible to book a reservation at a certain shop.
+ * An {@code AvailableDay} represents a day in which it is possible to book a reservation at
+ * a certain shop for a certain time slot.
  */
 public class AvailableDay {
     @NonNull
     private final Date date;
     @NonNull
-    private final List<String> times;
+    private final List<AvailableSlot> availableSlots;
 
-    public AvailableDay(@NonNull final Date date, @NonNull final List<String> times) {
+    public AvailableDay(@NonNull final Date date, @NonNull final List<AvailableSlot> availableSlots) {
         this.date = date;
-        this.times = times;
+        this.availableSlots = availableSlots;
     }
 
     @NonNull
@@ -24,7 +25,7 @@ public class AvailableDay {
     }
 
     @NonNull
-    public List<String> getTimes() {
-        return this.times;
+    public List<AvailableSlot> getAvailableSlots() {
+        return this.availableSlots;
     }
 }

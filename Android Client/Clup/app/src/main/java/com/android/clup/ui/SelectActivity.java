@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -26,6 +27,7 @@ public class SelectActivity extends AppCompatActivity {
 
     private ExtendedFloatingActionButton doneButton;
 
+    @NonNull
     private final View.OnClickListener doneButtonOnClickListener = view -> {
         this.doneButton.setClickable(false);
         this.doneButton.setFocusable(false);
@@ -41,6 +43,7 @@ public class SelectActivity extends AppCompatActivity {
         });
     };
 
+    @NonNull
     private final Observer<Boolean> visibilityObserver = visible -> {
         if (visible)
             this.doneButton.show();
@@ -48,6 +51,7 @@ public class SelectActivity extends AppCompatActivity {
             this.doneButton.hide();
     };
 
+    @NonNull
     private final ViewPager2.OnPageChangeCallback onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
         @Override
         public void onPageSelected(final int position) {

@@ -19,6 +19,7 @@ import java.util.Locale;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class MapsService {
+    @NonNull
     private static final String API_URL = "https://www.google.com/maps/dir/?api=1&destination=";
 
     private MapsService() {

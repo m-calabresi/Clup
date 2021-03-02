@@ -39,9 +39,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private FloatingActionButton backButton;
     private BottomSheetBehavior<View> bottomSheetBehavior;
 
+    @NonNull
     private final View.OnClickListener backButtonOnClickListener = view -> this.finish();
+    @NonNull
     private final View.OnClickListener locationButtonOnClickListener = view -> this.viewModel.startLocationPermissionRequest(this);
 
+    @NonNull
     private final BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
         @Override
         public void onStateChanged(@NonNull final View bottomSheet, final int newState) {

@@ -17,6 +17,7 @@
     <color name="black">#FF000000</color>
     <color name="black_alpha_03">#08000000</color>
     <color name="black_alpha_09">#17000000</color>
+    <color name="black_alpha_33">#33000000</color>
     <color name="white_alpha_07">#12FFFFFF</color>
     <color name="white_alpha_12">#1FFFFFFF</color>
     <color name="white_alpha_30">#4DFFFFFF</color>
@@ -57,4 +58,8 @@
     <!-- text colors -->
     <color name="error_color">#FFD20112</color>
     <color name="error_color_alt">#FFFFCDD2</color>
+
+    <!-- timeline colors -->
+    <color name="timeline_active_marker_color">@color/lime_500</color>
+    <color name="timeline_active_line_color">@color/lime_500</color>
 </resources>

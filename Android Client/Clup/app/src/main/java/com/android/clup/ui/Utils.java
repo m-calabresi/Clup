@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
@@ -28,6 +29,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.android.clup.R;
+import com.android.clup.adapter.TimeLineAdapter;
 import com.android.clup.concurrent.SimpleCallback;
 import com.android.clup.model.Preferences;
 import com.android.clup.model.Reservation;
@@ -426,5 +428,32 @@ public class Utils {
                 parent.addView(chip);
             }
         });
+    }
+
+    /**
+     * Highlight end line of the {@code TimeLineView} of the given {@code TimeLineViewHolder}.
+     */
+    public static void highlightEndLine(@NonNull final TimeLineAdapter.TimeLineViewHolder viewHolder) {
+        final int lineColor = viewHolder.itemView.getContext().getResources().getColor(R.color.timeline_active_line_color);
+        viewHolder.timelineView.setEndLineColor(lineColor, viewHolder.getItemViewType());
+    }
+
+    /**
+     * Highlights the start line and marker of the {@code TimeLineTextView} and the
+     * background/text color of the {@code TextView} of the given {@code TimeLineViewHolder}.
+     */
+    public static void highlightAll(@NonNull final TimeLineAdapter.TimeLineViewHolder viewHolder) {
+        final int lineColor = viewHolder.itemView.getContext().getResources().getColor(R.color.timeline_active_line_color);
+        final int backgroundColor = viewHolder.itemView.getContext().getResources().getColor(R.color.selected_background_color);
+        final int textColor = viewHolder.itemView.getContext().getResources().getColor(R.color.selected_text_color);
+
+        final Drawable marker = AppCompatResources.getDrawable(viewHolder.itemView.getContext(), R.drawable.marker_timeline_active);
+
+        viewHolder.timelineView.setStartLineColor(lineColor, viewHolder.getItemViewType());
+        viewHolder.timelineView.setMarker(marker, viewHolder.getItemViewType());
+
+        viewHolder.textView.setTextColor(textColor);
+
+        viewHolder.cardView.setCardBackgroundColor(backgroundColor);
     }
 }

@@ -4,20 +4,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.clup.R;
+import com.android.clup.adapter.TimeLineAdapter;
 import com.android.clup.model.AvailableDay;
 import com.android.clup.model.AvailableSlot;
 import com.android.clup.viewmodel.SelectViewModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +35,11 @@ public class SelectFragment extends Fragment {
 
     private ChipGroup timeChipGroup;
 
+    private RecyclerView recyclerView;
+    private TimeLineAdapter adapter;
+    private TextView queueTextView;
+
+    @NonNull
     private final ChipGroup.OnCheckedChangeListener timeChipGroupOnCheckedChangeListener = (group, checkedId) -> {
         // check if the change has been triggered by a valid chip
         if (checkedId != View.NO_ID) {
@@ -39,6 +49,9 @@ public class SelectFragment extends Fragment {
 
             this.viewModel.setSelectedTime(selectedTime);
             this.viewModel.setVisibilityStatusLiveData(true);
+
+            final List<String> customersNames = this.availableDay.getAvailableSlot(selectedTime).getEnqueuedCustomersNames();
+            showQueue(customersNames);
         }
     };
 
@@ -70,6 +83,15 @@ public class SelectFragment extends Fragment {
         final List<String> times = this.availableDay.getAvailableSlots().stream().map(AvailableSlot::getTime).collect(Collectors.toList());
         Utils.setTimeChips(this.timeChipGroup, times);
 
+        this.queueTextView = parent.findViewById(R.id.queue_text_view);
+
+        this.recyclerView = parent.findViewById(R.id.timeline_recycler_view);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        this.recyclerView.setHasFixedSize(true);
+
+        this.adapter = new TimeLineAdapter(Collections.emptyList());
+        this.recyclerView.setAdapter(this.adapter);
+
         return parent;
     }
 
@@ -83,5 +105,26 @@ public class SelectFragment extends Fragment {
         // clear the selected chip
         this.timeChipGroup.clearCheck();
         this.viewModel.setVisibilityStatusLiveData(false);
+
+        // hide unused recyclerview
+        hideQueue();
+    }
+
+    /**
+     * Show the queue with all customers behind the user, plus the user himself.
+     */
+    private void showQueue(@NonNull final List<String> items) {
+        this.adapter.setCustomersNames(items);
+        this.recyclerView.setVisibility(View.VISIBLE);
+        this.queueTextView.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Hide the customers queue.
+     */
+    private void hideQueue() {
+        this.adapter.setCustomersNames(Collections.emptyList());
+        this.recyclerView.setVisibility(View.GONE);
+        this.queueTextView.setVisibility(View.GONE);
     }
 }

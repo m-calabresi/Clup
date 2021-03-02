@@ -26,6 +26,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/select_tab_layout"
+            style="@style/AppTheme.Clup.TabsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="scrollable" />

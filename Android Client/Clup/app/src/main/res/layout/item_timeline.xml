@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:background="@color/transparent"
+    android:orientation="horizontal">
+
+    <com.github.vipulasri.timelineview.TimelineView
+        android:id="@+id/timeline"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        app:endLineColor="@color/normal_text_color"
+        app:lineWidth="3dp"
+        app:marker="@drawable/marker_timeline"
+        app:markerSize="15dp"
+        app:startLineColor="@color/normal_text_color" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/timeline_card_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/transparent"
+        app:cardBackgroundColor="@color/normal_background_color"
+        app:cardCornerRadius="@dimen/card_large_corner_radius"
+        app:cardElevation="@dimen/card_no_elevation"
+        app:contentPadding="15dp"
+        app:strokeWidth="0dp">
+
+        <TextView
+            android:id="@+id/text_timeline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/normal_text_color"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

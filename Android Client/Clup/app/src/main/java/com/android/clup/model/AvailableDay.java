@@ -3,6 +3,7 @@ package com.android.clup.model;
 import androidx.annotation.NonNull;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * An {@code AvailableDay} represents a day in which it is possible to book a reservation at
@@ -27,5 +28,14 @@ public class AvailableDay {
     @NonNull
     public List<AvailableSlot> getAvailableSlots() {
         return this.availableSlots;
+    }
+
+    @NonNull
+    public AvailableSlot getAvailableSlot(@NonNull final String time) {
+        for (final AvailableSlot availableSlot : this.availableSlots)
+            if (availableSlot.getTime().equals(time))
+                return availableSlot;
+
+        throw new NoSuchElementException("No AvailableSlot found that matches the given time: " + time);
     }
 }

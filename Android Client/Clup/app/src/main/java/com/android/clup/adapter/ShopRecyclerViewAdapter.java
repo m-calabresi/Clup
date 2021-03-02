@@ -73,6 +73,6 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return shops.size();
+        return this.shops.size();
     }
 }

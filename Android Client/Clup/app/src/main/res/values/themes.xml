@@ -183,6 +183,12 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="AppTheme.Clup.ItemTitleTextView.TimeLine" parent="">
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textSize">@dimen/item_title_text_view_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="AppTheme.Clup.InfoTitleTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:lines">1</item>
         <item name="android:textAlignment">center</item>
@@ -314,5 +320,13 @@
 
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TABS LAYOUT THEME -->
+    <style name="AppTheme.Clup.TabsLayout" parent="">
+        <item name="android:background">@color/lime_500</item>
+        <item name="tabSelectedTextColor">?attr/colorControlNormal</item>
+        <item name="tabTextColor">@color/black_alpha_33</item>
+        <item name="tabIndicatorColor">?attr/colorControlNormal</item>
     </style>
 </resources>

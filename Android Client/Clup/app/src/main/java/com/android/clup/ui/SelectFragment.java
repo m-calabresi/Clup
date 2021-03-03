@@ -24,19 +24,26 @@ import com.google.android.material.chip.ChipGroup;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class SelectFragment extends Fragment {
     @NonNull
     public static final String KEY_POSITION = "position";
 
+    @Nullable
     private SelectViewModel viewModel;
+    @Nullable
     private AvailableDay availableDay;
 
+    @Nullable
     private ChipGroup timeChipGroup;
 
+    @Nullable
     private RecyclerView recyclerView;
+    @Nullable
     private TimeLineAdapter adapter;
+    @Nullable
     private TextView queueTextView;
 
     @NonNull
@@ -80,7 +87,10 @@ public class SelectFragment extends Fragment {
         this.timeChipGroup = parent.findViewById(R.id.time_chip_group);
         this.timeChipGroup.setOnCheckedChangeListener(timeChipGroupOnCheckedChangeListener);
 
-        final List<String> times = this.availableDay.getAvailableSlots().stream().map(AvailableSlot::getTime).collect(Collectors.toList());
+        final List<String> times = Objects.requireNonNull(this.availableDay).getAvailableSlots()
+                .stream()
+                .map(AvailableSlot::getTime)
+                .collect(Collectors.toList());
         Utils.setTimeChips(this.timeChipGroup, times);
 
         this.queueTextView = parent.findViewById(R.id.queue_text_view);
@@ -103,8 +113,8 @@ public class SelectFragment extends Fragment {
         super.onPause();
 
         // clear the selected chip
-        this.timeChipGroup.clearCheck();
-        this.viewModel.setVisibilityStatusLiveData(false);
+        Objects.requireNonNull(this.timeChipGroup).clearCheck();
+        Objects.requireNonNull(this.viewModel).setVisibilityStatusLiveData(false);
 
         // hide unused recyclerview
         hideQueue();
@@ -114,17 +124,17 @@ public class SelectFragment extends Fragment {
      * Show the queue with all customers behind the user, plus the user himself.
      */
     private void showQueue(@NonNull final List<String> items) {
-        this.adapter.setCustomersNames(items);
-        this.recyclerView.setVisibility(View.VISIBLE);
-        this.queueTextView.setVisibility(View.VISIBLE);
+        Objects.requireNonNull(this.adapter).setCustomersNames(items);
+        Objects.requireNonNull(this.recyclerView).setVisibility(View.VISIBLE);
+        Objects.requireNonNull(this.queueTextView).setVisibility(View.VISIBLE);
     }
 
     /**
      * Hide the customers queue.
      */
     private void hideQueue() {
-        this.adapter.setCustomersNames(Collections.emptyList());
-        this.recyclerView.setVisibility(View.GONE);
-        this.queueTextView.setVisibility(View.GONE);
+        Objects.requireNonNull(this.adapter).setCustomersNames(Collections.emptyList());
+        Objects.requireNonNull(this.recyclerView).setVisibility(View.GONE);
+        Objects.requireNonNull(this.queueTextView).setVisibility(View.GONE);
     }
 }

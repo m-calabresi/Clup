@@ -61,6 +61,7 @@ public class MapViewModel extends ViewModel {
     // location retrieved by the Fused Location Provider.
     @Nullable
     private Location lastKnownLocation;
+    @Nullable
     private GoogleMap map;
 
     @NonNull
@@ -80,6 +81,8 @@ public class MapViewModel extends ViewModel {
     public void setGoogleMap(@NonNull final Context context, @NonNull final GoogleMap map) {
         this.map = map;
         this.map.getUiSettings().setCompassEnabled(false);
+        this.map.getUiSettings().setZoomControlsEnabled(false);
+        this.map.getUiSettings().setMapToolbarEnabled(false);
         this.map.setInfoWindowAdapter(new InfoWindowAdapter(context));
 
         // handles the click on the marker InfoView
@@ -146,9 +149,9 @@ public class MapViewModel extends ViewModel {
     private void updateLocationUI() {
         try {
             if (this.locationPermissionGranted)
-                this.map.setMyLocationEnabled(true);
+                Objects.requireNonNull(this.map).setMyLocationEnabled(true);
             else {
-                this.map.setMyLocationEnabled(false);
+                Objects.requireNonNull(this.map).setMyLocationEnabled(false);
                 this.lastKnownLocation = null;
             }
             this.map.getUiSettings().setMyLocationButtonEnabled(false);
@@ -173,7 +176,7 @@ public class MapViewModel extends ViewModel {
                         // Set the map's camera position to the current location of the device.
                         this.lastKnownLocation = task.getResult();
                         if (this.lastKnownLocation != null) {
-                            this.map.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                            Objects.requireNonNull(this.map).animateCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(this.lastKnownLocation.getLatitude(),
                                             this.lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         } else {
@@ -252,7 +255,7 @@ public class MapViewModel extends ViewModel {
             final String title = shop.getName();
             final String snippet = MapsService.getAddressByCoordinates(context, shop.getCoordinates());
 
-            final Marker marker = this.map.addMarker(new MarkerOptions()
+            final Marker marker = Objects.requireNonNull(this.map).addMarker(new MarkerOptions()
                     .position(shop.getCoordinates())
                     .icon(icon)
                     .title(title)

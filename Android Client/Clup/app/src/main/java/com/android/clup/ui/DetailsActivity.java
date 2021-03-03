@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -21,11 +23,16 @@ import com.android.clup.viewmodel.DetailsViewModel;
 import static com.android.clup.notification.NotificationService.EXTRA_RESERVATION;
 
 public class DetailsActivity extends AppCompatActivity {
+    @Nullable
     private DetailsViewModel viewModel;
+    @Nullable
     private Button notifyButton;
 
+    @NonNull
     private final View.OnClickListener notifyButtonOnClickListener = view -> this.viewModel.toggleNotificationUi(this, this.notifyButton);
+    @NonNull
     private final View.OnClickListener directionsButtonOnClickListener = view -> this.viewModel.navigateToSelectedShop(this);
+    @NonNull
     private final View.OnLongClickListener imageViewOnLongClickListener = view -> {
         final Intent intent = new Intent(this, InvalidateActivity.class);
         startActivity(intent);

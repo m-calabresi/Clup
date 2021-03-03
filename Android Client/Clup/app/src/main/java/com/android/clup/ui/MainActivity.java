@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -27,11 +28,15 @@ import com.android.clup.viewmodel.MainViewModel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements OnListItemClickedCallback {
+    @Nullable
     private MainViewModel viewModel;
+    @Nullable
     private ReservationRecyclerViewAdapter adapter;
 
+    @NonNull
     private final View.OnClickListener bookButtonOnClickListener = view -> {
         final Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnListItemClicked
     @Override
     public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
         if (item.getItemId() == R.id.action_settings_theme) {
-            this.viewModel.displayThemesAlertDialog(this);
+            Objects.requireNonNull(this.viewModel).displayThemesAlertDialog(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements OnListItemClicked
 
     @Override
     public void onListItemClicked(int position) {
-        this.viewModel.setSelectedReservation(position);
+        Objects.requireNonNull(this.viewModel).setSelectedReservation(position);
         startDetailsActivity();
     }
 
@@ -106,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements OnListItemClicked
     }
 
     private void setUpRecyclerView() {
-        final List<Reservation> reservations = this.viewModel.getReservations();
+        final List<Reservation> reservations = Objects.requireNonNull(this.viewModel).getReservations();
 
         final ConstraintLayout emptyLayout = findViewById(R.id.empty_layout);
         final RecyclerView recyclerView = findViewById(R.id.main_recycler_view);

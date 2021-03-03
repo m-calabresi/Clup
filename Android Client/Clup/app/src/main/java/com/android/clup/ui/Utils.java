@@ -2,6 +2,7 @@ package com.android.clup.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -22,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
@@ -385,11 +387,19 @@ public class Utils {
             final int marginTop = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top;
             final int marginStart = (int) parentView.getResources().getDimension(R.dimen.mini_fab_margin_start);
 
-            final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
-            params.topMargin = marginTop;
-            params.leftMargin = marginStart;
-            params.rightMargin = marginStart;
-            view.setLayoutParams(params);
+            if (!Utils.isPhone(parentView.getContext())) {
+                final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                params.topMargin = marginTop;
+                params.leftMargin = marginStart;
+                params.rightMargin = marginStart;
+                view.setLayoutParams(params);
+            } else {
+                final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
+                params.topMargin = marginTop;
+                params.leftMargin = marginStart;
+                params.rightMargin = marginStart;
+                view.setLayoutParams(params);
+            }
 
             return WindowInsetsCompat.CONSUMED;
         });
@@ -455,5 +465,20 @@ public class Utils {
         viewHolder.textView.setTextColor(textColor);
 
         viewHolder.cardView.setCardBackgroundColor(backgroundColor);
+    }
+
+    /**
+     * Whether the current device is a phone or not.
+     */
+    public static boolean isPhone(@NonNull final Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK) < Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    /**
+     * Whether the current device is in portrait mode or not.
+     */
+    public static boolean isPortrait(@NonNull final Context context) {
+        return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 }

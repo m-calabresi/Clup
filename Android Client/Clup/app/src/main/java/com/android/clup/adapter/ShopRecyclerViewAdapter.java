@@ -23,7 +23,9 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     private final List<Shop> shops;
 
     public class ShopViewHolder extends RecyclerView.ViewHolder {
+        @NonNull
         private final TextView nameTextView;
+        @NonNull
         private final TextView addressTextView;
 
         public ShopViewHolder(@NonNull final View v) {

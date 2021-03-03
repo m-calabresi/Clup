@@ -24,9 +24,13 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     private final List<Reservation> reservations;
 
     public class ReservationViewHolder extends RecyclerView.ViewHolder {
+        @NonNull
         private final TextView shopNameTextView;
+        @NonNull
         private final TextView dateTimeTextView;
+        @NonNull
         private final TextView notificationTextView;
+        @NonNull
         private final TextView expiredWaringTextView;
 
         public ReservationViewHolder(@NonNull final View itemView) {

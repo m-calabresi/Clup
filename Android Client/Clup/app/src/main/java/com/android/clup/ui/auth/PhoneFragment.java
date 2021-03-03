@@ -27,11 +27,16 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 public class PhoneFragment extends Fragment {
+    @Nullable
     private AuthViewModel viewModel;
 
+    @Nullable
     private Button nextButton;
+    @Nullable
     private TextInputLayout phoneNumberTextInput;
+    @Nullable
     private TextInputEditText prefixEditText;
+    @Nullable
     private TextInputEditText phoneNumberEditText;
 
     @NonNull
@@ -137,7 +142,7 @@ public class PhoneFragment extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_phone, container, false);
 
-        this.viewModel.getPhoneFragmentButtonVisibilityStatus().observe(getViewLifecycleOwner(), nextButtonObserver);
+        Objects.requireNonNull(this.viewModel).getPhoneFragmentButtonVisibilityStatus().observe(getViewLifecycleOwner(), nextButtonObserver);
 
         this.nextButton = root.findViewById(R.id.next_button);
         this.nextButton.setOnClickListener(this.nextOnClickListener);
@@ -161,7 +166,7 @@ public class PhoneFragment extends Fragment {
 
     @Override
     public void onResume() {
-        Utils.showSoftInput(requireActivity(), this.phoneNumberEditText);
+        Utils.showSoftInput(requireActivity(), Objects.requireNonNull(this.phoneNumberEditText));
         super.onResume();
     }
 
@@ -175,7 +180,7 @@ public class PhoneFragment extends Fragment {
      * Show an error hint associated to the textview the user is typing in.
      */
     private void showErrorHint() {
-        this.phoneNumberTextInput.post(() -> {
+        Objects.requireNonNull(this.phoneNumberTextInput).post(() -> {
             final String errorMessage = getString(R.string.text_error_phone);
             this.phoneNumberTextInput.setError(errorMessage);
         });
@@ -186,8 +191,8 @@ public class PhoneFragment extends Fragment {
      */
     private void switchToNextFragment() {
         new Handler(Looper.getMainLooper()).post(() -> {
-            this.nextButton.setVisibility(View.INVISIBLE);
-            this.viewModel.switchTo(CodeFragment.class);
+            Objects.requireNonNull(this.nextButton).setVisibility(View.INVISIBLE);
+            Objects.requireNonNull(this.viewModel).switchTo(CodeFragment.class);
         });
     }
 }

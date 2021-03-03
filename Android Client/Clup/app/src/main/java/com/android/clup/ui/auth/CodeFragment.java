@@ -28,14 +28,21 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 public class CodeFragment extends Fragment {
+    @Nullable
     private AuthViewModel viewModel;
 
+    @Nullable
     private Button verifyButton;
+    @Nullable
     private Button retryButton;
+    @Nullable
     private TextInputEditText codeEditText;
+    @Nullable
     private TextInputLayout codeInputLayout;
 
+    @Nullable
     private String retryInText;
+    @Nullable
     private CountDownTimer countDownTimer;
 
     @NonNull
@@ -107,12 +114,12 @@ public class CodeFragment extends Fragment {
             @Override
             public void onTick(long millisUntilFinished) {
                 final String text = retryInText + (millisUntilFinished / 1000);
-                retryButton.setText(text);
+                Objects.requireNonNull(retryButton).setText(text);
             }
 
             @Override
             public void onFinish() {
-                retryButton.setText(getString(R.string.action_retry));
+                Objects.requireNonNull(retryButton).setText(getString(R.string.action_retry));
                 retryButton.setEnabled(true);
             }
         };
@@ -126,7 +133,7 @@ public class CodeFragment extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_code, container, false);
 
-        this.viewModel.getCodeFragmentButtonVisibilityStatus().observe(getViewLifecycleOwner(), this.verifyButtonObserver);
+        Objects.requireNonNull(this.viewModel).getCodeFragmentButtonVisibilityStatus().observe(getViewLifecycleOwner(), this.verifyButtonObserver);
 
         this.retryInText = getString(R.string.action_retry_in);
 
@@ -151,7 +158,7 @@ public class CodeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
-        this.countDownTimer.start();
+        Objects.requireNonNull(this.countDownTimer).start();
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -159,14 +166,14 @@ public class CodeFragment extends Fragment {
      * Enable the retry button.
      */
     private void enableRetryButton() {
-        this.retryButton.post(() -> this.retryButton.setEnabled(true));
+        Objects.requireNonNull(this.retryButton).post(() -> this.retryButton.setEnabled(true));
     }
 
     /**
      * Show an error hint associated to the textview the user is typing in.
      */
     private void showErrorHint() {
-        this.codeInputLayout.post(() -> {
+        Objects.requireNonNull(this.codeInputLayout).post(() -> {
             final String errorMessage = getString(R.string.text_error_code);
             this.codeInputLayout.setError(errorMessage);
         });
@@ -177,8 +184,8 @@ public class CodeFragment extends Fragment {
      */
     private void switchToNextFragment() {
         new Handler(Looper.getMainLooper()).post(() -> {
-            this.verifyButton.setVisibility(View.INVISIBLE);
-            this.viewModel.switchTo(SuccessFragment.class);
+            Objects.requireNonNull(this.verifyButton).setVisibility(View.INVISIBLE);
+            Objects.requireNonNull(this.viewModel).switchTo(SuccessFragment.class);
         });
     }
 }

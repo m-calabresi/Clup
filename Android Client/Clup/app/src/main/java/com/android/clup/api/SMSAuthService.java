@@ -1,6 +1,7 @@
 package com.android.clup.api;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.clup.concurrent.Callback;
 import com.android.clup.concurrent.Result;
@@ -13,14 +14,16 @@ public class SMSAuthService {
     private static final String API_URL = "https://verify-2044-mdd3gm.twil.io/";
     @NonNull
     public static final String DEFAULT_LOCALE = "us";
-
+    @Nullable
     private static SMSAuthService instance;
+    @NonNull
     private final Executor executor;
 
     private SMSAuthService() {
         this.executor = Executors.newSingleThreadExecutor();
     }
 
+    @NonNull
     public static SMSAuthService getInstance() {
         if (instance == null)
             instance = new SMSAuthService();

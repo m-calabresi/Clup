@@ -281,7 +281,7 @@
         <item name="android:backgroundTint">@color/transparent</item>
     </style>
 
-    <!-- RECYCLER VIEW CONTAINER THEME -->
+    <!-- RECYCLER VIEW CONTAINER THEMES -->
     <style name="AppTheme.Clup.BottomSheetRecyclerView" parent="">
         <item name="android:background">@color/gray_50</item>
 
@@ -289,6 +289,10 @@
         <item name="behavior_peekHeight">@dimen/peek_height</item>
         <item name="layout_behavior">com.google.android.material.bottomsheet.BottomSheetBehavior
         </item>
+    </style>
+
+    <style name="AppTheme.Clup.SidedRecyclerView" parent="">
+        <item name="android:background">@color/gray_50</item>
     </style>
 
     <!-- EXTENDED FLOATING ACTION BUTTON THEME -->

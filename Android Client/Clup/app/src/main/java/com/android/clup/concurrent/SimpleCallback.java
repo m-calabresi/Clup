@@ -1,5 +1,7 @@
 package com.android.clup.concurrent;
 
+import androidx.annotation.NonNull;
+
 /**
  * A simple interface implementing a callback provided by a caller and used by a callee
  * to notify the caller.
@@ -12,5 +14,5 @@ public interface SimpleCallback<T> {
      * The returned result is not wrapped inside a {@link Result}
      * object allowing for simple wrapping/unwrapping of data.
      */
-    void onComplete(T result);
+    void onComplete(@NonNull final T result);
 }

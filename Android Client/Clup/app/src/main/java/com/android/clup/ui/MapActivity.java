@@ -32,11 +32,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, OnListItemClickedCallback {
+    @Nullable
     private MapViewModel viewModel;
 
+    @Nullable
     private TextView padView;
+    @Nullable
     private FloatingActionButton locationButton;
+    @Nullable
     private FloatingActionButton backButton;
+    @Nullable
     private BottomSheetBehavior<View> bottomSheetBehavior;
 
     @NonNull
@@ -82,9 +87,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.backButton.setOnClickListener(this.backButtonOnClickListener);
         Utils.setTopStartMargins(mapActivityView, this.backButton);
 
-        this.padView = findViewById(R.id.pad_view);
-        Utils.setPadHeight(mapActivityView, padView);
-
         final RecyclerView recyclerView = findViewById(R.id.map_recycler_view);
         recyclerView.setNestedScrollingEnabled(true);
         recyclerView.setHasFixedSize(true);
@@ -100,12 +102,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 displayErrorSnackBar();
         });
 
-        this.bottomSheetBehavior = BottomSheetBehavior.from(recyclerView);
-        this.bottomSheetBehavior.setFitToContents(false);
-        this.bottomSheetBehavior.setHalfExpandedRatio(MapViewModel.BOTTOM_SHEET_HALF_EXPANDED_RATIO);
-        this.bottomSheetBehavior.addBottomSheetCallback(this.bottomSheetCallback);
+        if (Utils.isPhone(this)) {
+            this.padView = findViewById(R.id.pad_view);
+            Utils.setPadHeight(mapActivityView, padView);
 
-        //int peekHeight = getResources().getDimension(R.dimen.)
+            this.bottomSheetBehavior = BottomSheetBehavior.from(recyclerView);
+            this.bottomSheetBehavior.setFitToContents(false);
+            this.bottomSheetBehavior.setHalfExpandedRatio(MapViewModel.BOTTOM_SHEET_HALF_EXPANDED_RATIO);
+            this.bottomSheetBehavior.addBottomSheetCallback(this.bottomSheetCallback);
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -125,7 +130,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull final GoogleMap googleMap) {
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style));
-        this.viewModel.setGoogleMap(this, googleMap);
+        Objects.requireNonNull(this.viewModel).setGoogleMap(this, googleMap);
 
         // Prompt the user for permission.
         this.viewModel.startLocationPermissionRequest(this);
@@ -140,7 +145,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        this.viewModel.continueLocationPermissionRequest(this, requestCode, grantResults);
+        Objects.requireNonNull(this.viewModel).continueLocationPermissionRequest(this, requestCode, grantResults);
     }
 
     /**
@@ -148,10 +153,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
      */
     @Override
     public void onListItemClicked(final int position) {
-        this.viewModel.setSelectedShop(position);
+        Objects.requireNonNull(this.viewModel).setSelectedShop(position);
         final Intent intent = new Intent(this, SelectActivity.class);
         startActivity(intent);
-        this.viewModel.adjustExpansion(this.bottomSheetBehavior);
+
+        if (Utils.isPhone(this))
+            this.viewModel.adjustExpansion(Objects.requireNonNull(this.bottomSheetBehavior));
     }
 
     /**

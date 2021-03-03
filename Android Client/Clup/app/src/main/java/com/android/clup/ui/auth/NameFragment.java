@@ -23,10 +23,14 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 public class NameFragment extends Fragment {
+    @Nullable
     private AuthViewModel viewModel;
 
+    @Nullable
     private Button nextButton;
+    @Nullable
     private TextInputLayout nameInputLayout;
+    @Nullable
     private TextInputEditText nameEditText;
 
     @NonNull
@@ -87,7 +91,7 @@ public class NameFragment extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_name, container, false);
 
-        this.viewModel.getNameFragmentButtonVisibilityStatus().observe(getViewLifecycleOwner(), nextButtonObserver);
+        Objects.requireNonNull(this.viewModel).getNameFragmentButtonVisibilityStatus().observe(getViewLifecycleOwner(), nextButtonObserver);
 
         this.nextButton = root.findViewById(R.id.next_button);
         this.nextButton.setOnClickListener(nextButtonClickListener);
@@ -102,7 +106,7 @@ public class NameFragment extends Fragment {
 
     @Override
     public void onResume() {
-        Utils.showSoftInput(requireActivity(), this.nameEditText);
+        Utils.showSoftInput(requireActivity(), Objects.requireNonNull(this.nameEditText));
         super.onResume();
     }
 

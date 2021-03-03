@@ -3,7 +3,6 @@ package com.android.clup.viewmodel;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.Button;
@@ -90,13 +89,8 @@ public class DetailsViewModel extends ViewModel {
      * it is in portrait mode.
      */
     public void handleCardViewBackground(@NonNull final Context context, @NonNull final CardView cardView) {
-        final boolean isTablet = (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-        final boolean isPortrait = context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
-
-        if (!isTablet && isPortrait) {
+        if (Utils.isPortrait(context))
             cardView.setBackgroundResource(R.drawable.rounded_view_background);
-        }
     }
 
     /**

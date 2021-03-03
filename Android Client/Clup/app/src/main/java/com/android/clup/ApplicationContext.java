@@ -4,12 +4,16 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.Objects;
 
 /**
  * The application context. This class is used to retrieve the application context without the need
  * to ask it to an Activity.
  */
 public class ApplicationContext extends Application {
+    @Nullable
     private static ApplicationContext instance;
 
     @Override
@@ -23,6 +27,6 @@ public class ApplicationContext extends Application {
      */
     @NonNull
     public static Context get() {
-        return instance.getApplicationContext();
+        return Objects.requireNonNull(instance).getApplicationContext();
     }
 }

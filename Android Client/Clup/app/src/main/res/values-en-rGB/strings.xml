@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Clup</string>
 
@@ -11,7 +12,6 @@
 
     <string name="text_verify_number">Enter your mobile number to receive a verification code</string>
     <string name="text_verify_code">Enter the verification code sent to +%1$s</string>
-    <string name="text_prefix" translatable="false">+</string>
     <string name="text_choose_name">Insert your full name, it will be visible to other Clup users.</string>
     <string name="text_unknown_location">Unknown location.</string>
     <string name="text_notification_set">Notification enabled</string>

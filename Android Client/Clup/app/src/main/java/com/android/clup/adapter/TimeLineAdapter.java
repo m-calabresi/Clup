@@ -22,8 +22,11 @@ public class TimeLineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<String> customersNames;
 
     public static class TimeLineViewHolder extends RecyclerView.ViewHolder {
+        @NonNull
         public final TimelineView timelineView;
+        @NonNull
         public final CardView cardView;
+        @NonNull
         public final TextView textView;
 
         public TimeLineViewHolder(@NonNull final View v, final int viewType) {

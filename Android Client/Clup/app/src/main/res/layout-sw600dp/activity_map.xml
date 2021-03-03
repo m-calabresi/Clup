@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_activity_map"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- dummy textview used to prevent the bottom sheet
-    to overlap the statusbar when fully expanded -->
-    <TextView
-        android:id="@+id/pad_view"
-        style="@style/AppTheme.Clup.PadTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/layout_activity_map"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,27 +14,40 @@
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|start"
             android:clickable="true"
             android:contentDescription="@string/accessibility_action_back"
             android:focusable="true"
             android:src="@drawable/ic_arrow_back"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/map_recycler_view"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/map_recycler_view"
-            style="@style/AppTheme.Clup.BottomSheetRecyclerView"
-            android:layout_width="match_parent"
+            style="@style/AppTheme.Clup.SidedRecyclerView"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:overScrollMode="never"
-            android:paddingTop="12dp" />
+            android:paddingTop="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/map"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/location_button"
@@ -57,9 +59,9 @@
             android:clickable="true"
             android:contentDescription="@string/accessibility_action_location"
             android:focusable="true"
-            app:layout_anchor="@+id/map_recycler_view"
-            app:layout_anchorGravity="top|end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/map_recycler_view"
             app:srcCompat="@drawable/ic_location" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

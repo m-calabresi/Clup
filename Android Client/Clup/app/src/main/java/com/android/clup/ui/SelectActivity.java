@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -22,9 +23,13 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Objects;
+
 public class SelectActivity extends AppCompatActivity {
+    @Nullable
     private SelectViewModel viewModel;
 
+    @Nullable
     private ExtendedFloatingActionButton doneButton;
 
     @NonNull
@@ -114,7 +119,7 @@ public class SelectActivity extends AppCompatActivity {
      * Shows an error snackbar.
      */
     private void showReservationError() {
-        this.doneButton.post(() -> {
+        Objects.requireNonNull(this.doneButton).post(() -> {
             this.doneButton.setClickable(true);
             this.doneButton.setFocusable(true);
             Utils.displayReservationErrorSnackBar(findViewById(R.id.layout_activity_select), this.doneButton);
@@ -141,7 +146,7 @@ public class SelectActivity extends AppCompatActivity {
      * Close the current activity and go back to the previous one.
      */
     private void onBackActionPerformed() {
-        this.viewModel.resetSelectedShop();
+        Objects.requireNonNull(this.viewModel).resetSelectedShop();
         this.viewModel.resetSelectedDay();
         this.viewModel.resetSelectedTime();
 

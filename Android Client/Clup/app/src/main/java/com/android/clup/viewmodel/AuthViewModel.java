@@ -21,6 +21,8 @@ import com.android.clup.model.Preferences;
 import com.android.clup.notification.NotificationService;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
+import java.util.Objects;
+
 public class AuthViewModel extends ViewModel {
     @NonNull
     private final Model model;
@@ -28,6 +30,7 @@ public class AuthViewModel extends ViewModel {
     @NonNull
     private final MutableLiveData<Class<? extends Fragment>> nextFragmentLiveData;
 
+    @NonNull
     private final SMSAuthService authService;
 
     // NameFragment fields
@@ -35,7 +38,9 @@ public class AuthViewModel extends ViewModel {
     private final MutableLiveData<Boolean> nameFragmentButtonVisibilityStatus;
 
     // PhoneFragment fields
+    @Nullable
     private String phoneNumber; // phone name of the user in format [prefix without '+'][phone number]
+    @Nullable
     private String locale; // language chosen by the user in form [\c\c] (eg. US)
 
     @NonNull
@@ -220,7 +225,7 @@ public class AuthViewModel extends ViewModel {
      * be correctly authenticated.
      */
     public void checkVerify(@NonNull final String code, @NonNull final Callback<String> callback) {
-        this.authService.checkVerify(this.phoneNumber, code, callback);
+        this.authService.checkVerify(Objects.requireNonNull(this.phoneNumber), code, callback);
     }
 
     /**

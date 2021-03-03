@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Clup</string>
+
+    <string name="title_verify_number">Verifica il tuo numero</string>
+    <string name="title_welcome">Benvenuto in Clup!</string>
+    <string name="title_insert_number">Inserisci il tuo numero</string>
+    <string name="title_theme_alert">Scegli tema</string>
+    <string name="title_activity_map">Mappa</string>
+    <string name="title_notify_alert">Avvisami</string>
+    <string name="title_error_connection_alert">Sei offline</string>
+
+    <string name="text_verify_number">Inserisci il tuo numero per ricevere un codice di verifica</string>
+    <string name="text_verify_code">Inserisci il codice di verifica inviato a +%1$s</string>
+    <string name="text_prefix" translatable="false">+</string>
+    <string name="text_choose_name">Inserisci il tuo nome completo, sarà visibile ad altri utenti di Clup.</string>
+    <string name="text_unknown_location">Posizione sconosciuta.</string>
+    <string name="text_notification_set">Notifica abilitata</string>
+    <string name="text_notification_cancelled">Notifica disabilitata</string>
+    <string name="text_friendly_message">Ciao, %1$s</string>
+    <string name="text_reservation_summary">%1$s alle %2$s</string>
+    <string name="text_notification_summary">%1$s prima</string>
+    <string name="text_empty_view">Nessuna prenotazione.\nPrenota ora!</string>
+    <string name="text_expired">Scaduta</string>
+    <string name="text_you">Tu</string>
+    <string name="text_time">Ora</string>
+    <string name="text_queue">Coda</string>
+
+    <string name="action_verify">Verifica</string>
+    <string name="action_next">Avanti</string>
+    <string name="action_retry">Riprova</string>
+    <string name="action_retry_in">Riprova tra\u0020</string>
+    <string name="action_select_theme">Tema</string>
+    <string name="action_book">Prenota</string>
+    <string name="action_ok">OK</string>
+    <string name="action_done">Fatto</string>
+    <string name="action_notify_me">Avvisami</string>
+    <string name="action_notification_on">Notifiche on</string>
+    <string name="action_notification_off">Notifiche off</string>
+    <string name="action_directions">Indicazioni</string>
+    <string name="action_invalidate">Invalida</string>
+
+    <string name="text_error_name">Questo campo è obbligatorio</string>
+    <string name="text_error_phone">Numero non valido</string>
+    <string name="text_error_code">Codice scaduto o non valido</string>
+    <string name="text_error_fullname">È richiesto il tuo nome completo</string>
+    <string name="text_error_alert_location">Per continuare, attiva la geo localizzazione sul tuo dispositivo</string>
+    <string name="text_error_location">Impossibile trovare la tua posizione, riprova</string>
+    <string name="text_error_connection_alert">Controlla la tua connessione internet e riprova</string>
+    <string name="text_error_reservation">Si è verificato un errore, riprova.</string>
+    <string name="text_error_alert_maps">Questa funzione non è disponibile sul tuo dispositivo.</string>
+    <string name="text_error_snackbar_shop">Impossibile caricare negozi, riprova tra un attimo</string>
+
+    <string name="text_warning_register">ATTENZIONE\nQuesta activity non dovrebbe trovarsi qui, si trova qui solo per questioni dimostrative.\n\nCliccando sul pulsante qua sotto segnerai l\'utente come registrato ovvero, che l'utente è entrato nel negozio e pertanto la prenotazione attuale deve essere invalidata.</string>
+    <string name="title_warning_expire">Questa prenotazione è scaduta.</string>
+    <string name="text_warning_expire">Rimarrà visibile per 1 ora dalla data di prenotazione.</string>
+
+    <string name="array_item_light">Chiaro</string>
+    <string name="array_item_dark">Scuro</string>
+    <string name="array_item_system_default">Predefinito di sistema</string>
+
+    <string name="info_title_text">Ciao, sono un codice QR!</string>
+    <string name="info_subtitle_text">Scansionami prima di entrare in negozio,\Non dimenticarti di indossare la mascherina!</string>
+
+    <string name="notification_channel_name">Prenotazione</string>
+    <string name="notification_channel_description">Ti ricorda in anticipo che il tuo turno è vicino.</string>
+    <string name="notification_title">prenotazione per %1$s</string>
+    <string name="notification_content">Non dimenticare il tuo appuntamento tra %1$s</string>
+
+    <string name="time_fifteen_minutes">15 minuti</string>
+    <string name="time_thirty_minutes">30 minuti</string>
+    <string name="time_one_hour">1 ora</string>
+    <string name="time_two_hours">2 ore</string>
+
+    <string name="array_item_fifteen_minutes_before">15 minuti prima</string>
+    <string name="array_item_thirty_minutes_before">30 minuti prima</string>
+    <string name="array_item_one_hour_before">1 ora prima</string>
+    <string name="array_item_two_hours_before">2 ore prima</string>
+
+    <string name="accessibility_qr_code_image_view">Codice QR da mostrare all\'ingresso del negozio</string>
+    <string name="accessibility_action_back">Indietro</string>
+    <string name="accessibility_action_location">Individua la tua posizione corrente sulla mappa</string>
+    <string name="accessibility_success_image_view">Autenticazione riuscita</string>
+</resources>

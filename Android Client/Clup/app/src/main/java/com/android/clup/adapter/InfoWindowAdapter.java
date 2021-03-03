@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.Marker;
  * This class styles the popup layout that appears when a user taps on a marker on the map.
  */
 public class InfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+    @NonNull
     private final View parentView;
 
     public InfoWindowAdapter(@NonNull final Context context) {
@@ -34,6 +35,7 @@ public class InfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     /**
      * Insert the information provided by the given {@link Marker} inside a custom layout.
      */
+    @NonNull
     @Override
     public View getInfoWindow(@NonNull final Marker marker) {
         final TextView titleTextView = parentView.findViewById(R.id.title_info_window);

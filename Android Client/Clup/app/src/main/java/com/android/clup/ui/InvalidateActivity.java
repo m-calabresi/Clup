@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,6 +21,7 @@ import com.android.clup.viewmodel.InvalidateViewModel;
  * This activity is reachable from {@link DetailsActivity} by long pressing the qr-code ImageView.
  */
 public class InvalidateActivity extends AppCompatActivity {
+    @Nullable
     private InvalidateViewModel viewModel;
 
     @NonNull

@@ -15,7 +15,7 @@ public class MapViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     private final Activity activity;
     @NonNull
-    final OnListItemClickedCallback recyclerViewItemClickedCallback;
+    private final OnListItemClickedCallback recyclerViewItemClickedCallback;
 
 
     public MapViewModelFactory(@NonNull final Activity activity,

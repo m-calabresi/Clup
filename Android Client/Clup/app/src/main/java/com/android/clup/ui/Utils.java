@@ -449,6 +449,14 @@ public class Utils {
     }
 
     /**
+     * Removes the highlighting at the end of the {@code TimeLineView} of the given {@code TimeLineViewHolder}.
+     */
+    public static void unHighlightEndLine(@NonNull final TimeLineAdapter.TimeLineViewHolder viewHolder) {
+        final int lineColor = viewHolder.itemView.getContext().getResources().getColor(R.color.normal_text_color);
+        viewHolder.timelineView.setEndLineColor(lineColor, viewHolder.getItemViewType());
+    }
+
+    /**
      * Highlights the start line and marker of the {@code TimeLineTextView} and the
      * background/text color of the {@code TextView} of the given {@code TimeLineViewHolder}.
      */

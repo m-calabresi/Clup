@@ -246,21 +246,23 @@ public class MapViewModel extends ViewModel {
      * Add markers on the map in the position specified by the retrieved shops.
      */
     public void addMarkers(@NonNull final Context context) {
-        final int size = Objects.requireNonNull(this.model.getShops()).size();
+        new Handler(Looper.getMainLooper()).post(() -> {
+            final int size = Objects.requireNonNull(this.model.getShops()).size();
 
-        for (int position = 0; position < size; position++) {
-            final Shop shop = this.model.getShops().get(position);
+            for (int position = 0; position < size; position++) {
+                final Shop shop = this.model.getShops().get(position);
 
-            final BitmapDescriptor icon = Utils.vectorToBitmap(context, R.drawable.marker_shop);
-            final String title = shop.getName();
-            final String snippet = MapsService.getAddressByCoordinates(context, shop.getCoordinates());
+                final BitmapDescriptor icon = Utils.vectorToBitmap(context, R.drawable.marker_shop);
+                final String title = shop.getName();
+                final String snippet = MapsService.getAddressByCoordinates(context, shop.getCoordinates());
 
-            final Marker marker = Objects.requireNonNull(this.map).addMarker(new MarkerOptions()
-                    .position(shop.getCoordinates())
-                    .icon(icon)
-                    .title(title)
-                    .snippet(snippet));
-            marker.setTag(position);
-        }
+                final Marker marker = Objects.requireNonNull(this.map).addMarker(new MarkerOptions()
+                        .position(shop.getCoordinates())
+                        .icon(icon)
+                        .title(title)
+                        .snippet(snippet));
+                marker.setTag(position);
+            }
+        });
     }
 }

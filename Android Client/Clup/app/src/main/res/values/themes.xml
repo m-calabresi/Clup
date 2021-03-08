@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- BASE APPLICATION THEME -->
+    <!-- BASE APPLICATION THEMES -->
     <style name="AppTheme.Clup" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/lime_700</item>
         <item name="colorPrimaryDark">@color/white</item>
@@ -11,19 +11,31 @@
         <item name="colorOnSecondary">@color/black</item>
     </style>
 
-    <!-- MAIN ACTIVITY THEME -->
+    <!-- AUTH ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Auth" parent="AppTheme.Clup">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+
+        <item name="android:statusBarColor">@color/gray_legacy</item>
+
+        <item name="android:navigationBarColor">@color/gray_legacy</item>
+
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- MAIN ACTIVITY THEMES -->
     <style name="AppTheme.Clup.Main" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:statusBarColor">@color/lime_500</item>
 
-        <item name="android:navigationBarColor">@color/lime_500</item>
+        <item name="android:navigationBarColor">@color/gray_legacy</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- MAP ACTIVITY THEME -->
+    <!-- MAP ACTIVITY THEMES -->
     <style name="AppTheme.Clup.Map" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -48,11 +60,11 @@
     </style>
 
     <style name="AppTheme.Clup.Select.Background" parent="">
-        <item name="android:background">@color/lime_500</item>
+        <item name="android:background">?android:colorBackground</item>
     </style>
 
-    <style name="AppTheme.Clup.Main.Background" parent="AppTheme.Clup.Select.Background">
-
+    <style name="AppTheme.Clup.Main.Background" parent="">
+        <item name="android:background">@color/lime_500</item>
     </style>
 
     <!-- DETAILS ACTIVITY THEMES -->
@@ -73,7 +85,12 @@
         <item name="android:statusBarColor">?android:colorBackground</item>
     </style>
 
-    <!-- SPLASH SCREEN THEME -->
+    <!-- INVALIDATE ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Invalidate" parent="AppTheme.Clup.Select">
+        <item name="android:statusBarColor">@color/gray_legacy</item>
+    </style>
+
+    <!-- SPLASH SCREEN THEMES -->
     <style name="AppTheme.Clup.Splash" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -100,7 +117,7 @@
         <item name="android:background">@color/lime_500</item>
     </style>
 
-    <!-- BUTTON BASE THEME -->
+    <!-- BUTTON BASE THEMES -->
     <style name="AppTheme.Clup.MaterialRoundedButton" parent="@style/Widget.MaterialComponents.Button">
         <item name="cornerRadius">@dimen/rounded_button_corner_radius</item>
 
@@ -145,7 +162,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <!-- ALERT DIALOG THEME -->
+    <!-- ALERT DIALOG THEMES -->
     <style name="AppTheme.Clup.RoundedAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/lime_900</item>
         <item name="colorAccent">@color/lime_900</item>
@@ -245,7 +262,7 @@
         <item name="android:textSize">@dimen/item_subtitle_text_view_text_size</item>
     </style>
 
-    <!-- PAD TEXT VIEW THEME -->
+    <!-- PAD TEXT VIEW THEMES -->
     <style name="AppTheme.Clup.PadTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:background">@color/gray_legacy</item>
     </style>
@@ -295,7 +312,7 @@
         <item name="android:background">@color/gray_50</item>
     </style>
 
-    <!-- EXTENDED FLOATING ACTION BUTTON THEME -->
+    <!-- EXTENDED FLOATING ACTION BUTTON THEMES -->
     <style name="AppTheme.Clup.ExtendedFloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
         <item name="android:paddingTop">@dimen/rounded_button_vertical_padding</item>
         <item name="android:paddingBottom">@dimen/rounded_button_vertical_padding</item>
@@ -308,7 +325,7 @@
         <item name="android:textColor">@color/gray_900</item>
     </style>
 
-    <!-- FLOATING ACTION BUTTON THEME -->
+    <!-- FLOATING ACTION BUTTON THEMES -->
     <style name="AppTheme.Clup.LocationFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
 
     </style>
@@ -326,7 +343,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- TABS LAYOUT THEME -->
+    <!-- TABS LAYOUT THEMES -->
     <style name="AppTheme.Clup.TabsLayout" parent="">
         <item name="android:background">@color/lime_500</item>
         <item name="tabSelectedTextColor">?attr/colorControlNormal</item>

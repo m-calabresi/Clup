@@ -29,7 +29,7 @@
     <dimen name="card_high_elevation">10dp</dimen>
     <dimen name="card_no_elevation">0dp</dimen>
 
-    <dimen name="peek_height">146dp</dimen>
+    <dimen name="peek_height">140dp</dimen>
 
     <!-- 16dp (top margin) + 56dp (extended FAB) + 16dp (bottom margin) -->
     <dimen name="footer_height">88dp</dimen>

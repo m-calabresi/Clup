@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- MAIN ACTIVITY THEME -->
+    <!-- AUTH ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Auth" parent="AppTheme.Clup">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
+
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- MAIN ACTIVITY THEMES -->
     <style name="AppTheme.Clup.Main" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -13,7 +26,7 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- MAP ACTIVITY THEME -->
+    <!-- MAP ACTIVITY THEMES -->
     <style name="AppTheme.Clup.Map" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -26,7 +39,7 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- SELECT ACTIVITY THEME -->
+    <!-- SELECT ACTIVITY THEMES -->
     <style name="AppTheme.Clup.Select" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -34,12 +47,12 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">?android:colorBackground</item>
 
-        <item name="android:navigationBarColor">?android:colorBackground</item>
+        <item name="android:navigationBarColor">@color/white_alpha_07</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- DETAILS ACTIVITY THEME -->
+    <!-- DETAILS ACTIVITY THEMES -->
     <style name="AppTheme.Clup.Details" parent="AppTheme.Clup.Select">
         <item name="android:navigationBarColor">@color/white_alpha_07</item>
     </style>
@@ -49,7 +62,12 @@
         <item name="android:statusBarColor">?android:colorBackground</item>
     </style>
 
-    <!-- SPLASH SCREEN THEME -->
+    <!-- INVALIDATE ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Invalidate" parent="AppTheme.Clup.Select">
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+    </style>
+
+    <!-- SPLASH SCREEN THEMES -->
     <style name="AppTheme.Clup.Splash" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>

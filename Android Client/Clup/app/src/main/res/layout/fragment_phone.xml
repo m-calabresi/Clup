@@ -57,11 +57,11 @@
                 android:id="@+id/prefix_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="3"
+                android:ems="4"
                 android:freezesText="true"
                 android:inputType="phone"
-                android:maxEms="3"
-                android:minEms="3"
+                android:maxEms="4"
+                android:minEms="4"
                 android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>

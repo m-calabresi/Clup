@@ -44,7 +44,7 @@
         <activity
             android:name=".ui.InvalidateActivity"
             android:parentActivityName=".ui.DetailsActivity"
-            android:theme="@style/AppTheme.Clup.Register" />
+            android:theme="@style/AppTheme.Clup.Invalidate" />
 
         <activity
             android:name=".ui.DetailsActivity"
@@ -71,7 +71,7 @@
         <activity
             android:name=".ui.auth.AuthActivity"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Clup.Splash"
+            android:theme="@style/AppTheme.Clup.Auth"
             android:windowSoftInputMode="stateVisible" />
     </application>
 

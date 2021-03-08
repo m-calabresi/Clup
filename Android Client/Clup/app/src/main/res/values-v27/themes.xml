@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- MAIN ACTIVITY THEME -->
+    <!-- AUTH ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Auth" parent="AppTheme.Clup">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
+
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- MAIN ACTIVITY THEMES -->
     <style name="AppTheme.Clup.Main" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -14,7 +28,7 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- MAP ACTIVITY THEME -->
+    <!-- MAP ACTIVITY THEMES -->
     <style name="AppTheme.Clup.Map" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -28,7 +42,7 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- SELECT ACTIVITY THEME -->
+    <!-- SELECT ACTIVITY THEMES -->
     <style name="AppTheme.Clup.Select" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -52,7 +66,12 @@
         <item name="android:statusBarColor">?android:colorBackground</item>
     </style>
 
-    <!-- SPLASH SCREEN THEME -->
+    <!-- INVALIDATE ACTIVITY THEMES -->
+    <style name="AppTheme.Clup.Invalidate" parent="AppTheme.Clup.Select">
+        <item name="android:statusBarColor">?android:colorBackground</item>
+    </style>
+
+    <!-- SPLASH SCREEN THEMES -->
     <style name="AppTheme.Clup.Splash" parent="AppTheme.Clup">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -68,7 +87,7 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- PAD TEXT VIEW THEME -->
+    <!-- PAD TEXT VIEW THEMES -->
     <style name="AppTheme.Clup.PadTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:background">@color/gray_50</item>
     </style>

@@ -80,6 +80,8 @@ public class TimeLineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Utils.highlightAll(viewHolder);
             } else {
                 viewHolder.textView.setText(this.customersNames.get(position));
+                // reset the color to inactive in order to prevent weird glitches with the timeline colors
+                Utils.unHighlightEndLine(viewHolder);
             }
         }
     }

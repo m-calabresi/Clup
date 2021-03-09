@@ -6,13 +6,18 @@
 
 # Clup v1.1 - DIMA Project AY 2020-2021
 
-## Download
-Download apk [here](link_to_apk_file_here)
+### Download
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download apk [here](link_to_apk_file_here)
 
-SHA256: ```sha_code_here```
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHA256: ```sha_code_here```
 
-## Supported Versions
-From API 22 (Android 5.1 Marshmallow) up to API 30 (Android 11)
+### Supported Versions
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From API 22 (Android 5.1 Marshmallow) up to API 30 (Android 11)
+
+### Documentation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brief application description [here](link_to_brief_description)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Design Document [here](link_to_design_document)
 
 ---
 

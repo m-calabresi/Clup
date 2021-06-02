@@ -7,6 +7,7 @@ import com.android.clup.concurrent.Result;
 import com.android.clup.model.AvailableDay;
 import com.android.clup.model.AvailableSlot;
 import com.android.clup.model.Date;
+import com.android.clup.model.Reservation;
 import com.android.clup.model.Shop;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -28,7 +29,7 @@ public class QueueService {
      */
     public void getUuid(@NonNull final String username, @NonNull final String shopName, @NonNull final String date,
                         @NonNull final String time, @NonNull final Callback<String> callback) {
-        executor.execute(() -> {
+        this.executor.execute(() -> {
             // TODO replace with API call
 
             final Result<String> result = new Result.Success<>("12345yhgfr56ygfr56765433456uhgy7");
@@ -40,7 +41,7 @@ public class QueueService {
      * Return the list of shops available for a reservation.
      */
     public void getShops(@NonNull final Callback<List<Shop>> callback) {
-        executor.execute(() -> {
+        this.executor.execute(() -> {
             // TODO replace with API call
 
             // dummy list
@@ -78,6 +79,12 @@ public class QueueService {
 
             final Result.Success<List<Shop>> result = new Result.Success<>(shops);
             callback.onComplete(result);
+        });
+    }
+
+    public void invalidateReservation(@NonNull final Reservation reservation) {
+        this.executor.execute(() -> {
+            // TODO implement API call
         });
     }
 }

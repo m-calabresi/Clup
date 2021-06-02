@@ -3,14 +3,20 @@ package com.android.clup.viewmodel;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
+import com.android.clup.api.QueueService;
 import com.android.clup.model.Model;
+import com.android.clup.model.Reservation;
 
 public class InvalidateViewModel extends ViewModel {
     @NonNull
     private final Model model;
 
+    @NonNull
+    private final QueueService queueService;
+
     public InvalidateViewModel() {
         this.model = Model.getInstance();
+        this.queueService = new QueueService();
     }
 
     /**
@@ -18,9 +24,11 @@ public class InvalidateViewModel extends ViewModel {
      * is propagated to the server-side business logic.
      */
     public void invalidateSelectedReservation() {
-        this.model.removeReservation(this.model.getSelectedReservation());
+        final Reservation selectedReservation = this.model.getSelectedReservation();
+
+        this.model.removeReservation(selectedReservation);
         this.model.resetSelectedReservation();
 
-        // TODO implement API call
+        this.queueService.invalidateReservation(selectedReservation);
     }
 }

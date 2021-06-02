@@ -261,7 +261,7 @@ public class MapViewModel extends ViewModel {
                         .icon(icon)
                         .title(title)
                         .snippet(snippet));
-                marker.setTag(position);
+                Objects.requireNonNull(marker).setTag(position);
             }
         });
     }

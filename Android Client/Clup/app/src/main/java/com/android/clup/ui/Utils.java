@@ -1,5 +1,6 @@
 package com.android.clup.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -224,6 +225,7 @@ public class Utils {
     /**
      * Display a SnackBar that will be attached to the given anchor view.
      */
+    @SuppressLint("ShowToast")
     @SuppressWarnings("SameParameterValue")
     private static void displayErrorSnackbar(@NonNull final View parent, @Nullable final View anchorView,
                                              @StringRes final int text) {
@@ -355,7 +357,6 @@ public class Utils {
     /**
      * Set the status bar to be fullscreen.
      */
-    @SuppressWarnings("deprecation")
     public static void setFullScreenStatusBar(@NonNull final Activity activity) {
         int systemUiVisibility = activity.getWindow().getDecorView().getSystemUiVisibility();
         systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;

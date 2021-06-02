@@ -162,6 +162,13 @@ public class CodeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void onDestroy() {
+        // stop the timer when the fragment is destroyed (to prevent onFinish from calling setText)
+        Objects.requireNonNull(this.countDownTimer).cancel();
+        super.onDestroy();
+    }
+
     /**
      * Enable the retry button.
      */

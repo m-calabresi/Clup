@@ -43,6 +43,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private FloatingActionButton backButton;
     @Nullable
     private BottomSheetBehavior<View> bottomSheetBehavior;
+    @Nullable
+    private RecyclerView recyclerView;
 
     @NonNull
     private final View.OnClickListener backButtonOnClickListener = view -> this.finish();
@@ -87,26 +89,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.backButton.setOnClickListener(this.backButtonOnClickListener);
         Utils.setTopStartMargins(mapActivityView, this.backButton);
 
-        final RecyclerView recyclerView = findViewById(R.id.map_recycler_view);
-        recyclerView.setNestedScrollingEnabled(true);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        this.viewModel.getShops(result -> {
-            if (result instanceof Result.Success) {
-                final List<Shop> shops = ((Result.Success<List<Shop>>) result).data;
-
-                final ShopRecyclerViewAdapter adapter = new ShopRecyclerViewAdapter(this, shops);
-                recyclerView.setAdapter(adapter);
-            } else
-                displayErrorSnackBar();
-        });
+        this.recyclerView = findViewById(R.id.map_recycler_view);
+        this.recyclerView.setNestedScrollingEnabled(true);
+        this.recyclerView.setHasFixedSize(true);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (Utils.isPhone(this)) {
             this.padView = findViewById(R.id.pad_view);
             Utils.setPadHeight(mapActivityView, padView);
 
-            this.bottomSheetBehavior = BottomSheetBehavior.from(recyclerView);
+            this.bottomSheetBehavior = BottomSheetBehavior.from(this.recyclerView);
             this.bottomSheetBehavior.setFitToContents(false);
             this.bottomSheetBehavior.setHalfExpandedRatio(MapViewModel.BOTTOM_SHEET_HALF_EXPANDED_RATIO);
             this.bottomSheetBehavior.addBottomSheetCallback(this.bottomSheetCallback);
@@ -135,8 +127,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Prompt the user for permission.
         this.viewModel.startLocationPermissionRequest(this);
 
-        // add markers on the map
-        this.viewModel.addMarkers(this);
+        this.viewModel.getShops(result -> {
+            if (result instanceof Result.Success) {
+                final List<Shop> shops = ((Result.Success<List<Shop>>) result).data;
+
+                // display the shops list
+                final ShopRecyclerViewAdapter adapter = new ShopRecyclerViewAdapter(this, shops);
+
+                Objects.requireNonNull(this.recyclerView).post(() -> this.recyclerView.setAdapter(adapter));
+
+                // add markers on the map
+                this.viewModel.addMarkers(this);
+            } else
+                displayErrorSnackBar();
+        });
     }
 
     /**

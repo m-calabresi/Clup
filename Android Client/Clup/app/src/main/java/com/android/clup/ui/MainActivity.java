@@ -53,25 +53,26 @@ public class MainActivity extends AppCompatActivity implements OnListItemClicked
             final Intent intent = new Intent(this, AuthActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            this.viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-            AppCompatDelegate.setDefaultNightMode(Preferences.getTheme());
-
-            final Toolbar toolbar = findViewById(R.id.main_toolbar);
-            toolbar.setTitle("");
-            setSupportActionBar(toolbar);
-
-            final String friendlyMessage = getResources().getString(R.string.text_friendly_message, this.viewModel.getFriendlyName());
-
-            final TextView friendlyNameTextView = findViewById(R.id.friendly_name_text_view);
-            friendlyNameTextView.setText(friendlyMessage);
-
-            final CardView cardView = findViewById(R.id.main_card_view);
-            cardView.setBackgroundResource(R.drawable.rounded_view_background);
-
-            final ExtendedFloatingActionButton bookButton = findViewById(R.id.book_button);
-            bookButton.setOnClickListener(bookButtonOnClickListener);
+            return;
         }
+
+        this.viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        AppCompatDelegate.setDefaultNightMode(Preferences.getTheme());
+
+        final Toolbar toolbar = findViewById(R.id.main_toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        final String friendlyMessage = getResources().getString(R.string.text_friendly_message, this.viewModel.getFriendlyName());
+
+        final TextView friendlyNameTextView = findViewById(R.id.friendly_name_text_view);
+        friendlyNameTextView.setText(friendlyMessage);
+
+        final CardView cardView = findViewById(R.id.main_card_view);
+        cardView.setBackgroundResource(R.drawable.rounded_view_background);
+
+        final ExtendedFloatingActionButton bookButton = findViewById(R.id.book_button);
+        bookButton.setOnClickListener(bookButtonOnClickListener);
     }
 
     @Override

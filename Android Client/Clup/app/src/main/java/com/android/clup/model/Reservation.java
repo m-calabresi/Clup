@@ -1,5 +1,6 @@
 package com.android.clup.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -139,13 +140,14 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
         this(shopName, date, uuid, coords, TimeNotice.NOT_SET);
     }
 
+    @SuppressLint("ParcelClassLoader")
     private Reservation(@NonNull final Parcel in) {
         this.shopName = in.readString();
         this.date = in.readParcelable(Date.class.getClassLoader());
         this.uuid = in.readString();
         this.coords = in.readParcelable(LatLng.class.getClassLoader());
         this.timeNotice = in.readInt();
-        this.expired = in.readBoolean();
+        this.expired = (Boolean) in.readValue(null);
     }
 
     @NonNull
@@ -210,6 +212,6 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
         dest.writeString(this.uuid);
         dest.writeParcelable(this.coords, flags);
         dest.writeInt(this.timeNotice);
-        dest.writeBoolean(this.expired);
+        dest.writeValue(this.expired);
     }
 }

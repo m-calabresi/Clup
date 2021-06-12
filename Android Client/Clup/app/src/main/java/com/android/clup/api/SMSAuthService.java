@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 public class SMSAuthService {
     @NonNull
-    private static final String API_URL = "https://verify-2044-mdd3gm.twil.io/";
+    private static final String API_URL = "https://verify-1061.twil.io/";
     @NonNull
     public static final String DEFAULT_LOCALE = "us";
     @Nullable

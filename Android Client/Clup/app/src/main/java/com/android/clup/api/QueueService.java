@@ -54,25 +54,47 @@ public class QueueService {
                         @NonNull final String time, @NonNull final Callback<String> callback) {
         this.executor.execute(() -> {
             // TODO replace with API call
-            final String postRequestURL = API_AVAILABLE_SHOPS_URL + "queue/enter";
+            final String queuePOSTRequestURL = API_AVAILABLE_SHOPS_URL + "queue/enter";
 
             JSONObject jsonObject = new JSONObject();
             try {
 
                 jsonObject.put("user_fullname", username);
-                jsonObject.put("hour", time);
+
+                String queueEnterDate = LocalDate.parse(date,
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ITALY)
+                ).format(
+                        DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ITALY)
+                );
+                jsonObject.put("date", queueEnterDate);
+                jsonObject.put("hour", time.split(":")[0]);
                 jsonObject.put("status", status.todo);
-                jsonObject.put("businesses", shopName);
+                jsonObject.put("businesses", "rec3XEqBb2EXeOkE9");
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            System.out.println("JSON" + jsonObject.toString());
-            Result<String> response = RemoteConnection.postConnect(postRequestURL, jsonObject.toString());
+            final Result<String> queuePOSTResponse =
+                    RemoteConnection.postConnect(queuePOSTRequestURL, jsonObject.toString());
 
-            final Result<String> result = new Result.Success<>("12345yhgfr56ygfr56765433456uhgy7");
-            callback.onComplete(result);
+            if (queuePOSTResponse instanceof Result.Success) {
+                final String queueJSONResponse = ((Result.Success<String>) queuePOSTResponse).data;
+
+                try {
+                    final JSONObject queueJSONObject = new JSONObject(queueJSONResponse);
+                    final JSONObject fields = queueJSONObject.getJSONObject("fields");
+                    final String uuid = fields.getString("uuid");
+                    final Result<String> result = new Result.Success<>(uuid);
+                    callback.onComplete(result);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (queuePOSTResponse instanceof  Result.Error) {
+                final Result.Error<String> result = ((Result.Error<String>) queuePOSTResponse);
+                callback.onComplete(result);
+            }
         });
     }
 
@@ -185,7 +207,7 @@ public class QueueService {
                         dateNameList.put(availableDates.get(j + 3), getNamesByDate(queueJsonArray, availableDates.get(j + 3)));
                         dateNameList.put(availableDates.get(j + 4), getNamesByDate(queueJsonArray, availableDates.get(j + 4)));
                     }
-                    System.out.println(dateNameList);
+                    //System.out.println(dateNameList);
 
 //                    for (int j = 0; j < availableDates.size(); j++) {
 //                        DayOfWeek dayOfWeek = LocalDate.parse(availableDates.get(j),

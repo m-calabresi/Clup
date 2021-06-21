@@ -131,13 +131,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             if (result instanceof Result.Success) {
                 final List<Shop> shops = ((Result.Success<List<Shop>>) result).data;
 
-                // display the shops list
-                final ShopRecyclerViewAdapter adapter = new ShopRecyclerViewAdapter(this, shops);
+                // dispatch UI update to a UI thread
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    // display the shops list
+                    final ShopRecyclerViewAdapter adapter = new ShopRecyclerViewAdapter(this, shops);
 
-                Objects.requireNonNull(this.recyclerView).post(() -> this.recyclerView.setAdapter(adapter));
+                    Objects.requireNonNull(this.recyclerView).setAdapter(adapter);
 
-                // add markers on the map
-                this.viewModel.addMarkers(this);
+                    // add markers on the map
+                    this.viewModel.addMarkers(this);
+                });
             } else
                 displayErrorSnackBar();
         });

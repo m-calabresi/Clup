@@ -42,27 +42,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <HorizontalScrollView
-                android:id="@+id/time_scroll_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
-                android:paddingVertical="30dp"
-                android:scrollbars="none"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/time_text_view">
-
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/time_chip_group"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="6dp"
+                    android:paddingVertical="30dp"
+                    android:paddingHorizontal="5dp"
                     app:chipSpacingHorizontal="8dp"
                     app:selectionRequired="true"
-                    app:singleLine="true"
-                    app:singleSelection="true" />
-
-            </HorizontalScrollView>
+                    app:singleLine="false"
+                    app:singleSelection="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/time_text_view"/>
 
             <TextView
                 android:id="@+id/queue_text_view"
@@ -76,7 +69,7 @@
                 android:visibility="gone"
                 app:drawableStartCompat="@drawable/ic_queue"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/time_scroll_view" />
+                app:layout_constraintTop_toBottomOf="@id/time_chip_group" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/timeline_recycler_view"

@@ -99,6 +99,7 @@ public class SelectViewModel extends ViewModel {
      * Save the reservation made by the user, then notify the caller about the result.
      */
     public void bookReservation(@NonNull Callback<Boolean> callback) {
+        final String shopId = this.model.getSelectedShop().getId();
         final String shopName = this.model.getSelectedShop().getName();
 
         final Date date = this.model.getSelectedDay().getDate();
@@ -107,13 +108,13 @@ public class SelectViewModel extends ViewModel {
 
         final LatLng coords = this.model.getSelectedShop().getCoordinates();
 
-        this.queueService.getUuid(this.model.getFullname(), shopName, date.plain(), time, result -> {
+        this.queueService.getUuid(this.model.getFullname(), shopId, date, time, result -> {
             Result<Boolean> bookResult;
 
             if (result instanceof Result.Success) {
                 final String uuid = ((Result.Success<String>) result).data;
 
-                final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+                final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
                 this.model.addReservation(reservation);
                 this.model.setSelectedReservation(reservation);
 

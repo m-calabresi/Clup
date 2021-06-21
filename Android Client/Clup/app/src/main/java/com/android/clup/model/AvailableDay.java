@@ -30,12 +30,30 @@ public class AvailableDay {
         return this.availableSlots;
     }
 
+    /**
+     * Return the {@link AvailableSlot} corresponding to the given {@code time}.
+     * The {@code time} parameter must be a valid time in the format {@code hh:mm}.
+     */
     @NonNull
-    public AvailableSlot getAvailableSlot(@NonNull final String time) {
+    public AvailableSlot getAvailableSlotByTime(@NonNull final String time) {
         for (final AvailableSlot availableSlot : this.availableSlots)
             if (availableSlot.getTime().equals(time))
                 return availableSlot;
 
         throw new NoSuchElementException("No AvailableSlot found that matches the given time: " + time);
+    }
+
+    /**
+     * Return the {@link AvailableSlot} corresponding to the given {@code hour}.
+     * The {@code hour} parameter must be a valid integer between 0 and 24 in the format {@code hh}
+     * or {@code h}.
+     */
+    @NonNull
+    public AvailableSlot getAvailableSlotByHour(@NonNull final String hour) {
+        for (final AvailableSlot availableSlot : this.availableSlots) {
+            if (availableSlot.getHour().equals(hour))
+                return availableSlot;
+        }
+        throw new NoSuchElementException("No AvailableSlot found that matches the given hour: " + hour);
     }
 }

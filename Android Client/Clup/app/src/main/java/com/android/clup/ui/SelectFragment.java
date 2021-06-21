@@ -57,7 +57,7 @@ public class SelectFragment extends Fragment {
             this.viewModel.setSelectedTime(selectedTime);
             this.viewModel.setVisibilityStatusLiveData(true);
 
-            final List<String> customersNames = this.availableDay.getAvailableSlot(selectedTime).getEnqueuedCustomersNames();
+            final List<String> customersNames = this.availableDay.getAvailableSlotByTime(selectedTime).getEnqueuedCustomersNames();
             showQueue(customersNames);
         }
     };

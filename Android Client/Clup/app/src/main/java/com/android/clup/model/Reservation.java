@@ -127,6 +127,12 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
     };
 
     /**
+     * The id of the shop at which the user booked his reservation.
+     */
+    @NonNull
+    private final String shopId;
+
+    /**
      * The name of the shop at which the user booked his reservation.
      */
     @NonNull
@@ -160,9 +166,31 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
      */
     private boolean expired;
 
-    public Reservation(@NonNull final String shopName, @NonNull final Date date,
-                       @NonNull final String uuid, @NonNull final LatLng coords,
-                       final int timeNotice) {
+    /**
+     * The status of a {@link Reservation}.
+     */
+    // TODO show only reservations with "todo" status
+    public static class Status {
+        /**
+         * A {@link Reservation} in this status has been successfully booked but the Customer
+         * isn't arrived to the store yet. This means that either the time hasn't yet come, or the
+         * Customer is late / has lost his appointment.
+         */
+        @NonNull
+        public static final String TODO = "todo";
+        /**
+         * A {@link Reservation} with this status has been successfully booked and then closed.
+         * This means that either the customer has successfully cleared his appointment, or he lost his
+         * turn and the system cancelled his reservation automatically due to the time has expired.
+         */
+        @NonNull
+        public static final String DONE = "done";
+    }
+
+    public Reservation(@NonNull final String shopId, @NonNull final String shopName,
+                       @NonNull final Date date, @NonNull final String uuid,
+                       @NonNull final LatLng coords, final int timeNotice) {
+        this.shopId = shopId;
         this.shopName = shopName;
         this.date = date;
         this.uuid = uuid;
@@ -171,19 +199,25 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
         this.expired = false;
     }
 
-    public Reservation(@NonNull final String shopName, @NonNull final Date date,
+    public Reservation(@NonNull final String shopId, @NonNull final String shopName, @NonNull final Date date,
                        @NonNull final String uuid, @NonNull final LatLng coords) {
-        this(shopName, date, uuid, coords, TimeNotice.NOT_SET);
+        this(shopId, shopName, date, uuid, coords, TimeNotice.NOT_SET);
     }
 
     @SuppressLint("ParcelClassLoader")
     private Reservation(@NonNull final Parcel in) {
+        this.shopId = in.readString();
         this.shopName = in.readString();
         this.date = in.readParcelable(Date.class.getClassLoader());
         this.uuid = in.readString();
         this.coords = in.readParcelable(LatLng.class.getClassLoader());
         this.timeNotice = in.readInt();
         this.expired = (Boolean) in.readValue(null);
+    }
+
+    @NonNull
+    public String getShopId() {
+        return this.shopId;
     }
 
     @NonNull
@@ -243,6 +277,7 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
 
     @Override
     public void writeToParcel(@NonNull final Parcel dest, final int flags) {
+        dest.writeString(this.shopId);
         dest.writeString(this.shopName);
         dest.writeParcelable(this.date, flags);
         dest.writeString(this.uuid);

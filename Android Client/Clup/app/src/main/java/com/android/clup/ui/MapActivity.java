@@ -127,6 +127,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Prompt the user for permission.
         this.viewModel.startLocationPermissionRequest(this);
 
+        // TODO add loading bar in bottomSheet while waiting for list to be ready
         this.viewModel.getShops(result -> {
             if (result instanceof Result.Success) {
                 final List<Shop> shops = ((Result.Success<List<Shop>>) result).data;

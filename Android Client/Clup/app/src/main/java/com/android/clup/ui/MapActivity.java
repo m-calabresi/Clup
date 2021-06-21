@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private BottomSheetBehavior<View> bottomSheetBehavior;
     @Nullable
     private RecyclerView recyclerView;
+    @Nullable
+    private ProgressBar progressBar;
 
     @NonNull
     private final View.OnClickListener backButtonOnClickListener = view -> this.finish();
@@ -89,6 +92,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.backButton.setOnClickListener(this.backButtonOnClickListener);
         Utils.setTopStartMargins(mapActivityView, this.backButton);
 
+        this.progressBar = findViewById(R.id.recycler_view_progress_bar);
+        this.progressBar.setIndeterminate(true);
+        this.progressBar.setVisibility(View.VISIBLE);
+
         this.recyclerView = findViewById(R.id.map_recycler_view);
         this.recyclerView.setNestedScrollingEnabled(true);
         this.recyclerView.setHasFixedSize(true);
@@ -126,14 +133,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         // Prompt the user for permission.
         this.viewModel.startLocationPermissionRequest(this);
-
-        // TODO add loading bar in bottomSheet while waiting for list to be ready
         this.viewModel.getShops(result -> {
             if (result instanceof Result.Success) {
                 final List<Shop> shops = ((Result.Success<List<Shop>>) result).data;
 
                 // dispatch UI update to a UI thread
                 new Handler(Looper.getMainLooper()).post(() -> {
+                    // hide progress bar
+                    Objects.requireNonNull(this.progressBar).setVisibility(View.GONE);
+
                     // display the shops list
                     final ShopRecyclerViewAdapter adapter = new ShopRecyclerViewAdapter(this, shops);
 

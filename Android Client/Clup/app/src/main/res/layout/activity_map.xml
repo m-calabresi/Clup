@@ -47,6 +47,16 @@
             android:overScrollMode="never"
             android:paddingTop="12dp" />
 
+        <ProgressBar
+            android:id="@+id/recycler_view_progress_bar"
+            style="@style/AppTheme.Clup.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@id/map_recycler_view"
+            app:layout_anchorGravity="center"
+            android:layout_marginBottom="20dp"
+            />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/location_button"
             style="@style/AppTheme.Clup.LocationFloatingActionButton"
@@ -58,7 +68,7 @@
             android:contentDescription="@string/accessibility_action_location"
             android:focusable="true"
             app:layout_anchor="@+id/map_recycler_view"
-            app:layout_anchorGravity="top|end"
+            app:layout_anchorGravity="bottom|end"
             app:srcCompat="@drawable/ic_location" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

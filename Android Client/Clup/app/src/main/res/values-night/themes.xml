@@ -309,4 +309,9 @@
         <item name="tabSelectedTextColor">@color/lime_200</item>
         <item name="tabIndicatorColor">@color/lime_200</item>
     </style>
+
+    <!-- PROGRESS BAR THEMES -->
+    <style name="AppTheme.Clup.ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/lime_200</item>
+    </style>
 </resources>

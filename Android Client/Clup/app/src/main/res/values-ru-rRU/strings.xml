@@ -49,7 +49,7 @@
     <string name="text_error_reservation">Произошла ошибка, повторите попытку</string>
     <string name="text_error_alert_maps">Эта функция недоступна на вашем устройстве</string>
     <string name="text_error_snackbar_shop">Не удается загрузить магазины, повторите попытку через некоторое время</string>
-    <string name="text_error_book_reservation">Impossibile continuare, esiste già una prenotazione per questo giorno</string> <!-- TODO translate -->
+    <string name="text_error_book_reservation">Невозможно продолжить, на этот день уже есть резервирование</string>
 
     <string name="text_warning_register">WARNING\nТекущая activity не должна здесь находится, ее присутствие обусловлено демонстрационными целями.\n\nНажав на кнопку ниже, вы пометите пользователя как зарегистрированного, то есть, пользователь вошел в магазин, что означает, что текущее бронирование должно быть признано недействительным</string>
     <string name="title_warning_expire">Срок действия этого бронирования истек</string>

@@ -12,7 +12,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHA256: ```sha_code_here```
 
 ### Supported Versions
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From API 22 (Android 5.1 Marshmallow) up to API 30 (Android 11)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From ```API 22``` (Android 5.1 Marshmallow) up to ```API 30``` (Android 11)
 
 ### Documentation
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brief application description [here](Documentation/Application%20Overview.pptx)

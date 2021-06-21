@@ -67,7 +67,7 @@
             android:contentDescription="@string/accessibility_action_location"
             android:focusable="true"
             app:layout_anchor="@+id/map_recycler_view"
-            app:layout_anchorGravity="bottom|end"
+            app:layout_anchorGravity="top|end"
             app:srcCompat="@drawable/ic_location" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

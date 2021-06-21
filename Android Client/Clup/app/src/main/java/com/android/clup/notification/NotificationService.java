@@ -138,12 +138,22 @@ public class NotificationService {
      */
     public static void scheduleNotification(@NonNull final Context context,
                                             @NonNull final Reservation reservation) {
-        // time of the appointment
-        final long endTime = reservation.getDate().toMillis();
-        // amount of time before the appointment the user wants to be notified (eg. 15 min, 1h...)
-        final long beforeTime = Date.minutesToMillis(reservation.getTimeNotice());
+        final int timeNotice = reservation.getTimeNotice();
+
         // time at which the notification should appear
-        final long expireTime = endTime - beforeTime;
+        long expireTime;
+
+        if(timeNotice == Reservation.TimeNotice.NOW)
+            expireTime = Date.now();
+        else {
+            // time of the appointment
+            final long endTime = reservation.getDate().toMillis();
+
+            // amount of time before the appointment the user wants to be notified (eg. 15 min, 1h...)
+            final long beforeTime = Date.minutesToMillis(reservation.getTimeNotice());
+
+            expireTime = endTime - beforeTime;
+        }
 
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         final PendingIntent alarmIntent = NotificationService.buildPendingIntent(context, reservation);

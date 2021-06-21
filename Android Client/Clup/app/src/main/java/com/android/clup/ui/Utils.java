@@ -314,12 +314,14 @@ public class Utils {
     private static int mapPositionToTimeNotice(final int position) {
         switch (position) {
             case 0:
-                return Reservation.TimeNotice.FIFTEEN_MINUTES;
+                return Reservation.TimeNotice.NOW;
             case 1:
-                return Reservation.TimeNotice.THIRTY_MINUTES;
+                return Reservation.TimeNotice.FIFTEEN_MINUTES;
             case 2:
-                return Reservation.TimeNotice.ONE_HOUR;
+                return Reservation.TimeNotice.THIRTY_MINUTES;
             case 3:
+                return Reservation.TimeNotice.ONE_HOUR;
+            case 4:
                 return Reservation.TimeNotice.TWO_HOURS;
             default:
                 throw new RuntimeException("User selected to return NOT_SET, did you handle the logic properly?");

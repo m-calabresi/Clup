@@ -34,6 +34,10 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
          */
         public static final int DISABLED = -1;
         /**
+         * The user has chosen to be notified now (for demo purposes only).
+         */
+        public static final int NOW = 0;
+        /**
          * The user has chosen to be notified 15 minutes in advance.
          */
         public static final int FIFTEEN_MINUTES = 15;
@@ -58,6 +62,9 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
             @StringRes int timeNoticeId;
 
             switch (timeNotice) {
+                case Reservation.TimeNotice.NOW:
+                    timeNoticeId = R.string.time_now;
+                    break;
                 case Reservation.TimeNotice.FIFTEEN_MINUTES:
                     timeNoticeId = R.string.time_fifteen_minutes;
                     break;
@@ -69,6 +76,35 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
                     break;
                 case Reservation.TimeNotice.TWO_HOURS:
                     timeNoticeId = R.string.time_two_hours;
+                    break;
+                default:
+                    throw new RuntimeException("Time notice for this reservation is set to NOT_SET, did you properly handle the notification logic?");
+            }
+            return context.getResources().getString(timeNoticeId);
+        }
+
+        /**
+         * Return the complete locale string representing the given integer time notice.
+         */
+        @NonNull
+        public static String toCompleteTimeString(@NonNull final Context context, final int timeNotice) {
+            @StringRes int timeNoticeId;
+
+            switch (timeNotice) {
+                case Reservation.TimeNotice.NOW:
+                    timeNoticeId = R.string.array_item_now;
+                    break;
+                case Reservation.TimeNotice.FIFTEEN_MINUTES:
+                    timeNoticeId = R.string.array_item_fifteen_minutes_before;
+                    break;
+                case Reservation.TimeNotice.THIRTY_MINUTES:
+                    timeNoticeId = R.string.array_item_thirty_minutes_before;
+                    break;
+                case Reservation.TimeNotice.ONE_HOUR:
+                    timeNoticeId = R.string.array_item_one_hour_before;
+                    break;
+                case Reservation.TimeNotice.TWO_HOURS:
+                    timeNoticeId = R.string.array_item_two_hours_before;
                     break;
                 default:
                     throw new RuntimeException("Time notice for this reservation is set to NOT_SET, did you properly handle the notification logic?");

@@ -18,7 +18,7 @@
     <string name="text_notification_cancelled">Уведомление отключено</string>
     <string name="text_friendly_message">Здравствуй, %1$s</string> <!-- eg. Здравствуй, Марк -->
     <string name="text_reservation_summary">%1$s в %2$s</string> <!-- eg. Среда, 21 июня в 12:30 -->
-    <string name="text_notification_summary">До начала осталось %1$s</string> <!-- eg. До начала осталось 30 минут -->
+    <!-- eg. До начала осталось 30 минут -->
     <string name="text_empty_view">Бронирований не обнаружено.\nУспейте забронировать!</string>
     <string name="text_expired">Просрочено</string>
     <string name="text_you">Вы</string>
@@ -71,6 +71,8 @@
     <string name="time_one_hour">1 час</string>
     <string name="time_two_hours">2 часа</string>
 
+    <string name="time_now">0 минут до</string>
+    <string name="array_item_now">Сейчас [ДЕМО]</string>
     <string name="array_item_fifteen_minutes_before">15 минут до</string>
     <string name="array_item_thirty_minutes_before">30 минут до</string>
     <string name="array_item_one_hour_before">1 час до</string>

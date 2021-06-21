@@ -100,10 +100,8 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
                     reservation.getTimeNotice() != Reservation.TimeNotice.DISABLED) {
                 viewHolder.notificationTextView.setVisibility(View.VISIBLE);
 
-                final String timeNoticeString = Reservation.TimeNotice
-                        .toTimeString(viewHolder.itemView.getContext(), reservation.getTimeNotice());
-                final String timeNoticeSummary = viewHolder.itemView.getContext()
-                        .getString(R.string.text_notification_summary, timeNoticeString);
+                final String timeNoticeSummary = Reservation.TimeNotice
+                        .toCompleteTimeString(viewHolder.itemView.getContext(), reservation.getTimeNotice());
 
                 viewHolder.notificationTextView.setText(timeNoticeSummary);
             } else

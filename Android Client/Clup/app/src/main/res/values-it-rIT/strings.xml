@@ -12,14 +12,12 @@
 
     <string name="text_verify_number">Inserisci il tuo numero per ricevere un codice di verifica</string>
     <string name="text_verify_code">Inserisci il codice di verifica inviato a +%1$s</string>
-    <string name="text_prefix" translatable="false">+</string>
     <string name="text_choose_name">Inserisci il tuo nome completo, sarà visibile ad altri utenti di Clup.</string>
     <string name="text_unknown_location">Posizione sconosciuta.</string>
     <string name="text_notification_set">Notifica abilitata</string>
     <string name="text_notification_cancelled">Notifica disabilitata</string>
     <string name="text_friendly_message">Ciao, %1$s</string>
     <string name="text_reservation_summary">%1$s alle %2$s</string>
-    <string name="text_notification_summary">%1$s prima</string>
     <string name="text_empty_view">Nessuna prenotazione.\nPrenota ora!</string>
     <string name="text_expired">Scaduta</string>
     <string name="text_you">Tu</string>
@@ -67,11 +65,13 @@
     <string name="notification_title">prenotazione per %1$s</string>
     <string name="notification_content">Non dimenticare il tuo appuntamento tra %1$s</string>
 
+    <string name="time_now">0 minuti</string>
     <string name="time_fifteen_minutes">15 minuti</string>
     <string name="time_thirty_minutes">30 minuti</string>
     <string name="time_one_hour">1 ora</string>
     <string name="time_two_hours">2 ore</string>
 
+    <string name="array_item_now">Ora [DEMO]</string>
     <string name="array_item_fifteen_minutes_before">15 minuti prima</string>
     <string name="array_item_thirty_minutes_before">30 minuti prima</string>
     <string name="array_item_one_hour_before">1 ora prima</string>

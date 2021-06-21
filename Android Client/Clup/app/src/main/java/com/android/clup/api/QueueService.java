@@ -62,7 +62,7 @@ public class QueueService {
 
             final Result<String> responseURL = RemoteConnection.connect(businessRequestURL);
             if (responseURL instanceof Result.Error) {
-                final String errorMessage = "Unable to access business/list";
+                final String errorMessage = "Unable to access business/list API";
                 callback.onComplete(new Result.Error<>(errorMessage));
                 return;
             }
@@ -73,7 +73,7 @@ public class QueueService {
             final Result<String> queueResponseURL = RemoteConnection.connect(queueRequestURL);
 
             if (queueResponseURL instanceof Result.Error) {
-                final String errorMessage = "Unable to access queue/list";
+                final String errorMessage = "Unable to access queue/list API";
                 callback.onComplete(new Result.Error<>(errorMessage));
                 return;
             }

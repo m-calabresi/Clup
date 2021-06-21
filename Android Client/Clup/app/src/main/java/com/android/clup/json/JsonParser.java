@@ -138,8 +138,14 @@ public class JsonParser {
     private static void addQueue(@NonNull final List<Shop> shops, @NonNull final JSONObject jsonQueue) {
         try {
             final JSONObject fieldsObject = jsonQueue.getJSONObject(FIELDS);
-
             final String businessId = fieldsObject.getJSONArray(BUSINESSES).getString(0);
+
+            final String status = fieldsObject.getString(STATUS);
+
+            // only pending reservations have to be shown
+            if(status.equals(Reservation.Status.DONE))
+                return;
+
             final String hour = fieldsObject.getString(HOUR);
             final String customerName = fieldsObject.getString(USER_FULLNAME);
 

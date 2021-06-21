@@ -169,12 +169,12 @@ public class Reservation implements Comparable<Reservation>, Parcelable {
     /**
      * The status of a {@link Reservation}.
      */
-    // TODO show only reservations with "todo" status
     public static class Status {
         /**
          * A {@link Reservation} in this status has been successfully booked but the Customer
          * isn't arrived to the store yet. This means that either the time hasn't yet come, or the
-         * Customer is late / has lost his appointment.
+         * Customer is late / has lost his appointment and not enough time is passed and the system
+         * hasn't automatically cancelled his reservation yet.
          */
         @NonNull
         public static final String TODO = "todo";

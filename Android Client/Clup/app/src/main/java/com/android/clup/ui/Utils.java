@@ -223,6 +223,14 @@ public class Utils {
     }
 
     /**
+     * Display an AlertDialog telling the user that another reservation has already been boked
+     * for the selected day.
+     */
+    public static void displayBookingReservationError(@NonNull final Context context) {
+        displayAlertDialog(context, R.string.text_error_book_reservation, R.string.action_ok);
+    }
+
+    /**
      * Display a SnackBar that will be attached to the given anchor view.
      */
     @SuppressLint("ShowToast")

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:overScrollMode="never"
     android:scrollbarThumbHorizontal="@null"
     android:scrollbarThumbVertical="@null"
-    android:fillViewport="true"
     tools:context=".ui.SelectFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

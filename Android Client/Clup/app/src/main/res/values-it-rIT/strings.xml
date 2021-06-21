@@ -48,6 +48,7 @@
     <string name="text_error_reservation">Si è verificato un errore, riprova.</string>
     <string name="text_error_alert_maps">Questa funzione non è disponibile sul tuo dispositivo.</string>
     <string name="text_error_snackbar_shop">Impossibile caricare negozi, riprova tra un attimo</string>
+    <string name="text_error_book_reservation">Impossibile continuare, esiste già una prenotazione per questo giorno</string>
 
     <string name="text_warning_register">ATTENZIONE\nQuesta activity non dovrebbe trovarsi qui, si trova qui solo per questioni dimostrative.\n\nCliccando sul pulsante qua sotto segnerai l\'utente come registrato ovvero, che l\'utente è entrato nel negozio e pertanto la prenotazione attuale deve essere invalidata.</string>
     <string name="title_warning_expire">Questa prenotazione è scaduta.</string>

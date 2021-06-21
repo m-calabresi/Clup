@@ -143,7 +143,7 @@ public class NotificationService {
         // time at which the notification should appear
         long expireTime;
 
-        if(timeNotice == Reservation.TimeNotice.NOW)
+        if (timeNotice == Reservation.TimeNotice.NOW)
             expireTime = Date.now();
         else {
             // time of the appointment

@@ -48,6 +48,7 @@
     <string name="text_error_reservation">An error occurred, retry.</string>
     <string name="text_error_alert_maps">This feature is not available on your device.</string>
     <string name="text_error_snackbar_shop">Unable to load shops, retry in a while</string>
+    <string name="text_error_book_reservation">Unable to proceed, there is already another reservation for this day</string>
 
     <string name="text_warning_register">WARNING\nThis activity should not be here, it is here only for demonstration purposes.\n\nBy clicking on the below button you will mark the user as registered that is, the user has entered the shop meaning that the current reservation must be invalidated.</string>
     <string name="title_warning_expire">This reservation is expired.</string>

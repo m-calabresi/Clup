@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 public class DateTest {
     // WARNING: FORMATTED_DATE may depend on the testing device locale, adjust this string accordingly
@@ -129,7 +127,7 @@ public class DateTest {
         final List<Date> businessWeek1 = Date.getBusinessWeekFrom("14-06-2021");
         final String[] expectedBusinessWeek1 = {"14-06-2021", "15-06-2021", "16-06-2021", "17-06-2021", "18-06-2021"};
 
-        for(int i = 0; i < businessWeek1.size(); i++) {
+        for (int i = 0; i < businessWeek1.size(); i++) {
             assertEquals(expectedBusinessWeek1[i], businessWeek1.get(i).plain());
         }
 
@@ -137,7 +135,7 @@ public class DateTest {
         final List<Date> businessWeek2 = Date.getBusinessWeekFrom("15-06-2021");
         final String[] expectedBusinessWeek2 = {"15-06-2021", "16-06-2021", "17-06-2021", "18-06-2021", "21-06-2021"};
 
-        for(int i = 0; i < businessWeek2.size(); i++) {
+        for (int i = 0; i < businessWeek2.size(); i++) {
             assertEquals(expectedBusinessWeek2[i], businessWeek2.get(i).plain());
         }
 
@@ -145,7 +143,7 @@ public class DateTest {
         final List<Date> businessWeek3 = Date.getBusinessWeekFrom("16-06-2021");
         final String[] expectedBusinessWeek3 = {"16-06-2021", "17-06-2021", "18-06-2021", "21-06-2021", "22-06-2021"};
 
-        for(int i = 0; i < businessWeek3.size(); i++) {
+        for (int i = 0; i < businessWeek3.size(); i++) {
             assertEquals(expectedBusinessWeek3[i], businessWeek3.get(i).plain());
         }
 
@@ -153,7 +151,7 @@ public class DateTest {
         final List<Date> businessWeek4 = Date.getBusinessWeekFrom("17-06-2021");
         final String[] expectedBusinessWeek4 = {"17-06-2021", "18-06-2021", "21-06-2021", "22-06-2021", "23-06-2021"};
 
-        for(int i = 0; i < businessWeek4.size(); i++) {
+        for (int i = 0; i < businessWeek4.size(); i++) {
             assertEquals(expectedBusinessWeek4[i], businessWeek4.get(i).plain());
         }
 
@@ -161,7 +159,7 @@ public class DateTest {
         final List<Date> businessWeek5 = Date.getBusinessWeekFrom("18-06-2021");
         final String[] expectedBusinessWeek5 = {"18-06-2021", "21-06-2021", "22-06-2021", "23-06-2021", "24-06-2021"};
 
-        for(int i = 0; i < businessWeek5.size(); i++) {
+        for (int i = 0; i < businessWeek5.size(); i++) {
             assertEquals(expectedBusinessWeek5[i], businessWeek5.get(i).plain());
         }
 
@@ -169,7 +167,7 @@ public class DateTest {
         final List<Date> businessWeek6 = Date.getBusinessWeekFrom("19-06-2021");
         final String[] expectedBusinessWeek6 = {"21-06-2021", "22-06-2021", "23-06-2021", "24-06-2021", "25-06-2021"};
 
-        for(int i = 0; i < businessWeek6.size(); i++) {
+        for (int i = 0; i < businessWeek6.size(); i++) {
             assertEquals(expectedBusinessWeek6[i], businessWeek6.get(i).plain());
         }
 
@@ -177,7 +175,7 @@ public class DateTest {
         final List<Date> businessWeek7 = Date.getBusinessWeekFrom("20-06-2021");
         final String[] expectedBusinessWeek7 = {"21-06-2021", "22-06-2021", "23-06-2021", "24-06-2021", "25-06-2021"};
 
-        for(int i = 0; i < businessWeek7.size(); i++) {
+        for (int i = 0; i < businessWeek7.size(); i++) {
             assertEquals(expectedBusinessWeek7[i], businessWeek7.get(i).plain());
         }
     }

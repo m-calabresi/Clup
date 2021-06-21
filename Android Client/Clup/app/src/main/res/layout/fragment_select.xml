@@ -42,20 +42,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/time_chip_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="6dp"
-                    android:paddingVertical="30dp"
-                    android:paddingHorizontal="5dp"
-                    app:chipSpacingHorizontal="8dp"
-                    app:selectionRequired="true"
-                    app:singleLine="false"
-                    app:singleSelection="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/time_text_view"/>
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/time_chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="30dp"
+                app:chipSpacingHorizontal="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/time_text_view"
+                app:selectionRequired="true"
+                app:singleLine="false"
+                app:singleSelection="true" />
 
             <TextView
                 android:id="@+id/queue_text_view"

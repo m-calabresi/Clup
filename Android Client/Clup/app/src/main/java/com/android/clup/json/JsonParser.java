@@ -143,7 +143,7 @@ public class JsonParser {
             final String status = fieldsObject.getString(STATUS);
 
             // only pending reservations have to be shown
-            if(status.equals(Reservation.Status.DONE))
+            if (status.equals(Reservation.Status.DONE))
                 return;
 
             final String hour = fieldsObject.getString(HOUR);

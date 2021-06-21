@@ -101,11 +101,11 @@ public class AvailableSlotTest {
         expectedSortedWeekSlots.add(tuesdayAvailableSlots);
         expectedSortedWeekSlots.add(mondayAvailableSlots);
 
-        for(int i = 0; i < expectedSortedWeekSlots.size(); i++) {
+        for (int i = 0; i < expectedSortedWeekSlots.size(); i++) {
             final List<AvailableSlot> expectedSortedDaySlots = expectedSortedWeekSlots.get(i);
             final List<AvailableSlot> sortedDaySlots = sortedWeekSlots.get(i);
 
-            for(int j = 0; j < expectedSortedDaySlots.size(); j++) {
+            for (int j = 0; j < expectedSortedDaySlots.size(); j++) {
                 final AvailableSlot expectedAvailableDay = expectedSortedDaySlots.get(j);
                 final AvailableSlot availableDay = sortedDaySlots.get(j);
 
@@ -115,7 +115,7 @@ public class AvailableSlotTest {
                 final List<String> expectedEnqueuedCustomersNames = expectedAvailableDay.getEnqueuedCustomersNames();
                 final List<String> enqueuedCustomersNames = availableDay.getEnqueuedCustomersNames();
 
-                for(int k = 0; k < expectedEnqueuedCustomersNames.size(); k++) {
+                for (int k = 0; k < expectedEnqueuedCustomersNames.size(); k++) {
                     final String expectedCustomerName = expectedEnqueuedCustomersNames.get(k);
                     final String customerName = enqueuedCustomersNames.get(k);
 

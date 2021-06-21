@@ -41,9 +41,14 @@ public class SelectActivity extends AppCompatActivity {
         this.viewModel.bookReservation(result -> {
             Utils.stopProgressBarAnimation(this.doneButton, getString(R.string.action_done));
 
-            if (result instanceof Result.Success && ((Result.Success<Boolean>) result).data)
-                switchToNextActivity();
-            else
+            if (result instanceof Result.Success) {
+                final boolean completed = ((Result.Success<Boolean>) result).data;
+
+                if (completed)
+                    switchToNextActivity();
+                else
+                    showReservationWarning();
+            } else
                 showReservationError();
         });
     };
@@ -116,13 +121,24 @@ public class SelectActivity extends AppCompatActivity {
     }
 
     /**
-     * Shows an error snackbar.
+     * Shows an error Snackbar.
      */
     private void showReservationError() {
         Objects.requireNonNull(this.doneButton).post(() -> {
             this.doneButton.setClickable(true);
             this.doneButton.setFocusable(true);
             Utils.displayReservationErrorSnackBar(findViewById(R.id.layout_activity_select), this.doneButton);
+        });
+    }
+
+    /**
+     * Show a warning AlertDialog
+     */
+    private void showReservationWarning() {
+        Objects.requireNonNull(this.doneButton).post(() -> {
+            this.doneButton.setClickable(true);
+            this.doneButton.setFocusable(true);
+            Utils.displayBookingReservationError(this);
         });
     }
 

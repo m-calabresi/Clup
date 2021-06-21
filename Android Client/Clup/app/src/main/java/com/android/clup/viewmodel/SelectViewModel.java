@@ -8,12 +8,17 @@ import androidx.lifecycle.ViewModel;
 import com.android.clup.api.QueueService;
 import com.android.clup.concurrent.Callback;
 import com.android.clup.concurrent.Result;
+import com.android.clup.exception.NoAvailableDayException;
 import com.android.clup.model.AvailableDay;
+import com.android.clup.model.AvailableSlot;
 import com.android.clup.model.Date;
 import com.android.clup.model.Model;
 import com.android.clup.model.Reservation;
 import com.android.clup.model.Shop;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
+import java.util.Objects;
 
 public class SelectViewModel extends ViewModel {
     @NonNull
@@ -102,13 +107,36 @@ public class SelectViewModel extends ViewModel {
         final String shopId = this.model.getSelectedShop().getId();
         final String shopName = this.model.getSelectedShop().getName();
 
+        final String userFullName = this.model.getFullname();
+
         final Date date = this.model.getSelectedDay().getDate();
         final String time = this.model.getSelectedTime();
         date.setTime(time);
 
         final LatLng coords = this.model.getSelectedShop().getCoordinates();
 
-        this.queueService.getUuid(this.model.getFullname(), shopId, date, time, result -> {
+        final List<Shop> shops = Objects.requireNonNull(this.model.getShops());
+
+        // prevent the user from booking another reservation for the same day
+        try {
+            final AvailableDay availableDay = Shop.getById(shops, shopId).getAvailableDayByDate(date);
+
+            for (final AvailableSlot availableSlot : availableDay.getAvailableSlots()) {
+                if (availableSlot.getEnqueuedCustomersNames().contains(userFullName)) {
+                    final Result.Success<Boolean> result = new Result.Success<>(false);
+                    callback.onComplete(result);
+                    return;
+                }
+            }
+        } catch (@NonNull final NoAvailableDayException e) {
+            final String errorMessage = "Unable to book reservation, the requested day (" + date.formatted() + ") is not available for shop " + shopName + ". Cause: " + e.getLocalizedMessage();
+            final Result.Error<Boolean> result = new Result.Error<>(errorMessage);
+            callback.onComplete(result);
+            return;
+        }
+
+        // no duplicate reservations, finalize the reservation
+        this.queueService.getUuid(userFullName, shopId, date, time, result -> {
             Result<Boolean> bookResult;
 
             if (result instanceof Result.Success) {

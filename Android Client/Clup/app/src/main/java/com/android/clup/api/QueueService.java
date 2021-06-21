@@ -30,7 +30,6 @@ public class QueueService {
     public void getUuid(@NonNull final String username, @NonNull final String shopId,
                         @NonNull final Date date, @NonNull final String time,
                         @NonNull final Callback<String> callback) {
-        // TODO prevent a user from booking another reservation for the same day
         this.executor.execute(() -> {
             final String queuePOSTRequestURL = API_AVAILABLE_SHOPS_URL + "queue/enter";
 

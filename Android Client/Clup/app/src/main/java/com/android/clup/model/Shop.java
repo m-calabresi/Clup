@@ -67,8 +67,8 @@ public class Shop {
      */
     @NonNull
     public AvailableDay getAvailableDayByDate(@NonNull final Date date) throws NoAvailableDayException {
-        for(final AvailableDay availableDay : this.availableDays) {
-            if(availableDay.getDate().equals(date))
+        for (final AvailableDay availableDay : this.availableDays) {
+            if (availableDay.getDate().equals(date))
                 return availableDay;
         }
         throw new NoAvailableDayException("No AvailableDay found that matches the given date: " + date.plain());
@@ -79,8 +79,8 @@ public class Shop {
      */
     @NonNull
     public static Shop getById(@NonNull final List<Shop> shops, @NonNull final String id) {
-        for(final Shop shop : shops) {
-            if(shop.getId().equals(id))
+        for (final Shop shop : shops) {
+            if (shop.getId().equals(id))
                 return shop;
         }
         throw new NoSuchElementException("No AvailableDay found that matches the given id: " + id);

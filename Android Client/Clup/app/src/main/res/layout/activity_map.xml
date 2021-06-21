@@ -52,10 +52,9 @@
             style="@style/AppTheme.Clup.ProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_anchor="@id/map_recycler_view"
-            app:layout_anchorGravity="center"
             android:layout_marginBottom="20dp"
-            />
+            app:layout_anchor="@id/map_recycler_view"
+            app:layout_anchorGravity="center" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/location_button"

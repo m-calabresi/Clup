@@ -85,7 +85,7 @@ public class Date implements Parcelable {
      */
     @NonNull
     public static Date fromStringReverse(@NonNull final String dateString) {
-        final LocalDate localdate =  LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALY));
+        final LocalDate localdate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALY));
         return Date.fromLocalDate(localdate);
     }
 
@@ -158,7 +158,7 @@ public class Date implements Parcelable {
      * Days start from monday (0) and ends with sunday(6).
      */
     public int getDayOfWeek() {
-        final int day = this.calendar.get(Calendar.DAY_OF_WEEK) -2;
+        final int day = this.calendar.get(Calendar.DAY_OF_WEEK) - 2;
 
         return (((day % DAYS_IN_A_WEEK) + DAYS_IN_A_WEEK) % DAYS_IN_A_WEEK);
     }
@@ -263,9 +263,9 @@ public class Date implements Parcelable {
 
     @Override
     public boolean equals(@Nullable final Object obj) {
-        if(obj == null)
+        if (obj == null)
             return false;
-        if(!(obj instanceof Date))
+        if (!(obj instanceof Date))
             return false;
         final Date other = (Date) obj;
         return this.plain().equals(other.plain());

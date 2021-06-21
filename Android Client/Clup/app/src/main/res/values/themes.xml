@@ -352,6 +352,6 @@
 
     <!-- PROGRESS BAR THEMES -->
     <style name="AppTheme.Clup.ProgressBar" parent="Widget.AppCompat.ProgressBar">
-        <item name="android:indeterminateTint">@color/lime_600</item>
+        <item name="android:indeterminateTint">@color/lime_500</item>
     </style>
 </resources>

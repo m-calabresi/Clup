@@ -78,7 +78,7 @@ public class AvailableDayTest {
         final List<String> expectedEnqueuedCustomersNames = expectedAvailableSlot.getEnqueuedCustomersNames();
         final List<String> retrievedEnqueuedCustomersNames = retrievedAvailableSlot.getEnqueuedCustomersNames();
 
-        for(int i = 0; i < expectedEnqueuedCustomersNames.size(); i++)
+        for (int i = 0; i < expectedEnqueuedCustomersNames.size(); i++)
             assertEquals(expectedEnqueuedCustomersNames.get(i), retrievedEnqueuedCustomersNames.get(i));
     }
 }

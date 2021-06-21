@@ -247,10 +247,11 @@ public class MapViewModel extends ViewModel {
      */
     public void addMarkers(@NonNull final Context context) {
         new Handler(Looper.getMainLooper()).post(() -> {
-            final int size = Objects.requireNonNull(this.model.getShops()).size();
+            final List<Shop> shops = Objects.requireNonNull(this.model.getShops());
+            final int size = shops.size();
 
             for (int position = 0; position < size; position++) {
-                final Shop shop = this.model.getShops().get(position);
+                final Shop shop = shops.get(position);
 
                 final BitmapDescriptor icon = Utils.vectorToBitmap(context, R.drawable.marker_shop);
                 final String title = shop.getName();

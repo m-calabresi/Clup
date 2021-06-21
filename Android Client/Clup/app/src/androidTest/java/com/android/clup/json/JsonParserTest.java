@@ -113,7 +113,7 @@ public class JsonParserTest {
         final List<Reservation> reservations = Collections.singletonList(reservation);
 
         final String expectedJsonString = "{\"reservations\":[{\"id\":\""
-                + shopId+ "\",\"shopName\":\"" + shopName
+                + shopId + "\",\"shopName\":\"" + shopName
                 + "\",\"date\":\"" + date.plain() + "\",\"time\":\"" + date.getTime()
                 + "\",\"uuid\":\"" + uuid + "\",\"coords\":{\"lat\":"
                 + coords.latitude + ",\"lng\":" + coords.longitude + "},\"timeNotice\":-2,\"expired\":false}]}";
@@ -312,7 +312,7 @@ public class JsonParserTest {
 
         final List<Shop> computedShops = JsonParser.getShops(jsonShops, jsonQueues);
 
-        for(int i = 0; i < expectedShops.size(); i++) {
+        for (int i = 0; i < expectedShops.size(); i++) {
             final Shop expectedShop = expectedShops.get(i);
             final Shop computedShop = computedShops.get(i);
 
@@ -323,14 +323,14 @@ public class JsonParserTest {
             final List<AvailableDay> expectedAvailableDays = expectedShop.getAvailableDays();
             final List<AvailableDay> computedAvailableDays = computedShop.getAvailableDays();
 
-            for(int j = 0; j < expectedAvailableDays.size(); j++) {
+            for (int j = 0; j < expectedAvailableDays.size(); j++) {
                 final AvailableDay expectedAvailableDay = expectedAvailableDays.get(j);
                 final AvailableDay computedAvailableDay = computedAvailableDays.get(j);
 
                 final List<AvailableSlot> expectedAvailableSlots = expectedAvailableDay.getAvailableSlots();
                 final List<AvailableSlot> computedAvailableSlots = computedAvailableDay.getAvailableSlots();
 
-                for(int k = 0; k < expectedAvailableSlots.size(); k++) {
+                for (int k = 0; k < expectedAvailableSlots.size(); k++) {
                     final AvailableSlot expectedAvailableSlot = expectedAvailableSlots.get(k);
                     final AvailableSlot computedAvailableSlot = computedAvailableSlots.get(k);
 

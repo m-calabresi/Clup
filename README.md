@@ -17,7 +17,7 @@
 ### Documentation
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brief application description [here](Documentation/Application%20Overview.pptx)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Design Document [here](link_to_design_document)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Design Document [here](Documentation/Design%20Document.pdf)
 
 ---
 

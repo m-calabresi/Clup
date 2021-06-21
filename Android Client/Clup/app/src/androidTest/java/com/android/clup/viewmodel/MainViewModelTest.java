@@ -37,13 +37,14 @@ public class MainViewModelTest {
 
     @Test
     public void setSelectedReservation() {
+        final String shopId = "1234567";
         final String shopName = "shopName2";
         final Date date = Date.fromString("12-02-2121");
         date.setTime("12:00");
         final String uuid = "15yhr5988uh";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         addReservation(reservation);
 
@@ -52,6 +53,7 @@ public class MainViewModelTest {
 
         final Reservation selectedReservation = this.model.getSelectedReservation();
 
+        assertEquals(shopId, selectedReservation.getShopId());
         assertEquals(shopName, selectedReservation.getShopName());
         assertEquals(date.plain(), selectedReservation.getDate().plain());
         assertEquals(date.getTime(), selectedReservation.getDate().getTime());
@@ -62,13 +64,14 @@ public class MainViewModelTest {
 
     @Test
     public void getReservations() {
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
         date.setTime("15:20");
         final String uuid = "15yhr544r50";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         addReservation(reservation);
         final List<Reservation> reservations = this.model.getReservations();
@@ -79,6 +82,7 @@ public class MainViewModelTest {
             final Reservation savedReservation = reservations.get(i);
             final Reservation retrievedReservation = retrievedReservations.get(i);
 
+            assertEquals(savedReservation.getShopId(), retrievedReservation.getShopId());
             assertEquals(savedReservation.getShopName(), retrievedReservation.getShopName());
             assertEquals(savedReservation.getDate().plain(), retrievedReservation.getDate().plain());
             assertEquals(savedReservation.getDate().getTime(), retrievedReservation.getDate().getTime());

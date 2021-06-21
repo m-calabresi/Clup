@@ -33,6 +33,9 @@ public class InvalidateViewModelTest {
 
     @Test
     public void invalidateCurrentReservation() {
+        final String shopId1 = "1234567";
+        final String shopId2 = "0987654";
+
         final String shopName1 = "shopName1";
         final String shopName2 = "shopName2";
 
@@ -44,8 +47,8 @@ public class InvalidateViewModelTest {
 
         final LatLng coords = new LatLng(11.75, 6.7654);
 
-        final Reservation reservation1 = new Reservation(shopName1, date, uuid1, coords);
-        final Reservation reservation2 = new Reservation(shopName2, date, uuid2, coords);
+        final Reservation reservation1 = new Reservation(shopId1, shopName1, date, uuid1, coords);
+        final Reservation reservation2 = new Reservation(shopId2, shopName2, date, uuid2, coords);
 
         clearReservations();
         addReservation(reservation1);

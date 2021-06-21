@@ -56,7 +56,7 @@ public class SelectViewModelTest {
         final List<AvailableSlot> availableSlots = Arrays.asList(availableSlot1, availableSlot2);
         final AvailableDay availableDay = new AvailableDay(date, availableSlots);
         final List<AvailableDay> availableDays = Arrays.asList(availableDay, availableDay);
-        final Shop shop = new Shop("Local shop", coords, availableDays);
+        final Shop shop = new Shop("1234567", "Local shop", coords, availableDays);
 
         Model.getInstance().setSelectedShop(shop);
 
@@ -79,7 +79,7 @@ public class SelectViewModelTest {
         final List<AvailableSlot> availableSlots = Arrays.asList(availableSlot1, availableSlot2);
         final AvailableDay availableDay = new AvailableDay(date, availableSlots);
         final List<AvailableDay> availableDays = Arrays.asList(availableDay, availableDay);
-        final Shop shop = new Shop("Local shop", coords, availableDays);
+        final Shop shop = new Shop("1234567", "Local shop", coords, availableDays);
 
         Model.getInstance().setSelectedShop(shop);
         //Model.getInstance().setSelectedDay(availableDay);
@@ -106,7 +106,7 @@ public class SelectViewModelTest {
         final List<AvailableSlot> availableSlots = Arrays.asList(availableSlot1, availableSlot2);
         final AvailableDay availableDay = new AvailableDay(date, availableSlots);
         final List<AvailableDay> availableDays = Arrays.asList(availableDay, availableDay);
-        final Shop shop = new Shop("Local shop", coords, availableDays);
+        final Shop shop = new Shop("1234567", "Local shop", coords, availableDays);
 
         Model.getInstance().setSelectedShop(shop);
         Model.getInstance().setSelectedDay(availableDay);

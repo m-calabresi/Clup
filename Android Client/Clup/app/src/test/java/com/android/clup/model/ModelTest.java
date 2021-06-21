@@ -51,8 +51,8 @@ public class ModelTest {
 
         final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay2, availableDay3);
 
-        final Shop shop1 = new Shop("Local shop", coords1, availableDays);
-        final Shop shop2 = new Shop("Supermarket", coords2, availableDays);
+        final Shop shop1 = new Shop("1234567", "Local shop", coords1, availableDays);
+        final Shop shop2 = new Shop("0987654", "Supermarket", coords2, availableDays);
 
         final List<Shop> shops = Arrays.asList(shop1, shop2, shop1);
 
@@ -89,7 +89,7 @@ public class ModelTest {
 
         final List<AvailableDay> availableDays = Arrays.asList(availableDay1, availableDay2, availableDay3);
 
-        final Shop shop1 = new Shop("Local shop", coords1, availableDays);
+        final Shop shop1 = new Shop("1234567", "Local shop", coords1, availableDays);
 
         this.model.setSelectedShop(shop1);
 
@@ -150,12 +150,13 @@ public class ModelTest {
     public void getSelectedReservation() {
         assertThrows(NullPointerException.class, () -> this.model.getSelectedReservation());
 
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("14-02-2021");
         final String time = "12:00";
         final LatLng coords = new LatLng(12.34567, 12.87654);
 
-        final Reservation reservation = new Reservation(shopName, date, time, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, time, coords);
 
         this.model.setSelectedReservation(reservation);
 

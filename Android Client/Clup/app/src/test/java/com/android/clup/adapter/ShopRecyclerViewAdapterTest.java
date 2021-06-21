@@ -30,7 +30,7 @@ public class ShopRecyclerViewAdapterTest {
         final List<AvailableSlot> availableSlots = Arrays.asList(availableSlot1, availableSlot2);
         final AvailableDay availableDay = new AvailableDay(date, availableSlots);
         final List<AvailableDay> availableDays = Arrays.asList(availableDay, availableDay, availableDay);
-        final Shop shop = new Shop("Local shop", coords, availableDays);
+        final Shop shop = new Shop("1234567", "Local shop", coords, availableDays);
         final List<Shop> shops = Arrays.asList(shop, shop, shop);
 
         this.size = shops.size();

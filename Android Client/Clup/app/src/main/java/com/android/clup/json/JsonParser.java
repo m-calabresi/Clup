@@ -314,7 +314,7 @@ public class JsonParser {
      * from the given JSON Object.
      */
     @NonNull
-    public static List<AvailableSlot> getAvailableSlots(@NonNull final JSONObject openingDays, @NonNull final String day) {
+    private static List<AvailableSlot> getAvailableSlots(@NonNull final JSONObject openingDays, @NonNull final String day) {
         try {
             final JSONArray timesArray = openingDays.getJSONArray(day);
             final List<AvailableSlot> availableSlots = new ArrayList<>(timesArray.length());

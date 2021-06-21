@@ -21,13 +21,14 @@ public class ModelTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test(expected = IndexOutOfBoundsException.class)
     public void addReservation() {
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
         date.setTime("12:00");
         final String uuid = "15yhr5988uh";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         clearReservations();
         addReservation(reservation);
@@ -37,6 +38,9 @@ public class ModelTest {
 
     @Test
     public void removeReservation() {
+        final String shopId1 = "1234567";
+        final String shopId2 = "0987654";
+
         final String shopName1 = "shopName1";
         final String shopName2 = "shopName2";
 
@@ -48,8 +52,8 @@ public class ModelTest {
 
         final LatLng coords = new LatLng(11.75, 6.7654);
 
-        final Reservation reservation1 = new Reservation(shopName1, date, uuid1, coords);
-        final Reservation reservation2 = new Reservation(shopName2, date, uuid2, coords);
+        final Reservation reservation1 = new Reservation(shopId1, shopName1, date, uuid1, coords);
+        final Reservation reservation2 = new Reservation(shopId2, shopName2, date, uuid2, coords);
 
         clearReservations();
         addReservation(reservation1);
@@ -64,6 +68,7 @@ public class ModelTest {
 
         assertEquals(beforeLength - 1, afterLength);
 
+        assertEquals(shopId2, retrievedReservation.getShopId());
         assertEquals(shopName2, retrievedReservation.getShopName());
         assertEquals(date.plain(), retrievedReservation.getDate().plain());
         assertEquals(date.getTime(), retrievedReservation.getDate().getTime());
@@ -94,13 +99,14 @@ public class ModelTest {
     public void setSelectedReservationTimeNotice() {
         final int timeNotice = Reservation.TimeNotice.FIFTEEN_MINUTES;
 
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
         date.setTime("12:00");
         final String uuid = "15yhr5988uh";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         clearReservations();
         addReservation(reservation);

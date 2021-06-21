@@ -29,13 +29,14 @@ public class DetailsViewModelTest {
 
     @Test
     public void getReservationShopName() {
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
         date.setTime("12:00");
         final String uuid = "15yhr578";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         this.viewModel.setSelectedReservation(reservation);
 
@@ -44,13 +45,14 @@ public class DetailsViewModelTest {
 
     @Test
     public void getReservationDate() {
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
         date.setTime("12:00");
         final String uuid = "15yhr598";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         this.viewModel.setSelectedReservation(reservation);
 
@@ -59,13 +61,14 @@ public class DetailsViewModelTest {
 
     @Test
     public void getReservationTime() {
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
         date.setTime("12:00");
         final String uuid = "15yhr54rf";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         this.viewModel.setSelectedReservation(reservation);
 
@@ -74,13 +77,14 @@ public class DetailsViewModelTest {
 
     @Test
     public void isReservationExpired() {
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
         date.setTime("12:00");
         final String uuid = "15yhr54rf";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         this.viewModel.setSelectedReservation(reservation);
 
@@ -93,18 +97,20 @@ public class DetailsViewModelTest {
 
     @Test
     public void setSelectedReservation() {
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
         date.setTime("12:00");
         final String uuid = "15yhr56tg";
         final LatLng coords = new LatLng(12.65432, 6.23456);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         this.viewModel.setSelectedReservation(reservation);
 
         final Reservation selectedReservation = Model.getInstance().getSelectedReservation();
 
+        assertEquals(shopId, selectedReservation.getShopId());
         assertEquals(shopName, selectedReservation.getShopName());
         assertEquals(date.plain(), selectedReservation.getDate().plain());
         assertEquals(date.getTime(), selectedReservation.getDate().getTime());

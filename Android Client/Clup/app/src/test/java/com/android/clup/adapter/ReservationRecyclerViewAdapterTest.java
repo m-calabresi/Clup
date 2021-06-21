@@ -20,12 +20,13 @@ public class ReservationRecyclerViewAdapterTest {
     public void setup() {
         final OnListItemClickedCallback callback = position -> {
         };
+        final String shopId = "1234567";
         final String shopName = "Shop Name";
         final Date date = Date.fromString("12-02-2021");
         final String uuid = "345678uhgfe456yg";
         final LatLng coords = new LatLng(12.76543, 3.76543);
 
-        final Reservation reservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation reservation = new Reservation(shopId, shopName, date, uuid, coords);
 
         final List<Reservation> reservations = Arrays.asList(reservation, reservation, reservation);
 

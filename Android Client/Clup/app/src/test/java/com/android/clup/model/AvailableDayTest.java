@@ -56,12 +56,29 @@ public class AvailableDayTest {
 
     @Test
     public void getAvailableSlot() {
-        final AvailableSlot availableSlot = this.day.getAvailableSlot(TIME_1);
+        final AvailableSlot availableSlot = this.day.getAvailableSlotByTime(TIME_1);
 
         assertEquals(availableSlot.getTime(), TIME_1);
         assertEquals(availableSlot.getEnqueuedCustomersNames().get(0), NAME_1);
         assertEquals(availableSlot.getEnqueuedCustomersNames().get(1), NAME_2);
 
-        assertThrows(NoSuchElementException.class, () -> this.day.getAvailableSlot(TIME_ERROR));
+        assertThrows(NoSuchElementException.class, () -> this.day.getAvailableSlotByTime(TIME_ERROR));
+    }
+
+    @Test
+    public void getAvailableSlotByHour() {
+        final String hour = TIME_1.split(":")[0]; // 12
+
+        final AvailableSlot expectedAvailableSlot = this.day.getAvailableSlots().get(0);
+        final AvailableSlot retrievedAvailableSlot = this.day.getAvailableSlotByHour(hour);
+
+        assertEquals(expectedAvailableSlot.getHour(), retrievedAvailableSlot.getHour());
+        assertEquals(expectedAvailableSlot.getTime(), retrievedAvailableSlot.getTime());
+
+        final List<String> expectedEnqueuedCustomersNames = expectedAvailableSlot.getEnqueuedCustomersNames();
+        final List<String> retrievedEnqueuedCustomersNames = retrievedAvailableSlot.getEnqueuedCustomersNames();
+
+        for(int i = 0; i < expectedEnqueuedCustomersNames.size(); i++)
+            assertEquals(expectedEnqueuedCustomersNames.get(i), retrievedEnqueuedCustomersNames.get(i));
     }
 }

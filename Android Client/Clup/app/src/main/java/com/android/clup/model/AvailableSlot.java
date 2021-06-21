@@ -50,11 +50,12 @@ public class AvailableSlot {
      */
     @NonNull
     public static List<List<AvailableSlot>> sortAvailableSlotsBy(@NonNull final List<List<AvailableSlot>> availableSlots, @NonNull final List<Date> dates) {
-        final List<List<AvailableSlot>> sortedAvailableSlots = new ArrayList<>(availableSlots.size());
-
-        int dateIndex = dates.get(0).getDayOfWeek(); // start from the the first date and get the day of week
-
         final int weekSlots = availableSlots.size();
+
+        final List<List<AvailableSlot>> sortedAvailableSlots = new ArrayList<>(weekSlots);
+
+        int dateIndex = dates.get(0).getDayOfWeek(); // start from the first date and get the day of week
+
         for (int i = 0; i < weekSlots; i++) {
             sortedAvailableSlots.add(availableSlots.get(dateIndex));
             dateIndex = (dateIndex + 1) % weekSlots; // get the next day circularly (after thursday again monday)

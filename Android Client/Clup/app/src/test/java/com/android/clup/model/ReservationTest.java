@@ -15,35 +15,41 @@ public class ReservationTest {
 
     private Reservation reservation;
 
-    private static final String shopName = "Shop Name";
-    private static final Date date = Date.fromString(DATE_STRING);
-    private static final String uuid = "1245ythgfr6yu";
-    private static final LatLng coords = new LatLng(12.34567, 12.87654);
+    private final String shopId = "1234567";
+    private final String shopName = "Shop Name";
+    private final Date date = Date.fromString(DATE_STRING);
+    private final String uuid = "1245ythgfr6yu";
+    private final LatLng coords = new LatLng(12.34567, 12.87654);
 
     @Before
     public void setUp() {
         date.setTime(TIME_STRING);
-        this.reservation = new Reservation(shopName, date, uuid, coords);
+        this.reservation = new Reservation(this.shopId, this.shopName, this.date, this.uuid, this.coords);
+    }
+
+    @Test
+    public void getShopId() {
+        assertEquals(this.shopId, this.reservation.getShopId());
     }
 
     @Test
     public void getShopName() {
-        assertEquals(shopName, this.reservation.getShopName());
+        assertEquals(this.shopName, this.reservation.getShopName());
     }
 
     @Test
     public void getDate() {
-        assertEquals(date, this.reservation.getDate());
+        assertEquals(this.date, this.reservation.getDate());
     }
 
     @Test
     public void getUuid() {
-        assertEquals(uuid, this.reservation.getUuid());
+        assertEquals(this.uuid, this.reservation.getUuid());
     }
 
     @Test
     public void getCoords() {
-        assertEquals(coords, this.reservation.getCoords());
+        assertEquals(this.coords, this.reservation.getCoords());
     }
 
     @Test
@@ -74,7 +80,7 @@ public class ReservationTest {
         final String AFTER_TIME = "13:00";
 
         final Reservation thisReservation = this.reservation;
-        final Reservation sameReservation = new Reservation(shopName, date, uuid, coords);
+        final Reservation sameReservation = new Reservation(this.shopId, this.shopName, this.date, this.uuid, this.coords);
 
         // this comes at the same time of above reservations
         assertEquals(0, this.reservation.compareTo(thisReservation));
@@ -83,17 +89,17 @@ public class ReservationTest {
         // preceding date and time
         final Date precedingDateAndTime = Date.fromString(BEFORE_DATE);
         precedingDateAndTime.setTime(BEFORE_TIME);
-        final Reservation precedingDateAndTimeReservation = new Reservation(shopName, precedingDateAndTime, uuid, coords);
+        final Reservation precedingDateAndTimeReservation = new Reservation(this.shopId, this.shopName, precedingDateAndTime, this.uuid, this.coords);
 
         // same date, preceding time
         final Date precedingTime = Date.fromString(DATE_STRING);
         precedingTime.setTime(BEFORE_TIME);
-        final Reservation precedingTimeReservation = new Reservation(shopName, precedingTime, uuid, coords);
+        final Reservation precedingTimeReservation = new Reservation(this.shopId, this.shopName, precedingTime, this.uuid, this.coords);
 
         //preceding date, same time
         final Date precedingDate = Date.fromString(BEFORE_DATE);
         precedingDate.setTime(TIME_STRING);
-        final Reservation precedingDateReservation = new Reservation(shopName, precedingDate, uuid, coords);
+        final Reservation precedingDateReservation = new Reservation(this.shopId, this.shopName, precedingDate, this.uuid, this.coords);
 
         // this comes after above reservations
         assertEquals(1, this.reservation.compareTo(precedingDateAndTimeReservation));
@@ -103,17 +109,17 @@ public class ReservationTest {
         // following date and time
         final Date followingDateAndTime = Date.fromString(AFTER_DATE);
         followingDateAndTime.setTime(AFTER_TIME);
-        final Reservation followingDateAndTimeReservation = new Reservation(shopName, followingDateAndTime, uuid, coords);
+        final Reservation followingDateAndTimeReservation = new Reservation(this.shopId, this.shopName, followingDateAndTime, this.uuid, this.coords);
 
         // same date, following time
         final Date followingTime = Date.fromString(DATE_STRING);
         followingTime.setTime(AFTER_TIME);
-        final Reservation followingTimeReservation = new Reservation(shopName, followingTime, uuid, coords);
+        final Reservation followingTimeReservation = new Reservation(this.shopId, this.shopName, followingTime, this.uuid, this.coords);
 
         //following date, same time
         final Date followingDate = Date.fromString(AFTER_DATE);
         followingDate.setTime(TIME_STRING);
-        final Reservation followingDateReservation = new Reservation(shopName, followingDate, uuid, coords);
+        final Reservation followingDateReservation = new Reservation(this.shopId, this.shopName, followingDate, this.uuid, this.coords);
 
         // this comes before above reservations
         assertEquals(-1, this.reservation.compareTo(followingDateAndTimeReservation));

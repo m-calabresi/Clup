@@ -4,12 +4,12 @@
 </div>
 </p>
 
-# Clup v1.1 - DIMA Project AY 2020-2021
+# Clup v1.3 - DIMA Project AY 2020-2021
 
 ### Download
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download apk [here](link_to_apk_file_here)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download apk [here](https://github.com/m-calabresi/Clup/raw/main/Android%20Client/Clup/app/release/Clup.apk)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHA256: ```sha_code_here```
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHA256: ```F4CFB79DEE9B2AC8AEAF0A5040F61A49D0950167D5EAF4BEB9E9B3FD94CEF873```
 
 ### Supported Versions
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From ```API 22``` (Android 5.1 Marshmallow) up to ```API 30``` (Android 11)

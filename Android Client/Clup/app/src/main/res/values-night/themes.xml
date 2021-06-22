@@ -272,6 +272,10 @@
         <item name="layout_behavior">@string/bottom_sheet_behavior</item>
     </style>
 
+    <style name="AppTheme.Clup.SidedRecyclerView" parent="">
+        <item name="android:background">?android:colorBackground</item>
+    </style>
+
     <!-- EXTENDED FLOATING ACTION BUTTON THEMES -->
     <style name="AppTheme.Clup.ExtendedFloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
         <item name="android:paddingTop">@dimen/rounded_button_vertical_padding</item>

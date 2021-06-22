@@ -399,11 +399,21 @@ public class Utils {
             final int marginStart = (int) parentView.getResources().getDimension(R.dimen.mini_fab_margin_start);
 
             if (!Utils.isPhone(parentView.getContext())) {
-                final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                params.topMargin = marginTop;
-                params.leftMargin = marginStart;
-                params.rightMargin = marginStart;
-                view.setLayoutParams(params);
+                try {
+                    final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+
+                    params.topMargin = marginTop;
+                    params.leftMargin = marginStart;
+                    params.rightMargin = marginStart;
+                    view.setLayoutParams(params);
+                } catch (@NonNull final ClassCastException e) {
+                    final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
+
+                    params.topMargin = marginTop;
+                    params.leftMargin = marginStart;
+                    params.rightMargin = marginStart;
+                    view.setLayoutParams(params);
+                }
             } else {
                 final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
                 params.topMargin = marginTop;
